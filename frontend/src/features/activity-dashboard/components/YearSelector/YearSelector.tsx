@@ -16,13 +16,13 @@ export function YearSelector(props: YearSelectorProps) {
         <div className={styles.container}>
             <div className={styles.yearList}>
                 {props.years.map((year) => (
-                    <button
+                    <div
                         key={year}
-                        className={`${styles.yearButton} ${year === props.selectedYear ? styles.active : ''}`}
+                        className={`${styles.yearBlock} ${year === props.selectedYear ? styles.active : ''}`}
                         onClick={() => handleYearChange(year)}
                     >
                         {year}
-                    </button>
+                    </div>
                 ))}
             </div>
         </div>

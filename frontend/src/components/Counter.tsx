@@ -7,7 +7,7 @@ export default function Counter() {
 
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-md">
-      <p className="text-2xl font-bold mb-4">Count: {count}</p>
+      <p className="text-2xl mb-4">Count: {count}</p>
       <div className="flex gap-4">
         <button
           onClick={() => setCount(count - 1)}

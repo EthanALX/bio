@@ -18,7 +18,6 @@
 
 .monthLabel {
     font-size: 0.8rem;
-    font-weight: 600;
     color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -28,7 +27,7 @@
 .weeks {
     display: flex;
     flex-direction: column;
-    gap: 0.12rem;
+    gap: 0.32rem;
 }
 
 .week {
@@ -39,7 +38,6 @@
 
 .weekLabel {
     font-size: 0.55rem;
-    font-weight: 600;
     color: #64748b;
     min-width: 1.3rem;
     text-align: right;
@@ -69,7 +67,7 @@
 }
 
 .day:hover:not(.empty) {
-    transform: scale(1.18);
+    transform: scale(1.1);
     z-index: 10;
 }
 

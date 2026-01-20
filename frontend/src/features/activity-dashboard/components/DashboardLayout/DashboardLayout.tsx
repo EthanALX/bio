@@ -42,8 +42,7 @@ export function DashboardLayout() {
                 <header className={styles.header}>
                     <div className={styles.avatar}>E</div>
                     <div className={styles.headerText}>
-                        <h1 className={styles.title}>Activity Dashboard</h1>
-                        <p className={styles.subtitle}>Track your fitness journey</p>
+                        <p className={styles.subtitle}>如果你想跑步，跑一公里就好，如果你想体验不一样的人生，去跑场马拉松  --艾米尔·扎托佩克</p>
                     </div>
                 </header>
 

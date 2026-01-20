@@ -1,14 +1,37 @@
 import type { Metadata } from 'next';
+import { JetBrains_Mono, IBM_Plex_Mono, Fira_Code, Space_Mono } from 'next/font/google';
 import './globals.css';
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-ibm-plex-mono',
+});
+
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  variable: '--font-fira-code',
+});
+
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-space-mono',
+});
+
 export const metadata: Metadata = {
-  title: 'Visual Bio',
-  description: 'A visual biological data platform',
+  title: '跑步历程',
+  description: '个人跑步记录',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${jetbrainsMono.variable} ${ibmPlexMono.variable} ${firaCode.variable} ${spaceMono.variable}`}>
       <body>
         {children}
       </body>

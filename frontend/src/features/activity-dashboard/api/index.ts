@@ -11,6 +11,12 @@ const mockActivities: Activity[] = [
         time: '56m 00s',
         route: 'Morning Run',
         type: 'run',
+        coordinates: [
+            { lat: 31.23, lng: 121.47 },
+            { lat: 31.24, lng: 121.48 },
+            { lat: 31.22, lng: 121.49 },
+            { lat: 31.23, lng: 121.47 },
+        ],
     },
     {
         id: '2',
@@ -31,6 +37,12 @@ const mockActivities: Activity[] = [
         time: '1h 21m 38s',
         route: 'Long Distance',
         type: 'run',
+        coordinates: [
+            { lat: 31.20, lng: 121.40 },
+            { lat: 31.21, lng: 121.41 },
+            { lat: 31.22, lng: 121.42 },
+            { lat: 31.20, lng: 121.43 },
+        ],
     },
 ];
 

@@ -7,6 +7,7 @@ export interface FormattedActivity {
     bpm: number;
     time: string;
     route: string;
+    coordinates?: Array<{ lat: number; lng: number }>;
     dateDisplay: string;
 }
 
@@ -28,6 +29,7 @@ export const useActivityList = ({ activities }: UseActivityListProps): UseActivi
         bpm: activity.bpm,
         time: activity.time,
         route: activity.route,
+        coordinates: activity.coordinates,
         dateDisplay: `${activity.date} 15:10`, // Preserving the user's custom formatting requirement
     }));
 

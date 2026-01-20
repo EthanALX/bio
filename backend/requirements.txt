@@ -1,2 +1,30 @@
+# Core dependencies
 fastapi
-uvicorn
+uvicorn[standard]
+sqlalchemy
+alembic
+psycopg2-binary
+python-dotenv
+python-jose[cryptography]
+passlib[argon2]
+python-multipart
+
+# Pydantic for validation
+pydantic[email]
+pydantic-settings
+
+# Database
+sqlalchemy
+alembic
+psycopg2-binary
+
+# Testing dependencies
+pytest
+pytest-asyncio
+pytest-cov
+httpx
+
+# Development dependencies
+black
+isort
+flake8

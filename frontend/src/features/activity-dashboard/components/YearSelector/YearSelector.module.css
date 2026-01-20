@@ -4,29 +4,28 @@
 
 .yearList {
     display: flex;
-    gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
+    padding-left: 1.5rem;
+    gap: 1.5rem;
 }
 
-.yearButton {
-    padding: 0.25rem 0.5rem;
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    font-size: 0.875rem;
-    font-weight: 600;
+.yearBlock {
+    color: #e2e8f0;
+    font-size: 1.6rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    font-style: oblique;
 }
 
-.yearButton:hover {
-    color: #e2e8f0;
-}
-
-.yearButton.active {
+.yearBlock:hover {
     color: #6366f1;
 }
 
-.yearButton.active:hover {
+.yearBlock.active {
+    color: #6366f1;
+}
+
+.yearBlock.active:hover {
     color: #a855f7;
 }
