@@ -59,13 +59,15 @@ MyComponent/
     *   No complex calculations.
     *   Must call `use[Name]` hook to get its state/handlers.
 
-#### `[Name].hook.ts` - The Logic
+#### `[Name].hook.ts` - The Logic (ViewModel)
 *   **Role**: The Brain.
 *   **Responsibility**:
     *   Manage local state (`useState`, `useReducer`).
     *   Handle side effects (`useEffect`).
     *   Fetch data (consume `useQuery` or services).
+    *   **Process Logic**: Formatting dates, calculating derived values, mapping data structures.
     *   Return a neat interface (`interface Use[Name]Result`) for the View.
+*   **Goal**: The `.tsx` file should be reduced to a purely declarative template. If you find yourself writing a `map`, `filter`, or `new Date()` in the `.tsx` file, consider if it belongs in the hook.
 
 #### `api/*.ts` - The Service Layer
 *   **Role**: Data Access.
