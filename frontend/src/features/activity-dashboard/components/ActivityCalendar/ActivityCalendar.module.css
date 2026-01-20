@@ -1,0 +1,78 @@
+.container {
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.month {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.monthLabel {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
+}
+
+.weeks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+}
+
+.week {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.weekLabel {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: #64748b;
+    min-width: 1.3rem;
+    text-align: right;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    flex: 1;
+}
+
+.day {
+    aspect-ratio: 1;
+    background: rgba(148, 163, 184, 0.1);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.day.empty {
+    background: transparent;
+}
+
+.day.active {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    box-shadow: 0 0 5px rgba(99, 102, 241, 0.4);
+}
+
+.day:hover:not(.empty) {
+    transform: scale(1.18);
+    z-index: 10;
+}
+
+.day.active:hover {
+    box-shadow: 0 0 9px rgba(99, 102, 241, 0.6);
+}

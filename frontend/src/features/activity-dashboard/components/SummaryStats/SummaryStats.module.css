@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 250px;
+}
+
+.statCard {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.statCard:hover .value {
+  color: #a855f7;
+}
+
+.statCard.active .value {
+  color: #6366f1;
+}
+
+.value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  transition: color 0.2s ease;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-style: italic;
+  font-weight: 400;
+}

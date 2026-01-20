@@ -1,0 +1,32 @@
+.container {
+    margin: 0;
+}
+
+.yearList {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.yearButton {
+    padding: 0.25rem 0.5rem;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.yearButton:hover {
+    color: #e2e8f0;
+}
+
+.yearButton.active {
+    color: #6366f1;
+}
+
+.yearButton.active:hover {
+    color: #a855f7;
+}

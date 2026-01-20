@@ -1,0 +1,109 @@
+.container {
+    background: rgba(30, 41, 59, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 6px;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #e2e8f0;
+}
+
+.tab.active {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+.chartContainer {
+    display: flex;
+    gap: 1rem;
+    height: 300px;
+}
+
+.yAxis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.axisLabel {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+.chart {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 0.5rem 0;
+}
+
+.barWrapper {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.bar {
+    width: 100%;
+    background: linear-gradient(180deg, #a855f7 0%, #6366f1 100%);
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease;
+    min-height: 4px;
+}
+
+.bar:hover {
+    opacity: 0.8;
+    transform: scaleY(1.05);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+}
+
+.legend {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legendColor {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.legendItem span {
+    font-size: 0.875rem;
+    color: #e2e8f0;
+}
