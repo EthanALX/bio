@@ -1,37 +1,40 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import styles from "./AboutLayout.module.css";
 
 export function AboutLayout() {
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <h2 className={styles.cardTitle}>我</h2>
+      <header className={styles.hero}>
+        <p>每一公里，都是对生命的热爱</p>
+      </header>
+
+      <section className={styles.card}>
+        <h2 className={styles.cardTitle}>故事</h2>
         <p className={styles.text}>
-          跑步历程是一个记录个人跑步经历的平台。我相信每一次迈步都是一次成长，每一次挑战都是一次突破。
+          我相信每一次迈步都是一次成长，每一次挑战都是一次突破。
           无论是清晨的5公里，还是挑战自我的马拉松，每一步都值得被记录和分享。
         </p>
         <p className={styles.text}>
-          这个网站始于一个简单的想法：记录跑步数据不仅仅是数字的积累，更是个人成长和健康生活方式的见证。
-          通过可视化的方式，我希望让每一位跑者都能看到自己的进步，找到坚持下去的动力。
+          跑步数据不仅仅是数字的积累，更是个人成长和健康生活方式的见证。
+          希望让每一位跑者都能看到自己的进步，找到坚持下去的动力。
         </p>
-      </div>
+      </section>
 
-      <div className={styles.card}>
-        <h2 className={styles.cardTitle}>为什么跑步？</h2>
+      <section className={styles.card}>
+        <h2 className={styles.cardTitle}>为什么？</h2>
         <p className={styles.text}>
-          跑步是最简单、最原始的运动形式之一。它不需要复杂的设备，只需要一双合适的跑鞋和一颗愿意前行的内心。
+          跑步是最简单、最原始的运动形式之一。一点儿也不复杂，只需要一双合适的跑鞋和一颗愿意前行的内心。
           正如传奇跑者艾米尔·扎托佩克所说："如果想跑步，一公里就好，如果想体验不一样的人生，去跑场马拉松。"
         </p>
         <p className={styles.text}>
           跑步不仅锻炼身体，更能磨练意志。每一次突破自己的极限，都是对内心的一次对话和成长。
           在跑步中，我学会了坚持，学会了面对困难，也学会了在疲惫中寻找力量。
         </p>
-      </div>
+      </section>
 
-      <div className={styles.card}>
+      <section className={styles.card}>
         <div className={styles.socialLinks}>
           <a
             href="https://www.strava.com/athletes/yourprofile"
@@ -84,11 +87,11 @@ export function AboutLayout() {
             <span>Twitter</span>
           </a>
         </div>
-      </div>
+      </section>
 
-      <div className={styles.footer}>
-        <p>© 2024 跑步历程 - 记录每一步</p>
-      </div>
+      <footer className={styles.footer}>
+        <p>© 2024  记录每一步</p>
+      </footer>
     </div>
   );
 }

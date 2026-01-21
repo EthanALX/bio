@@ -38,11 +38,11 @@ html {
 
 body {
     /* 在下方切换不同的字体变量进行尝试： */
-    /* font-family: var(--font-jetbrains-mono), monospace; */
+    font-family: var(--font-jetbrains-mono), monospace;
     /* font-family: var(--font-ibm-plex-mono), monospace; */
     /* 当前选中：IBM Plex Mono */
     /* font-family: var(--font-fira-code), monospace; */
-    font-family: var(--font-space-mono), monospace;
+    /* font-family: var(--font-space-mono), monospace; */
 
     color: #e2e8f0;
     background: transparent;
