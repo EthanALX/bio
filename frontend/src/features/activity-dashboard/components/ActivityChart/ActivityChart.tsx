@@ -22,6 +22,10 @@ export function ActivityChart({ activities }: ActivityChartProps) {
 
     return (
         <div className={styles.container}>
+            <div className={styles.header}>
+                <div className={styles.button}>Pace</div>
+                <div className={styles.button}>Avg Heart Rate</div>
+            </div>
             <div className={styles.chartArea}>
                 <svg className={styles.svg} viewBox="0 0 800 500" preserveAspectRatio="xMinYMin meet">
                     <defs>

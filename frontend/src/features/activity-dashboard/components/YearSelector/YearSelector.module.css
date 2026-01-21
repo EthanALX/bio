@@ -1,12 +1,13 @@
 .container {
-    margin: 0;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 60;
 }
 
 .yearList {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-end;
     margin-top: 0.5rem;
-    padding-left: 1.5rem;
     gap: 1.5rem;
 }
 
@@ -15,7 +16,6 @@
     font-size: 1.6rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-style: oblique;
 }
 
 .yearBlock:hover {

@@ -2,29 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
 }
 
 body {
-  /* 在下方切换不同的字体变量进行尝试： */
-  /* font-family: var(--font-jetbrains-mono), monospace; */
-  /* font-family: var(--font-ibm-plex-mono), monospace; */
-  /* 当前选中：IBM Plex Mono */
-  /* font-family: var(--font-fira-code), monospace; */
-  font-family: var(--font-space-mono), monospace;
+    overflow-y: hidden;
+}
 
-  color: rgb(var(--foreground-rgb));
-  background: #0f172a;
-  color: #e2e8f0;
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+html {
+    background-color: #0f172a;
+}
+
+body {
+    /* 在下方切换不同的字体变量进行尝试： */
+    /* font-family: var(--font-jetbrains-mono), monospace; */
+    /* font-family: var(--font-ibm-plex-mono), monospace; */
+    /* 当前选中：IBM Plex Mono */
+    /* font-family: var(--font-fira-code), monospace; */
+    font-family: var(--font-space-mono), monospace;
+
+    color: #e2e8f0;
+    background: transparent;
 }

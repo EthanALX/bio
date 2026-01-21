@@ -3,6 +3,28 @@
     backdrop-filter: blur(10px);
 }
 
+.header {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.button {
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+.button:hover {
+    color: #e2e8f0;
+}
+
+
+
 .chartArea {
     height: 400px;
     width: 100%;

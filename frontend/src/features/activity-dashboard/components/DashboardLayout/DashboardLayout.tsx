@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useDashboardLayout } from './DashboardLayout.hook';
-import { YearSelector } from '../YearSelector';
-import { SummaryStats } from '../SummaryStats';
-import { ActivityList } from '../ActivityList';
-import { ActivityCalendar } from '../ActivityCalendar';
-import { ActivityChart } from '../ActivityChart';
-import { ActivityMap } from '../ActivityMap';
-import styles from './DashboardLayout.module.css';
+import React from "react";
+import { useDashboardLayout } from "./DashboardLayout.hook";
+import { YearSelector } from "../YearSelector";
+import { SummaryStats } from "../SummaryStats";
+import { ActivityList } from "../ActivityList";
+import { ActivityCalendar } from "../ActivityCalendar";
+import { ActivityChart } from "../ActivityChart";
+import { ActivityMap } from "../ActivityMap";
+import styles from "./DashboardLayout.module.css";
 
 export function DashboardLayout() {
     const { state, actions } = useDashboardLayout();
@@ -37,28 +37,32 @@ export function DashboardLayout() {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.topBar}>
-                <header className={styles.header}>
-                    <div className={styles.avatar}>E</div>
-                    <div className={styles.headerText}>
-                        <p className={styles.subtitle}>如果想跑步，一公里就好，如果想体验不一样的人生，去跑场马拉松  --艾米尔·扎托佩克</p>
-                    </div>
-                </header>
+        <div className={`${styles.container} ${viewMode === 'map' ? styles.backgroundActive : ''}`}>
+            <ActivityMap isBackground={true} isVisible={viewMode === 'map'} activities={data.activities} />
 
-                <YearSelector
-                    years={years}
-                    selectedYear={selectedYear}
-                    onYearChange={setSelectedYear}
-                />
-            </div>
+            <YearSelector
+                years={years}
+                selectedYear={selectedYear}
+                onYearChange={setSelectedYear}
+            />
 
             <div className={styles.mainLayout}>
                 <div className={styles.content}>
-                    {viewMode === 'list' && <ActivityList activities={data.activities} />}
-                    {viewMode === 'calendar' && <ActivityCalendar activities={data.activities} year={selectedYear} />}
-                    {viewMode === 'chart' && <ActivityChart activities={data.activities} />}
-                    {viewMode === 'map' && <ActivityMap activities={data.activities} />}
+                    {viewMode === "list" && <ActivityList activities={data.activities} />}
+                    {viewMode === "calendar" && (
+                        <ActivityCalendar
+                            activities={data.activities}
+                            year={selectedYear}
+                        />
+                    )}
+                    {viewMode === "chart" && (
+                        <ActivityChart activities={data.activities} />
+                    )}
+                    {viewMode === "map" && (
+                        <div className={styles.mapPlaceholderView}>
+                            <div className={styles.mapHint}></div>
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.sidebar}>
