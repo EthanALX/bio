@@ -1,52 +1,47 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Activity } from '../../types';
-
-export type ChartType = 'pace' | 'bpm';
 
 interface UseActivityChartProps {
     activities: Activity[];
 }
 
 export function useActivityChart({ activities }: UseActivityChartProps) {
-    const [activeTab, setActiveTab] = useState<ChartType>('pace');
-
     const chartData = useMemo(() => {
         if (!activities.length) return [];
 
-        // Parse values based on type
         const parsed = activities.map(a => {
-            let value = 0;
-            if (activeTab === 'bpm') {
-                value = a.bpm;
-            } else {
-                // Parse pace "5'20\"/km" -> total seconds
-                const match = a.pace.match(/(\d+)'(\d+)/);
-                if (match) {
-                    value = parseInt(match[1]) * 60 + parseInt(match[2]);
-                }
+            let paceSeconds = 0;
+            const match = a.pace.match(/(\d+)'(\d+)/);
+            if (match) {
+                paceSeconds = parseInt(match[1]) * 60 + parseInt(match[2]);
             }
-            return { ...a, numericValue: value };
+            return {
+                ...a,
+                paceSeconds,
+                bpm: a.bpm
+            };
         });
 
-        const values = parsed.map(p => p.numericValue);
-        const max = Math.max(...values);
-        const min = Math.min(...values);
-        const range = max - min || 1;
+        const paceValues = parsed.map(p => p.paceSeconds).filter(v => v > 0);
+        const paceMax = Math.max(...paceValues);
+        const paceMin = Math.min(...paceValues);
+
+        const bpmValues = parsed.map(p => p.bpm).filter(v => v > 0);
+        const bpmMax = Math.max(...bpmValues);
+        const bpmMin = Math.min(...bpmValues);
 
         return parsed.map(p => ({
             id: p.id,
             date: p.date,
-            displayValue: activeTab === 'bpm' ? `${p.bpm} BPM` : p.pace,
-            // For pace, lower is "better" but usually charts show higher bars for higher values.
-            // However, "dynamic" often means literal magnitude.
-            // Let's normalize so it fits 0-100%
-            percent: ((p.numericValue - min * 0.8) / (max - min * 0.8 || 1)) * 100
+            paceValue: p.pace,
+            bpmValue: `${p.bpm} BPM`,
+            // Normalize for display
+            pacePercent: ((p.paceSeconds - paceMin * 0.9) / (paceMax - paceMin * 0.9 || 1)) * 100,
+            hrPercent: ((p.bpm - bpmMin * 0.9) / (bpmMax - bpmMin * 0.9 || 1)) * 100
         }));
-    }, [activities, activeTab]);
+    }, [activities]);
 
     return {
-        activeTab,
-        setActiveTab,
         chartData
     };
 }

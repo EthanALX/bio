@@ -1,44 +1,11 @@
 .container {
-    /* background: rgba(30, 41, 59, 0.3); */
     padding: 1.5rem;
     backdrop-filter: blur(10px);
 }
 
-.header {
-    margin-bottom: 2rem;
-}
-
-.tabs {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.tab {
-    padding: 0.5rem 1rem;
-    background: transparent;
-    /* border: 1px solid rgba(148, 163, 184, 0.2); */
-    border-radius: 6px;
-    color: #94a3b8;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.tab:hover {
-    border-color: rgba(99, 102, 241, 0.4);
-    color: #e2e8f0;
-}
-
-.tab.active {
-    /* background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); */
-    border-color: transparent;
-    color: #ffffff;
-}
-
 .chartArea {
-    height: 300px;
+    height: 400px;
     width: 100%;
-    padding-left: 1.4rem;
 }
 
 .svg {
@@ -49,22 +16,31 @@
 
 .bar {
     transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    filter: drop-shadow(0 0 4px rgba(99, 102, 241, 0.3));
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
 }
 
 .barGroup:hover .bar {
-    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.6));
     opacity: 0.9;
 }
 
-.label {
-    fill: #94a3b8;
-    font-size: 8px;
-    font-style: italic;
+.value {
+    fill: #e2e8f0;
+    font-size: 14px;
+    font-weight: 400;
 }
 
-.value {
-    fill: #94a3b8;
-    font-size: 10px;
-    font-weight: 200;
+.hrLine {
+    filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.4));
+    pointer-events: none;
+}
+
+.hrPoint {
+    fill: #fbbf24;
+}
+
+.hrValue {
+    fill: #fcd34d;
+    font-size: 12px;
+    font-weight: 500;
 }
