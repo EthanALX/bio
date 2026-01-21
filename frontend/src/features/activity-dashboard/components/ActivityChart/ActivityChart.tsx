@@ -14,23 +14,23 @@ export function ActivityChart({ activities }: ActivityChartProps) {
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.tabs}>
-                    <button
+                    <div
                         className={`${styles.tab} ${activeTab === 'pace' ? styles.active : ''}`}
                         onClick={() => setActiveTab('pace')}
                     >
                         Pace
-                    </button>
-                    <button
+                    </div>
+                    <div
                         className={`${styles.tab} ${activeTab === 'bpm' ? styles.active : ''}`}
                         onClick={() => setActiveTab('bpm')}
                     >
                         Heart Rate
-                    </button>
+                    </div>
                 </div>
             </div>
 
             <div className={styles.chartArea}>
-                <svg className={styles.svg} viewBox="0 0 100 240" preserveAspectRatio="none">
+                <svg className={styles.svg} viewBox="0 0 400 300" preserveAspectRatio="xMinYMin meet">
                     <defs>
                         <linearGradient id="barGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stopColor="#6366f1" />
@@ -38,34 +38,27 @@ export function ActivityChart({ activities }: ActivityChartProps) {
                         </linearGradient>
                     </defs>
                     {chartData.map((item, index) => {
-                        const y = index * 30 + 10;
+                        const y = index * 45 + 20;
                         return (
                             <g key={item.id} className={styles.barGroup}>
-                                {/* <text x="0" y={y + 14} className={styles.label}>{item.date.slice(5)}</text> */}
+                                <text x="0" y={y} className={styles.value}>
+                                    {item.displayValue}
+                                </text>
                                 <rect
-                                    x="15"
-                                    y={y}
-                                    width={item.percent * 0.75}
-                                    height="20"
-                                    rx="4"
+                                    x="0"
+                                    y={y + 8}
+                                    width={item.percent * 3.5}
+                                    height="12"
+                                    rx="0"
                                     className={styles.bar}
                                     fill="url(#barGradient)"
                                 />
-                                <text x={item.percent * 0.75 + 18} y={y + 14} className={styles.value}>
-                                    {item.displayValue}
-                                </text>
                             </g>
                         );
                     })}
                 </svg>
             </div>
 
-            <div className={styles.legend}>
-                <div className={styles.legendItem}>
-                    <div className={styles.legendColor} />
-                    <span>{activeTab === 'pace' ? 'Pace' : 'Heart Rate'} Trend</span>
-                </div>
-            </div>
         </div>
     );
 }

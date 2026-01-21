@@ -38,6 +38,7 @@
 .chartArea {
     height: 300px;
     width: 100%;
+    padding-left: 1.4rem;
 }
 
 .svg {
@@ -63,37 +64,7 @@
 }
 
 .value {
-    fill: #e2e8f0;
-    font-size: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.barGroup:hover .value {
-    opacity: 1;
-}
-
-.legend {
-    margin-top: 1.5rem;
-    display: flex;
-    gap: 1.5rem;
-}
-
-.legendItem {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.legendColor {
-    width: 16px;
-    height: 4px;
-    background: linear-gradient(90deg, #6366f1, #a855f7);
-    border-radius: 2px;
-}
-
-.legendItem span {
-    font-size: 0.875rem;
-    color: #e2e8f0;
-    font-style: italic;
+    fill: #94a3b8;
+    font-size: 10px;
+    font-weight: 200;
 }
