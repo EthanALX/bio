@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw'
+import activities from './activities.json'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -10,24 +11,7 @@ export const handlers = [
 
   // Mock activities endpoint
   http.get(`${API_BASE_URL}/activities`, () => {
-    return HttpResponse.json([
-      {
-        id: '1',
-        type: 'run',
-        date: '2024-01-15',
-        duration: 30,
-        distance: 5,
-        calories: 300,
-      },
-      {
-        id: '2',
-        type: 'cycle',
-        date: '2024-01-16',
-        duration: 45,
-        distance: 15,
-        calories: 400,
-      },
-    ])
+    return HttpResponse.json(activities)
   }),
 
   // Mock activity creation
@@ -47,24 +31,7 @@ export const handlers = [
 
   // Mock frontend API endpoint (used in integration tests)
   http.get('/api/activities', () => {
-    return HttpResponse.json([
-      {
-        id: '1',
-        type: 'run',
-        date: '2024-01-15',
-        duration: 30,
-        distance: 5,
-        calories: 300,
-      },
-      {
-        id: '2',
-        type: 'cycle',
-        date: '2024-01-16',
-        duration: 45,
-        distance: 15,
-        calories: 400,
-      },
-    ])
+    return HttpResponse.json(activities)
   }),
 
   // Mock error response

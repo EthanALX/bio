@@ -30,7 +30,13 @@ export const useActivityList = ({ activities }: UseActivityListProps): UseActivi
         time: activity.time,
         route: activity.route,
         coordinates: activity.coordinates,
-        dateDisplay: `${activity.date} 15:10`, // Preserving the user's custom formatting requirement
+        dateDisplay: new Date(activity.date).toLocaleString('zh-CN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        }).replace(/\//g, '-'),
     }));
 
     return {

@@ -21,7 +21,7 @@ export interface UseDashboardLayoutResult {
 
 export const useDashboardLayout = (): UseDashboardLayoutResult => {
     const { years, loading: yearsLoading } = useAvailableYears();
-    const [selectedYear, setSelectedYear] = useState<number>(2026);
+    const [selectedYear, setSelectedYear] = useState<number>(2022);
     const [viewMode, setViewMode] = useState<ViewMode>('list');
     const { data, loading, error } = useActivityData(selectedYear);
 

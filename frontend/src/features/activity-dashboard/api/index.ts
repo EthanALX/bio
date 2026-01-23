@@ -1,76 +1,85 @@
-import { Activity, YearData } from '../types';
+import { Activity, YearData, ActivityStats } from '../types';
+import activitiesData from '../../../mocks/activities.json';
 
-// Mock data for development
-const mockActivities: Activity[] = [
-    {
-        id: '1',
-        date: '2026-01-15',
-        distance: 10.5,
-        pace: "5'20\"/km",
-        bpm: 145,
-        time: '56m 00s',
-        route: 'Morning Run',
-        type: 'run',
-        coordinates: [
-            { lat: 31.23, lng: 121.47 },
-            { lat: 31.24, lng: 121.48 },
-            { lat: 31.22, lng: 121.49 },
-            { lat: 31.23, lng: 121.47 },
-        ],
-    },
-    {
-        id: '2',
-        date: '2026-01-14',
-        distance: 5.2,
-        pace: "5'45\"/km",
-        bpm: 138,
-        time: '29m 54s',
-        route: 'Evening Jog',
-        type: 'run',
-    },
-    {
-        id: '3',
-        date: '2026-01-12',
-        distance: 15.8,
-        pace: "5'10\"/km",
-        bpm: 152,
-        time: '1h 21m 38s',
-        route: 'Long Distance',
-        type: 'run',
-        coordinates: [
-            { lat: 31.20, lng: 121.40 },
-            { lat: 31.21, lng: 121.41 },
-            { lat: 31.22, lng: 121.42 },
-            { lat: 31.20, lng: 121.43 },
-        ],
-    },
-];
+// Cast the imported data to Activity[] to ensure types match
+const allActivities = activitiesData as unknown as Activity[];
+
+/**
+ * Helper to calculate stats from a list of activities
+ */
+function calculateStats(activities: Activity[]): ActivityStats {
+    const totalDistance = activities.reduce((sum, act) => sum + act.distance, 0);
+
+    // Count distinct days
+    const days = new Set(activities.map(act => act.date.split('T')[0])).size;
+
+    // Calculate average pace (total seconds / total km)
+    let totalSeconds = 0;
+    activities.forEach(act => {
+        // Parse "30m" or "1h 23m" or "56m 00s"
+        // The mock data currently has "30m".
+        // joy.htm parser produced "30m" or "1h 30m".
+        const parts = act.time.match(/(\d+)h/);
+        const hours = parts ? parseInt(parts[1]) : 0;
+        const minParts = act.time.match(/(\d+)m/);
+        const minutes = minParts ? parseInt(minParts[1]) : 0;
+        const secParts = act.time.match(/(\d+)s/);
+        const seconds = secParts ? parseInt(secParts[1]) : 0;
+
+        totalSeconds += hours * 3600 + minutes * 60 + seconds;
+    });
+
+    // Valid distance check
+    if (totalDistance === 0) {
+        return { Distance: 0, Days: 0, AvgPace: "0'00\"/km", Routes: 0 };
+    }
+
+    const avgPaceSeconds = totalSeconds / totalDistance;
+    const paceMin = Math.floor(avgPaceSeconds / 60);
+    const paceSec = Math.floor(avgPaceSeconds % 60);
+    const avgPace = `${paceMin}'${paceSec.toString().padStart(2, '0')}"/km`;
+
+    // Count routes (just count total activities for simplicity, or unique route names)
+    // "Routes" usually implies tracks.
+    const routeCount = activities.filter(a => a.coordinates && a.coordinates.length > 0).length;
+    // Fallback: if no coords, maybe just total count or unique locations
+    const totalCount = activities.length;
+
+    return {
+        Distance: parseFloat(totalDistance.toFixed(1)),
+        Days: days,
+        AvgPace: avgPace,
+        Routes: routeCount,
+    };
+}
 
 /**
  * Fetch activity data for a specific year
- * TODO: Replace with actual API call
  */
 export async function fetchYearData(year: number): Promise<YearData> {
     // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    const yearActivities = allActivities.filter(act => {
+        const actYear = new Date(act.date).getFullYear();
+        return actYear === year;
+    });
+
+    const stats = calculateStats(yearActivities);
 
     return {
         year,
-        stats: {
-            Distance: 2020,
-            Days: 245,
-            AvgPace: "5'20\"/km",
-            Routes: 18,
-        },
-        activities: mockActivities,
+        stats,
+        activities: yearActivities,
     };
 }
 
 /**
  * Fetch available years
- * TODO: Replace with actual API call
  */
 export async function fetchAvailableYears(): Promise<number[]> {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    return [2026, 2025, 2024, 2023, 2022];
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    const years = new Set(allActivities.map(act => new Date(act.date).getFullYear()));
+    return Array.from(years).sort((a, b) => b - a);
 }
+
