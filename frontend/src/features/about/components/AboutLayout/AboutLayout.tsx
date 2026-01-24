@@ -90,7 +90,7 @@ export function AboutLayout() {
       </section>
 
       <footer className={styles.footer}>
-        <p>© 2024  记录每一步</p>
+        <p>© 2026  记录每一步</p>
       </footer>
     </div>
   );
