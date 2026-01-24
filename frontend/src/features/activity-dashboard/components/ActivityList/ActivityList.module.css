@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    padding: 1.5rem;
+    padding: 0 1.5rem;
 
     /* Column Width Configuration */
     --col-distance: 1fr;
@@ -14,8 +14,7 @@
 .header {
     display: grid;
     grid-template-columns:
-        var(--col-distance) var(--col-pace) var(--col-bpm)
-        var(--col-time) var(--col-route) var(--col-date);
+        var(--col-distance) var(--col-pace) var(--col-bpm) var(--col-time) var(--col-route) var(--col-date);
     gap: 0.75rem;
     padding: 0.25rem 0;
     border-bottom: 1px solid rgba(148, 163, 184, 0.2);
@@ -30,16 +29,11 @@
     align-items: center;
 }
 
-.list {
-}
-
 .row {
     display: grid;
     grid-template-columns:
-        var(--col-distance) var(--col-pace) var(--col-bpm)
-        var(--col-time) var(--col-route) var(--col-date);
+        var(--col-distance) var(--col-pace) var(--col-bpm) var(--col-time) var(--col-route) var(--col-date);
     gap: 0.75rem;
-    padding: 0.375rem 0;
     transition: all 0.2s ease;
 }
 
