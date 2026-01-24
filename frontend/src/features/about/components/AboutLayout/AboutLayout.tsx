@@ -13,12 +13,12 @@ export function AboutLayout() {
       <section className={styles.card}>
         <h2 className={styles.cardTitle}>故事</h2>
         <p className={styles.text}>
-          我相信每一次迈步都是一次成长，每一次挑战都是一次突破。
+          我相信每一次迈步都是成长，每一次挑战都是突破。
           无论是清晨的5公里，还是挑战自我的马拉松，每一步都值得被记录和分享。
         </p>
         <p className={styles.text}>
-          跑步数据不仅仅是数字的积累，更是个人成长和健康生活方式的见证。
-          希望让每一位跑者都能看到自己的进步，找到坚持下去的动力。
+          跑步数据更是成长和健康生活的见证。
+          希望都能看到自己的进步，找到坚持下去的动力。
         </p>
       </section>
 
