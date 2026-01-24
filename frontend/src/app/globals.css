@@ -8,14 +8,18 @@
     margin: 0;
 }
 
-html,
-body {
+html {
     height: 100%;
     overflow-x: hidden;
 }
 
 body {
-    overflow-y: hidden;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    /*overflow-y: hidden;*/
 }
 
 :root {
@@ -38,7 +42,9 @@ html {
 
 body {
     /* 在下方切换不同的字体变量进行尝试： */
-    font-family: var(--font-jetbrains-mono), monospace;
+    font-family:
+        var(--font-jetbrains-mono), "Sarasa Mono SC", "Microsoft YaHei",
+        monospace;
     /* font-family: var(--font-ibm-plex-mono), monospace; */
     /* 当前选中：IBM Plex Mono */
     /* font-family: var(--font-fira-code), monospace; */
@@ -46,4 +52,22 @@ body {
 
     color: #e2e8f0;
     background: transparent;
+}
+
+/* Global scrollbar styles */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.3);
 }

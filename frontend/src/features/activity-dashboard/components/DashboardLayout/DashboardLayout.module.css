@@ -6,7 +6,7 @@
 
 .mainLayout {
     display: flex;
-    /* gap: 4rem; */
+    gap: 8rem;
     align-items: flex-start;
     position: relative;
     z-index: 50;
@@ -20,8 +20,26 @@
 .sidebar {
     width: 220px;
     flex-shrink: 0;
+    z-index: 100;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.sticky {
     position: sticky;
     top: 2rem;
+    align-self: flex-start;
+}
+
+.sidebar.fixed {
+    position: fixed;
+    top: 2rem;
+    left: auto;
+}
+
+.sidebarPlaceholder {
+    width: 220px;
+    flex-shrink: 0;
+    visibility: hidden;
 }
 
 .loading,
@@ -80,7 +98,6 @@
 }
 
 @keyframes fadeInOut {
-
     0%,
     100% {
         opacity: 0.4;

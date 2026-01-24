@@ -9,6 +9,8 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
     const chartData = useMemo(() => {
         if (!activities.length) return [];
 
+        const MAX_PACE_SECONDS = 450; // 7'30"
+
         const parsed = activities.map(a => {
             let paceSeconds = 0;
             const match = a.pace.match(/(\d+)'(\d+)/);
@@ -22,9 +24,7 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
             };
         });
 
-        const paceValues = parsed.map(p => p.paceSeconds).filter(v => v > 0);
-        const paceMax = Math.max(...paceValues);
-        const paceMin = Math.min(...paceValues);
+
 
         const bpmValues = parsed.map(p => p.bpm).filter(v => v > 0);
         const bpmMax = Math.max(...bpmValues);
@@ -36,7 +36,9 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
             paceValue: p.pace,
             bpmValue: `${p.bpm} BPM`,
             // Normalize for display
-            pacePercent: ((p.paceSeconds - paceMin * 0.9) / (paceMax - paceMin * 0.9 || 1)) * 100,
+            // Constant baseline: 7'30" (450s) = 100% width
+            // Faster pace (smaller seconds) = shorter width
+            pacePercent: Math.min((p.paceSeconds / MAX_PACE_SECONDS) * 100, 100),
             hrPercent: ((p.bpm - bpmMin * 0.9) / (bpmMax - bpmMin * 0.9 || 1)) * 100
         }));
     }, [activities]);

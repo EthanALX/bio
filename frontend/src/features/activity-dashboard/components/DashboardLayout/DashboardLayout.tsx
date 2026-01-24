@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { useDashboardLayout } from "./DashboardLayout.hook";
 import { YearSelector } from "../YearSelector";
 import { SummaryStats } from "../SummaryStats";
@@ -11,9 +11,10 @@ import { ActivityMap } from "../ActivityMap";
 import styles from "./DashboardLayout.module.css";
 
 export function DashboardLayout() {
-    const { state, actions } = useDashboardLayout();
-    const { years, selectedYear, viewMode, data, isLoading, error } = state;
+    const { state, actions, refs } = useDashboardLayout();
+    const { years, selectedYear, viewMode, data, isLoading, error, isSidebarFixed, sidebarLeft } = state;
     const { setSelectedYear, setViewMode } = actions;
+    const { sidebarRef } = refs;
 
     if (isLoading) {
         return (
@@ -65,7 +66,14 @@ export function DashboardLayout() {
                     )}
                 </div>
 
-                <div className={styles.sidebar}>
+                {isSidebarFixed && (
+                    <div className={styles.sidebarPlaceholder} />
+                )}
+                <div 
+                    ref={sidebarRef} 
+                    className={`${styles.sidebar} ${isSidebarFixed ? styles.fixed : styles.sticky}`}
+                    style={isSidebarFixed ? { left: `${sidebarLeft}px` } : {}}
+                >
                     <SummaryStats
                         stats={data.stats}
                         viewMode={viewMode}

@@ -14,7 +14,8 @@
 .header {
     display: grid;
     grid-template-columns:
-        var(--col-distance) var(--col-pace) var(--col-bpm) var(--col-time) var(--col-route) var(--col-date);
+        var(--col-distance) var(--col-pace) var(--col-bpm)
+        var(--col-time) var(--col-route) var(--col-date);
     gap: 0.75rem;
     padding: 0.25rem 0;
     border-bottom: 1px solid rgba(148, 163, 184, 0.2);
@@ -30,14 +31,13 @@
 }
 
 .list {
-    max-height: 500px;
-    overflow-y: auto;
 }
 
 .row {
     display: grid;
     grid-template-columns:
-        var(--col-distance) var(--col-pace) var(--col-bpm) var(--col-time) var(--col-route) var(--col-date);
+        var(--col-distance) var(--col-pace) var(--col-bpm)
+        var(--col-time) var(--col-route) var(--col-date);
     gap: 0.75rem;
     padding: 0.375rem 0;
     transition: all 0.2s ease;
@@ -54,22 +54,4 @@
     align-items: center;
     min-height: 40px;
     /* Standardize cell height to accommodate SVG sketches */
-}
-
-/* Custom scrollbar */
-.list::-webkit-scrollbar {
-    width: 6px;
-}
-
-.list::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.list::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.2);
-    border-radius: 3px;
-}
-
-.list::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.3);
 }
