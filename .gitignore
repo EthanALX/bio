@@ -144,3 +144,7 @@ temp/
 *.tmp
 *.bak
 *.swp
+
+
+# Agent
+.sisyphus

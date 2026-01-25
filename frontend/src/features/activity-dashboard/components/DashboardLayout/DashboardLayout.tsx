@@ -75,9 +75,9 @@ export function DashboardLayout() {
             />
             // <GitHubCalendar activities={data.activities} year={selectedYear} />
           )}
-          {viewMode === "chart" && (
+          {/*{viewMode === "chart" && (
             <ActivityChart activities={data.activities} />
-          )}
+          )}*/}
           {viewMode === "map" && (
             <div className={styles.mapPlaceholderView}>
               <div className={styles.mapHint}></div>
