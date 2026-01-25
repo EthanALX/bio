@@ -51,9 +51,11 @@
 }
 
 .day {
+    width: 14px;
+    height: 14px;
     aspect-ratio: 1;
     background: rgba(148, 163, 184, 0.1);
-    border-radius: 3px;
+    border-radius: 2px;
     transition: all 0.2s ease;
 }
 
@@ -61,9 +63,44 @@
     background: transparent;
 }
 
-.day.active {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-    box-shadow: 0 0 5px rgba(99, 102, 241, 0.4);
+/* Level 0 - White background (no activity) */
+.day.level-0 {
+    background: rgba(148, 163, 184, 0.1);
+}
+
+/* Level 1 - Light green */
+.day.level-1 {
+    background: #ccf5ee;
+}
+
+/* Level 2 - Light-medium green */
+.day.level-2 {
+    background: #c8e6c8;
+}
+
+/* Level 3 - Medium green */
+.day.level-3 {
+    background: #a5d6a7;
+}
+
+/* Level 4 - Medium-dark green */
+.day.level-4 {
+    background: #81c784;
+}
+
+/* Level 5 - Dark green */
+.day.level-5 {
+    background: #66bb6a;
+}
+
+/* Level 6 - Darker green */
+.day.level-6 {
+    background: #4caf50;
+}
+
+/* Level 7 - Darkest green */
+.day.level-7 {
+    background: #388e3c;
 }
 
 .day:hover:not(.empty) {
@@ -71,6 +108,60 @@
     z-index: 10;
 }
 
-.day.active:hover {
-    box-shadow: 0 0 9px rgba(99, 102, 241, 0.6);
+.day:not(.empty):hover {
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 0 9px rgba(76, 175, 80, 0.6);
+}
+
+/* Legend Styles */
+.legend {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.legendTitle {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.8rem;
+    text-align: center;
+}
+
+.legendItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.legendItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.legendDay {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    aspect-ratio: 1;
+}
+
+.legendLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.legendDistance {
+    font-size: 0.65rem;
+    color: #64748b;
+    white-space: nowrap;
+    font-weight: 500;
 }

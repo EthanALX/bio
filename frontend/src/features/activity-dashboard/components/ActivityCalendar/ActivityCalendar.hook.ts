@@ -1,101 +1,134 @@
-import { Activity } from '../../types';
+import { Activity } from "../../types";
 
 export interface CalendarDay {
-    day: number;
-    date: string;
-    hasActivity: boolean;
+  day: number;
+  date: string;
+  hasActivity: boolean;
+  distance?: number;
+  level: number; // 0-7, where 0 is white background, 1-7 are increasing intensity
 }
 
 export interface CalendarWeek {
-    weekNumber: number;
-    days: (CalendarDay | null)[];
+  weekNumber: number;
+  days: (CalendarDay | null)[];
 }
 
 export interface CalendarMonth {
-    name: string;
-    weeks: CalendarWeek[];
+  name: string;
+  weeks: CalendarWeek[];
 }
 
 export interface UseActivityCalendarProps {
-    activities: Activity[];
-    year: number;
+  activities: Activity[];
+  year: number;
 }
 
 export interface UseActivityCalendarResult {
-    state: {
-        months: CalendarMonth[];
-    };
+  state: {
+    months: CalendarMonth[];
+  };
 }
 
-export const useActivityCalendar = ({ activities, year }: UseActivityCalendarProps): UseActivityCalendarResult => {
-    const monthNames = [
-        'Jan 一月', 'Feb 二月', 'Mar 三月', 'Apr 四月', 'May 五月', 'Jun 六月',
-        'Jul 七月', 'Aug 八月', 'Sep 九月', 'Oct 十月', 'Nov 十一月', 'Dec 十二月'
-    ];
+export const useActivityCalendar = ({
+  activities,
+  year,
+}: UseActivityCalendarProps): UseActivityCalendarResult => {
+  const monthNames = [
+    "Jan 一月",
+    "Feb 二月",
+    "Mar 三月",
+    "Apr 四月",
+    "May 五月",
+    "Jun 六月",
+    "Jul 七月",
+    "Aug 八月",
+    "Sep 九月",
+    "Oct 十月",
+    "Nov 十一月",
+    "Dec 十二月",
+  ];
 
-    // Create a map of dates to activities
-    const activityMap = new Map<string, Activity>();
-    activities.forEach((activity) => {
-        activityMap.set(activity.date, activity);
-    });
+  // Create a map of dates to activities
+  const activityMap = new Map<string, Activity>();
 
-    // Get week number of the year for a date
-    const getWeekNumber = (date: Date): number => {
-        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-        const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
-        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-    };
+  activities.forEach((activity) => {
+    const dateString = activity.date.split("T")[0];
+    activityMap.set(dateString, activity);
+  });
 
-    // Generate weeks for each month
-    const generateMonthWeeks = (monthIndex: number): CalendarWeek[] => {
-        const firstDay = new Date(year, monthIndex, 1);
-        const lastDay = new Date(year, monthIndex + 1, 0);
-        const weeks: CalendarWeek[] = [];
+  // Calculate activity level based on distance (distance/5, 8 levels total)
+  const calculateActivityLevel = (distance: number): number => {
+    const level = Math.floor(distance / 5);
+    return Math.min(level, 7); // Cap at level 7
+  };
 
-        let currentWeek: (CalendarDay | null)[] = [];
-        let currentWeekNumber = getWeekNumber(firstDay);
+  // Get week number of the year for a date
+  const getWeekNumber = (date: Date): number => {
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear =
+      (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  };
 
-        // Add empty cells for days before the first day of the month
-        const firstDayOfWeek = firstDay.getDay();
-        for (let i = 0; i < firstDayOfWeek; i++) {
-            currentWeek.push(null);
-        }
+  // Generate weeks for each month
+  const generateMonthWeeks = (monthIndex: number): CalendarWeek[] => {
+    const firstDay = new Date(year, monthIndex, 1);
+    const lastDay = new Date(year, monthIndex + 1, 0);
+    const weeks: CalendarWeek[] = [];
 
-        // Add all days of the month
-        for (let day = 1; day <= lastDay.getDate(); day++) {
-            const date = new Date(year, monthIndex, day);
-            const dateString = date.toISOString().split('T')[0];
-            const hasActivity = activityMap.has(dateString);
+    let currentWeek: (CalendarDay | null)[] = [];
+    let currentWeekNumber = getWeekNumber(firstDay);
 
-            currentWeek.push({ day, date: dateString, hasActivity });
+    // Add empty cells for days before the first day of the month
+    const firstDayOfWeek = firstDay.getDay();
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      currentWeek.push(null);
+    }
 
-            // If week is complete (7 days), start a new week
-            if (currentWeek.length === 7) {
-                weeks.push({ weekNumber: currentWeekNumber, days: [...currentWeek] });
-                currentWeek = [];
-                currentWeekNumber = getWeekNumber(new Date(year, monthIndex, day + 1));
-            }
-        }
+    // Add all days of the month
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+      const date = new Date(year, monthIndex, day);
+      const dateString = date.toISOString().split("T")[0];
+      const activity = activityMap.get(dateString);
+      const hasActivity = !!activity;
 
-        // Add remaining days to the last week
-        if (currentWeek.length > 0) {
-            while (currentWeek.length < 7) {
-                currentWeek.push(null);
-            }
-            weeks.push({ weekNumber: currentWeekNumber, days: currentWeek });
-        }
+      let distance = 0;
+      let level = 0; // Default to level 0 (white background)
 
-        return weeks;
-    };
+      if (activity && activity.distance) {
+        distance = activity.distance;
+        level = calculateActivityLevel(distance);
+      }
 
-    const months: CalendarMonth[] = monthNames.map((name, index) => ({
-        name,
-        weeks: generateMonthWeeks(index),
-    }));
+      currentWeek.push({ day, date: dateString, hasActivity, distance, level });
 
-    return {
-        state: {
-            months,
-        },
-    };
+      // If week is complete (7 days), start a new week
+      if (currentWeek.length === 7) {
+        weeks.push({ weekNumber: currentWeekNumber, days: [...currentWeek] });
+        currentWeek = [];
+        currentWeekNumber = getWeekNumber(new Date(year, monthIndex, day + 1));
+      }
+    }
+
+    // Add remaining days to the last week
+    if (currentWeek.length > 0) {
+      while (currentWeek.length < 7) {
+        currentWeek.push(null);
+      }
+      weeks.push({ weekNumber: currentWeekNumber, days: currentWeek });
+    }
+
+    return weeks;
+  };
+
+  const months: CalendarMonth[] = monthNames.map((name, index) => ({
+    name,
+    weeks: generateMonthWeeks(index),
+  }));
+
+  return {
+    state: {
+      months,
+    },
+  };
 };

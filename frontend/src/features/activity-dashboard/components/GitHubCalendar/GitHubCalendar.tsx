@@ -11,7 +11,6 @@ export interface GitHubCalendarProps {
 export function GitHubCalendar({ activities, year }: GitHubCalendarProps) {
   const { state } = useGitHubCalendar({ activities, year });
   const { weeks, months, dayLabels, dayLabelColors, dayLabelDates } = state;
-  console.log(activities);
 
   return (
     <div className={styles.container}>
@@ -40,7 +39,7 @@ export function GitHubCalendar({ activities, year }: GitHubCalendarProps) {
                   {dayLabelColors[dayIndex].map((color, weekIndex) => (
                     <div
                       key={weekIndex}
-                      className={`${styles.dayLabelCell} ${color ? styles[color] : styles['level-0']}`}
+                      className={`${styles.dayLabelCell} ${color ? styles[color] : styles["level-0"]}`}
                       title={`${label} - Week ${weekIndex + 1}: ${color}`}
                     />
                   ))}
