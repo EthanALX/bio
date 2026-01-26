@@ -76,11 +76,6 @@
     color: #f87171;
 }
 
-.backgroundActive {
-    /*height: 100vh;*/
-    /*overflow: hidden;*/
-}
-
 .backgroundActive .mainLayout {
     transition: opacity 0.5s ease;
 }
@@ -130,7 +125,7 @@
 }
 
 .trajectoryInfo {
-    background: rgba(0, 0, 0, 0.7);
+    /*background: rgba(0, 0, 0, 0.7);*/
     color: white;
     padding: 4px 8px;
     font-size: 10px;
