@@ -37,6 +37,8 @@ export const useDashboardLayout = (): UseDashboardLayoutResult => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      console.log("sss", scrollY);
+
       const shouldBeFixed = scrollY > 100;
       setIsSidebarFixed(shouldBeFixed);
     };
@@ -53,15 +55,16 @@ export const useDashboardLayout = (): UseDashboardLayoutResult => {
     const updatePosition = () => {
       if (sidebarRef.current && !isSidebarFixed) {
         const rect = sidebarRef.current.getBoundingClientRect();
-        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollLeft =
+          window.pageXOffset || document.documentElement.scrollLeft;
         setSidebarLeft(rect.left + scrollLeft);
       }
     };
 
     updatePosition();
 
-    window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
+    window.addEventListener("resize", updatePosition);
+    return () => window.removeEventListener("resize", updatePosition);
   }, [isSidebarFixed, data, loading]);
 
   const isLoading = yearsLoading || loading;

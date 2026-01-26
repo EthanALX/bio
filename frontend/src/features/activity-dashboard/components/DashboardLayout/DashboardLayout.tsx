@@ -6,10 +6,9 @@ import { YearSelector } from "../YearSelector";
 import { SummaryStats } from "../SummaryStats";
 import { ActivityList } from "../ActivityList";
 import { ActivityCalendar } from "../ActivityCalendar";
-import { GitHubCalendar } from "../GitHubCalendar";
-import { ActivityChart } from "../ActivityChart";
 import { ActivityMap } from "../ActivityMap";
 import styles from "./DashboardLayout.module.css";
+import { RouteSketch } from "../RouteSketch";
 
 export function DashboardLayout() {
   const { state, actions, refs } = useDashboardLayout();
@@ -73,14 +72,27 @@ export function DashboardLayout() {
               activities={data.activities}
               year={selectedYear}
             />
-            // <GitHubCalendar activities={data.activities} year={selectedYear} />
           )}
-          {/*{viewMode === "chart" && (
-            <ActivityChart activities={data.activities} />
-          )}*/}
+
           {viewMode === "map" && (
             <div className={styles.mapPlaceholderView}>
-              <div className={styles.mapHint}></div>
+              <div className={styles.trajectoryGrid}>
+                {data.activities.map((activity) => (
+                  <div
+                    key={activity.id}
+                    className={styles.trajectoryBlock}
+                    title={`${activity.route} - ${activity.distance}km`}
+                  >
+                    <RouteSketch
+                      coordinates={activity.coordinates}
+                      seed={activity.id}
+                    />
+                    <div className={styles.trajectoryInfo}>
+                      <div>{activity.distance}km</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
