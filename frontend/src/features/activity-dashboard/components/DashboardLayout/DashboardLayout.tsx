@@ -90,7 +90,7 @@ export function DashboardLayout() {
             <div key="map" className={`${styles.viewTransition} ${styles.mapPlaceholderView}`}>
               <div className={styles.trajectoryGrid}>
                 {data.activities.map((activity, index) => {
-                  const distance = parseFloat(`${activity.distance}`);
+                  const distance = activity.distance;
                   const getRouteColor = (dist: number) => {
                     if (dist >= 15) return '#f59e0b';      // 橙色
                     if (dist >= 10) return '#0ea5e9';      // 蓝色

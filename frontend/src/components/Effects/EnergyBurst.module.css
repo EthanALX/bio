@@ -1,0 +1,86 @@
+.container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.1), transparent 70%);
+  pointer-events: none;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+.core {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0ea5e9, #f97316);
+  box-shadow:
+    0 0 60px #0ea5e9,
+    0 0 120px #f97316,
+    inset 0 0 40px rgba(255, 255, 255, 0.5);
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.wave {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 3px solid #0ea5e9;
+  box-shadow: 0 0 30px #0ea5e9;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.ray {
+  position: absolute;
+  width: 4px;
+  height: 50vh;
+  background: linear-gradient(to bottom, #0ea5e9, transparent);
+  transform-origin: center top;
+  top: 50%;
+  left: 50%;
+  margin-left: -2px;
+  box-shadow: 0 0 20px #0ea5e9;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.text {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.text h1 {
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-family: var(--font-bebas), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #0ea5e9, #f97316, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 40px rgba(14, 165, 233, 0.5));
+  margin: 0;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 300;
+  color: var(--text-primary);
+  letter-spacing: 0.3em;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
