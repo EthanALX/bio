@@ -7,7 +7,7 @@ import {
   Inter,
   Bebas_Neue,
 } from "next/font/google";
-import { GlobalHeader } from "../components/GlobalHeader";
+import { EnhancedGlobalHeader } from "../components/GlobalHeader";
 import { BackgroundOrchestrator } from "../components/Background";
 import { EnergyBurst } from "../components/Effects/EnergyBurst";
 import { DataReactiveParticles } from "../components/Background/DataReactiveParticles";
@@ -68,7 +68,7 @@ export default function RootLayout({
         <DataReactiveParticles />
         <BackgroundOrchestrator />
         <ContentWrapper>
-          <GlobalHeader />
+          <EnhancedGlobalHeader />
           {children}
         </ContentWrapper>
       </body>

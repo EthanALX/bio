@@ -1,0 +1,253 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 0;
+  position: relative;
+  z-index: 100;
+}
+
+/* 运动员卡片 */
+.athleteCard {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.6),
+    rgba(30, 41, 59, 0.4)
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transform: skewX(-2deg);
+}
+
+.athleteCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(14, 165, 233, 0.2),
+    transparent
+  );
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+/* Avatar 容器 */
+.avatarContainer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  transform: skewX(2deg);
+}
+
+/* 能量环 */
+.energyRing {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background: linear-gradient(135deg, #0ea5e9, #f97316, #a855f7, #0ea5e9) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.6));
+}
+
+/* 数据轨道 */
+.dataOrbit {
+  position: absolute;
+  inset: -15px;
+}
+
+.dataPoint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  margin-top: -12px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.8));
+}
+
+/* 中心 Avatar */
+.avatar {
+  position: absolute;
+  inset: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: var(--font-bebas), sans-serif;
+  letter-spacing: 0.05em;
+  box-shadow:
+    0 0 30px rgba(14, 165, 233, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* 脉冲波 */
+.pulseWave {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #0ea5e9;
+  pointer-events: none;
+}
+
+/* 运动员信息 */
+.athleteInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transform: skewX(2deg);
+}
+
+.athleteName {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-bebas), sans-serif;
+  letter-spacing: 0.1em;
+  background: linear-gradient(90deg, #0ea5e9, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.athleteTitle {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-inter), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* 实时数据流 */
+.dataStream {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.dataItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dataLabel {
+  font-size: 0.625rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.dataValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--font-bebas), sans-serif;
+  color: var(--electric-blue);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+}
+
+/* 导航按钮 */
+.navContainer {
+  transform: skewX(-2deg);
+}
+
+.navButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.8),
+    rgba(30, 41, 59, 0.6)
+  );
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(14, 165, 233, 0.3);
+  border-radius: 16px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform: skewX(2deg);
+}
+
+.navButton:hover {
+  border-color: var(--electric-blue);
+  box-shadow:
+    0 0 30px rgba(14, 165, 233, 0.4),
+    inset 0 0 20px rgba(14, 165, 233, 0.1);
+  transform: skewX(2deg) translateY(-2px);
+}
+
+.navIcon {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.6));
+}
+
+.navText {
+  position: relative;
+  z-index: 2;
+}
+
+.navGlow {
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.3), transparent 70%);
+  pointer-events: none;
+}
+
+/* 分隔线 */
+.divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(14, 165, 233, 0.5),
+    rgba(249, 115, 22, 0.5),
+    transparent
+  );
+  margin: 1rem 0;
+  transform-origin: left;
+}
