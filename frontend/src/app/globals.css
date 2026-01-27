@@ -24,11 +24,15 @@ body {
     --neon-orange: #f97316;
     --bright-cyan: #06b6d4;
     --energy-red: #ef4444;
+    --cyber-purple: #a855f7;
+    --velocity-green: #10b981;
+    --gold: #fbbf24;
 
     /* Dark Base */
     --deep-slate: #0f172a;
     --darker-slate: #020617;
     --slate-800: #1e293b;
+    --slate-900: #0f172a;
 
     /* Text Colors */
     --text-primary: #f1f5f9;
@@ -43,6 +47,8 @@ body {
     --glow-cyan: rgba(6, 182, 212, 0.4);
     --glow-orange: rgba(249, 115, 22, 0.4);
     --glow-blue: rgba(14, 165, 233, 0.4);
+    --glow-purple: rgba(168, 85, 247, 0.4);
+    --glow-green: rgba(16, 185, 129, 0.4);
 
     /* Legacy */
     --foreground-rgb: 255, 255, 255;
@@ -66,8 +72,33 @@ body {
 /* Display Typography - Athletic Headers */
 h1, h2, h3, .display-font {
     font-family: var(--font-bebas), var(--font-inter), sans-serif;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.05em;
     font-weight: 400;
+    text-transform: uppercase;
+}
+
+/* 超大标题特效 */
+.hero-title {
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-family: var(--font-bebas), sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    background: linear-gradient(135deg, #0ea5e9 0%, #f97316 50%, #a855f7 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+    text-shadow: 0 0 80px rgba(14, 165, 233, 0.5);
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 /* Data Typography - Monospace for precision */
@@ -91,4 +122,89 @@ h1, h2, h3, .display-font {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(148, 163, 184, 0.3);
+}
+
+/* GPU Acceleration Hints */
+.gpu-accelerated {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+/* Common Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px currentColor;
+    }
+    50% {
+        box-shadow: 0 0 40px currentColor;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

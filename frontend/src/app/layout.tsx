@@ -8,6 +8,10 @@ import {
   Bebas_Neue,
 } from "next/font/google";
 import { GlobalHeader } from "../components/GlobalHeader";
+import { BackgroundOrchestrator } from "../components/Background";
+import { EnergyBurst } from "../components/Effects/EnergyBurst";
+import { DataReactiveParticles } from "../components/Background/DataReactiveParticles";
+import { ContentWrapper } from "../components/ContentWrapper";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -60,10 +64,13 @@ export default function RootLayout({
       className={`${jetbrainsMono.variable} ${ibmPlexMono.variable} ${firaCode.variable} ${spaceMono.variable} ${inter.variable} ${bebasNeue.variable}`}
     >
       <body className="antialiased">
-        <div className="max-w-[75%] min-w-[900px] mx-auto relative z-10">
+        <EnergyBurst />
+        <DataReactiveParticles />
+        <BackgroundOrchestrator />
+        <ContentWrapper>
           <GlobalHeader />
           {children}
-        </div>
+        </ContentWrapper>
       </body>
     </html>
   );

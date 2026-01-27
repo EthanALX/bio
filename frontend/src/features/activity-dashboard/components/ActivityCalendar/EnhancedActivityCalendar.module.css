@@ -1,0 +1,342 @@
+.container {
+  position: relative;
+  padding: 2rem;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* 移除顶部月份标签 */
+.monthLabels {
+  display: none;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  max-width: 100%;
+}
+
+.month {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.monthName {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-align: center;
+  font-family: var(--font-inter), sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.monthDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  justify-items: center;
+}
+
+/* 滚动提示渐变 */
+.container::after {
+  content: '';
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 100px;
+  background: linear-gradient(to left, rgba(15, 23, 42, 0.8), transparent);
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.container:hover::after {
+  opacity: 0;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.day {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 20px;
+  max-width: 32px;
+  border-radius: 4px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dayNumber {
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  opacity: 0.6;
+  font-family: var(--font-inter), sans-serif;
+  pointer-events: none;
+}
+
+.day:hover .dayNumber {
+  opacity: 1;
+}
+
+.dayEmpty {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 20px;
+  max-width: 32px;
+}
+
+.day.level-0 {
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.day.level-1 {
+  background: rgba(14, 165, 233, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.2);
+}
+
+.day.level-2 {
+  background: rgba(14, 165, 233, 0.4);
+  border: 1px solid rgba(14, 165, 233, 0.5);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.3);
+}
+
+.day.level-3 {
+  background: rgba(14, 165, 233, 0.6);
+  border: 1px solid rgba(14, 165, 233, 0.7);
+  box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+}
+
+.day.level-4 {
+  background: rgba(14, 165, 233, 0.9);
+  border: 1px solid rgba(14, 165, 233, 1);
+  box-shadow:
+    0 0 20px rgba(14, 165, 233, 0.6),
+    inset 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.day.weekend {
+  border-width: 2px;
+}
+
+.day.bestStreak {
+  animation: streakGlow 2s ease-in-out infinite;
+}
+
+@keyframes streakGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(251, 191, 36, 0.6),
+      inset 0 0 10px rgba(251, 191, 36, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(251, 191, 36, 0.8),
+      inset 0 0 15px rgba(251, 191, 36, 0.5);
+  }
+}
+
+.streakLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 1000;
+  min-width: 200px;
+  max-width: 300px;
+  max-height: 400px;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-radius: 12px;
+  box-shadow:
+    0 0 30px rgba(14, 165, 233, 0.3),
+    0 10px 40px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
+
+.tooltip::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tooltip::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tooltip::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 2px;
+}
+
+.tooltipDate {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--electric-blue);
+  margin-bottom: 0.75rem;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.tooltipStats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.tooltipStat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tooltipLabel {
+  font-size: 0.625rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tooltipValue {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-bebas), sans-serif;
+}
+
+.tooltipActivities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tooltipActivity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.activityDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--electric-blue);
+  box-shadow: 0 0 8px var(--electric-blue);
+}
+
+.activityPace {
+  margin-left: auto;
+  color: var(--text-tertiary);
+}
+
+.tooltipEmpty {
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.tooltipEmptyText {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.legendTitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.legendGradient {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legendLabel {
+  font-size: 0.625rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.legendBox {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  cursor: help;
+  transition: transform 0.2s ease;
+}
+
+.legendBox:hover {
+  transform: scale(1.3);
+}
+
+.streakBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(249, 115, 22, 0.2));
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 20px;
+}
+
+.streakIcon {
+  font-size: 1rem;
+  animation: fireFlicker 1.5s ease-in-out infinite;
+}
+
+@keyframes fireFlicker {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.streakText {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-inter), sans-serif;
+}
