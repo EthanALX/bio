@@ -1,0 +1,244 @@
+.container {
+  width: 100%;
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.toggleButtons {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(148, 163, 184, 0.1);
+  padding: 0.25rem;
+  border-radius: 8px;
+}
+
+.toggleButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggleButton:hover {
+  color: #e2e8f0;
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.toggleButton.active {
+  color: #e2e8f0;
+  background: rgba(110, 231, 183, 0.2);
+  box-shadow: 0 0 10px rgba(110, 231, 183, 0.2);
+}
+
+.statsRow {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  letter-spacing: -0.02em;
+}
+
+.statValue.highlight {
+  color: #6ee7b7;
+  text-shadow: 0 0 20px rgba(110, 231, 183, 0.3);
+}
+
+.chartArea {
+  margin-top: 2rem;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  min-height: 600px;
+}
+
+.bar {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.bar:hover {
+  opacity: 0.85;
+  filter: brightness(1.1);
+}
+
+.barLabel {
+  font-size: 11px;
+  fill: #94a3b8;
+  font-weight: 500;
+  transition: fill 0.2s ease;
+}
+
+.barValue {
+  font-size: 13px;
+  fill: #e2e8f0;
+  font-weight: 600;
+}
+
+.axisLabel {
+  font-size: 11px;
+  fill: #64748b;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gridLine {
+  stroke: rgba(148, 163, 184, 0.15);
+  stroke-width: 1;
+  stroke-dasharray: 2, 4;
+}
+
+.avgLine {
+  stroke: #6ee7b7;
+  stroke-width: 2;
+  stroke-dasharray: 8, 4;
+  filter: drop-shadow(0 0 4px rgba(110, 231, 183, 0.4));
+}
+
+.avgLabel {
+  font-size: 11px;
+  fill: #6ee7b7;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 10px rgba(110, 231, 183, 0.5);
+}
+
+.avgMarker {
+  fill: #6ee7b7;
+  filter: drop-shadow(0 0 6px rgba(110, 231, 183, 0.6));
+}
+
+.trendPoint {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.trendPoint:hover {
+  r: 8;
+  filter: drop-shadow(0 0 12px rgba(110, 231, 183, 0.9));
+}
+
+.tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: #94a3b8;
+}
+
+.emptyState p {
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .statsRow {
+    gap: 1.5rem;
+  }
+
+  .statValue {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.125rem;
+  }
+
+  .statsRow {
+    gap: 1rem;
+  }
+
+  .statValue {
+    font-size: 1.125rem;
+  }
+
+  .barLabel {
+    font-size: 9px;
+  }
+
+  .barValue {
+    font-size: 11px;
+  }
+
+  .axisLabel {
+    font-size: 9px;
+  }
+}

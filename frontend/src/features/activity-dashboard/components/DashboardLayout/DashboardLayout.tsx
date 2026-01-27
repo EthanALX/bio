@@ -7,6 +7,7 @@ import { SummaryStats } from "../SummaryStats";
 import { ActivityList } from "../ActivityList";
 import { ActivityCalendar } from "../ActivityCalendar";
 import { ActivityMap } from "../ActivityMap";
+import { PaceDistribution } from "../PaceDistribution";
 import styles from "./DashboardLayout.module.css";
 import { RouteSketch } from "../RouteSketch";
 
@@ -72,6 +73,9 @@ export function DashboardLayout() {
               activities={data.activities}
               year={selectedYear}
             />
+          )}
+          {viewMode === "pace" && (
+            <PaceDistribution activities={data.activities} />
           )}
 
           {viewMode === "map" && (
