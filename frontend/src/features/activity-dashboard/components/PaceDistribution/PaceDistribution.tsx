@@ -11,15 +11,17 @@ type ChartMode = "distribution" | "trend";
 
 export function PaceDistribution({ activities }: PaceDistributionProps) {
   const [chartMode, setChartMode] = useState<ChartMode>("trend");
-  const { paceRanges, paceStats, avgPaceSeconds, timeSeriesData } =
+  const { paceRanges, paceStats, avgPaceSeconds, timeSeriesData, monthlyData } =
     usePaceDistribution({
       activities,
     });
 
   const chartDimensions = useMemo(() => {
-    const chartWidth = Math.max(1400, timeSeriesData.length * 20 + 300);
-    const chartHeight = 700;
-    const padding = { top: 80, right: 80, bottom: 120, left: 100 };
+    // Use monthly data for trend chart to reduce density
+    const dataLength = chartMode === "trend" ? monthlyData.length : paceRanges.length;
+    const chartWidth = Math.max(1200, dataLength * 60 + 300);
+    const chartHeight = 600;
+    const padding = { top: 60, right: 80, bottom: 100, left: 80 };
     const plotWidth = chartWidth - padding.left - padding.right;
     const plotHeight = chartHeight - padding.top - padding.bottom;
 
@@ -30,7 +32,7 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
       plotWidth,
       plotHeight,
     };
-  }, [timeSeriesData.length]);
+  }, [chartMode, monthlyData.length, paceRanges.length]);
 
   // Find max count for scaling
   const maxCount = useMemo(() => {
@@ -53,23 +55,23 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
     );
   }, [paceRanges, avgPaceSeconds]);
 
-  // Calculate trend line data
+  // Calculate trend line data using monthly aggregated data
   const trendLineData = useMemo(() => {
-    if (timeSeriesData.length === 0) return { points: "", minPace: 0, maxPace: 0 };
+    if (monthlyData.length === 0) return { points: "", minPace: 0, maxPace: 0 };
 
-    const paceValues = timeSeriesData.map((d) => d.paceSeconds);
+    const paceValues = monthlyData.map((d) => d.avgPaceSeconds);
     const minPace = Math.min(...paceValues);
     const maxPace = Math.max(...paceValues);
     const paceRange = maxPace - minPace || 1;
 
-    const points = timeSeriesData
+    const points = monthlyData
       .map((dataPoint, index) => {
         const x =
           chartDimensions.padding.left +
-          (index / (timeSeriesData.length - 1 || 1)) *
+          (index / (monthlyData.length - 1 || 1)) *
             chartDimensions.plotWidth;
-        // 配速越小（越快）越高，所以用 (paceSeconds - minPace) 而不是 (maxPace - paceSeconds)
-        const normalizedPace = (dataPoint.paceSeconds - minPace) / paceRange;
+        // 配速越小（越快）越高，所以用 (avgPaceSeconds - minPace) 而不是 (maxPace - avgPaceSeconds)
+        const normalizedPace = (dataPoint.avgPaceSeconds - minPace) / paceRange;
         const y =
           chartDimensions.padding.top +
           normalizedPace * chartDimensions.plotHeight;
@@ -78,7 +80,7 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
       .join(" ");
 
     return { points, minPace, maxPace };
-  }, [timeSeriesData, chartDimensions]);
+  }, [monthlyData, chartDimensions]);
 
   if (paceStats.totalActivities === 0) {
     return (
@@ -145,7 +147,7 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
           preserveAspectRatio="xMinYMin meet"
         >
           <defs>
-            {/* 普通柱状图 - 电蓝渐变 */}
+            {/* 普通柱状图 - 简化渐变 */}
             <linearGradient
               id="barGradientPace"
               x1="0%"
@@ -153,12 +155,11 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
               x2="0%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="rgba(14, 165, 233, 0.5)" />
-              <stop offset="50%" stopColor="rgba(6, 182, 212, 0.7)" />
-              <stop offset="100%" stopColor="rgba(14, 165, 233, 0.9)" />
+              <stop offset="0%" stopColor="rgba(14, 165, 233, 0.4)" />
+              <stop offset="100%" stopColor="rgba(14, 165, 233, 0.7)" />
             </linearGradient>
 
-            {/* 平均配速区间 - 橙蓝渐变 */}
+            {/* 平均配速区间 - 简化渐变 */}
             <linearGradient
               id="barGradientAvg"
               x1="0%"
@@ -166,32 +167,9 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
               x2="0%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="rgba(249, 115, 22, 0.6)" />
-              <stop offset="50%" stopColor="rgba(14, 165, 233, 0.8)" />
-              <stop offset="100%" stopColor="rgba(6, 182, 212, 1)" />
+              <stop offset="0%" stopColor="rgba(14, 165, 233, 0.5)" />
+              <stop offset="100%" stopColor="rgba(14, 165, 233, 0.85)" />
             </linearGradient>
-
-            {/* 柱状图阴影效果 */}
-            <filter id="barShadow">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-              <feOffset dx="0" dy="2" result="offsetblur"/>
-              <feComponentTransfer>
-                <feFuncA type="linear" slope="0.3"/>
-              </feComponentTransfer>
-              <feMerge>
-                <feMergeNode/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-
-            {/* 平均配速柱状图发光效果 */}
-            <filter id="avgGlow">
-              <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
           </defs>
 
           {/* Grid lines */}
@@ -242,15 +220,15 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
               {/* Area under the line */}
               <defs>
                 <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="rgba(14, 165, 233, 0.4)" />
-                  <stop offset="100%" stopColor="rgba(6, 182, 212, 0.05)" />
+                  <stop offset="0%" stopColor="rgba(14, 165, 233, 0.25)" />
+                  <stop offset="100%" stopColor="rgba(14, 165, 233, 0.03)" />
                 </linearGradient>
               </defs>
 
               <polygon
                 points={`${chartDimensions.padding.left},${chartDimensions.padding.top + chartDimensions.plotHeight} ${trendLineData.points} ${chartDimensions.padding.left + chartDimensions.plotWidth},${chartDimensions.padding.top + chartDimensions.plotHeight}`}
                 fill="url(#areaGradient)"
-                opacity="0.5"
+                opacity="0.6"
               />
 
               {/* Main trend line */}
@@ -258,20 +236,20 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
                 points={trendLineData.points}
                 fill="none"
                 stroke="#0ea5e9"
-                strokeWidth="4"
+                strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                filter="url(#avgGlow)"
+                opacity="0.8"
               />
 
-              {/* Data points */}
-              {timeSeriesData.map((dataPoint, index) => {
+              {/* Data points - monthly aggregated */}
+              {monthlyData.map((dataPoint, index) => {
                 const x =
                   chartDimensions.padding.left +
-                  (index / (timeSeriesData.length - 1 || 1)) *
+                  (index / (monthlyData.length - 1 || 1)) *
                     chartDimensions.plotWidth;
                 const paceRange = trendLineData.maxPace - trendLineData.minPace || 1;
-                const normalizedPace = (dataPoint.paceSeconds - trendLineData.minPace) / paceRange;
+                const normalizedPace = (dataPoint.avgPaceSeconds - trendLineData.minPace) / paceRange;
                 const y =
                   chartDimensions.padding.top +
                   normalizedPace * chartDimensions.plotHeight;
@@ -286,8 +264,18 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
                       className={styles.trendPoint}
                     />
                     <title>
-                      {`${new Date(dataPoint.dateString).toLocaleDateString('zh-CN')}\n${dataPoint.paceString}\n${dataPoint.activity.route}`}
+                      {`${dataPoint.monthLabel}\n平均配速: ${dataPoint.avgPaceString}\n活动数: ${dataPoint.activityCount}`}
                     </title>
+                    {/* Month label on X-axis */}
+                    <text
+                      x={x}
+                      y={chartDimensions.chartHeight - chartDimensions.padding.bottom + 20}
+                      textAnchor="middle"
+                      className={styles.barLabel}
+                      transform={`rotate(-45, ${x}, ${chartDimensions.chartHeight - chartDimensions.padding.bottom + 20})`}
+                    >
+                      {dataPoint.monthLabel}
+                    </text>
                   </g>
                 );
               })}
@@ -357,8 +345,7 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
                       ? "url(#barGradientAvg)"
                       : "url(#barGradientPace)"
                   }
-                  filter={isAvgRange ? "url(#avgGlow)" : "url(#barShadow)"}
-                  opacity={isAvgRange ? 1 : 0.85}
+                  opacity={isAvgRange ? 0.9 : 0.7}
                 />
 
                 {/* Count value on top of bar */}
@@ -390,13 +377,13 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
                   <>
                     <circle
                       cx={x + barWidth / 2}
-                      cy={Math.max(barY - 40, chartDimensions.padding.top + 15)}
-                      r="6"
+                      cy={Math.max(barY - 35, chartDimensions.padding.top + 15)}
+                      r="4"
                       className={styles.avgMarker}
                     />
                     <text
                       x={x + barWidth / 2}
-                      y={Math.max(barY - 50, chartDimensions.padding.top + 5)}
+                      y={Math.max(barY - 45, chartDimensions.padding.top + 5)}
                       textAnchor="middle"
                       className={styles.avgLabel}
                     >
@@ -429,11 +416,11 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
 
           {/* Y-axis label */}
           <text
-            x={chartDimensions.padding.left - 50}
+            x={chartDimensions.padding.left - 40}
             y={chartDimensions.padding.top + chartDimensions.plotHeight / 2}
             textAnchor="middle"
             className={styles.axisLabel}
-            transform={`rotate(-90, ${chartDimensions.padding.left - 50}, ${
+            transform={`rotate(-90, ${chartDimensions.padding.left - 40}, ${
               chartDimensions.padding.top + chartDimensions.plotHeight / 2
             })`}
           >
@@ -443,11 +430,11 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
           {/* X-axis label */}
           <text
             x={chartDimensions.chartWidth / 2}
-            y={chartDimensions.chartHeight - 20}
+            y={chartDimensions.chartHeight - 15}
             textAnchor="middle"
             className={styles.axisLabel}
           >
-            {chartMode === "trend" ? "时间" : "配速区间（每公里）"}
+            {chartMode === "trend" ? "月份" : "配速区间（每公里）"}
           </text>
         </svg>
       </div>

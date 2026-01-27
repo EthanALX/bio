@@ -29,6 +29,15 @@ export function ActivityList(props: ActivityListProps) {
         return 'easy';
     };
 
+    // 获取路线颜色
+    const getRouteColor = (distance: number) => {
+        if (distance >= 20) return '#ef4444';      // 红色
+        if (distance >= 15) return '#f59e0b';      // 橙色
+        if (distance >= 10) return '#0ea5e9';      // 蓝色
+        if (distance >= 5) return '#06b6d4';       // 青色
+        return '#94a3b8';                           // 灰色
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.list}>
@@ -72,6 +81,7 @@ export function ActivityList(props: ActivityListProps) {
                                 <RouteSketch
                                     coordinates={activity.coordinates}
                                     seed={activity.id}
+                                    color={getRouteColor(distance)}
                                 />
                             </div>
 

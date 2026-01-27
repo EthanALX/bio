@@ -19,6 +19,15 @@ export interface PaceDataPoint {
   activity: Activity;
 }
 
+export interface MonthlyPaceData {
+  month: string; // YYYY-MM
+  monthLabel: string; // e.g., "2024年1月"
+  avgPaceSeconds: number;
+  avgPaceString: string;
+  activityCount: number;
+  activities: Activity[];
+}
+
 export interface PaceStats {
   fastest: string;
   average: string;
@@ -35,6 +44,7 @@ export interface UsePaceDistributionResult {
   paceStats: PaceStats;
   avgPaceSeconds: number;
   timeSeriesData: PaceDataPoint[];
+  monthlyData: MonthlyPaceData[];
 }
 
 /**
@@ -157,10 +167,50 @@ export const usePaceDistribution = ({
     return dataPoints.sort((a, b) => a.date.getTime() - b.date.getTime());
   }, [validActivities]);
 
+  // Generate monthly aggregated data
+  const monthlyData = useMemo(() => {
+    if (validActivities.length === 0) return [];
+
+    // Group activities by month
+    const monthMap = new Map<string, Activity[]>();
+
+    validActivities.forEach((activity) => {
+      const date = new Date(activity.date);
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+      if (!monthMap.has(monthKey)) {
+        monthMap.set(monthKey, []);
+      }
+      monthMap.get(monthKey)!.push(activity);
+    });
+
+    // Calculate average pace for each month
+    const monthlyDataPoints: MonthlyPaceData[] = Array.from(monthMap.entries()).map(([monthKey, activities]) => {
+      const paceSeconds = activities.map((a) => paceToSeconds(a.pace));
+      const avgPace = paceSeconds.reduce((sum, p) => sum + p, 0) / paceSeconds.length;
+
+      const [year, month] = monthKey.split('-');
+      const monthLabel = `${year}年${parseInt(month)}月`;
+
+      return {
+        month: monthKey,
+        monthLabel,
+        avgPaceSeconds: avgPace,
+        avgPaceString: secondsToPace(avgPace),
+        activityCount: activities.length,
+        activities,
+      };
+    });
+
+    // Sort by month (ascending)
+    return monthlyDataPoints.sort((a, b) => a.month.localeCompare(b.month));
+  }, [validActivities]);
+
   return {
     paceRanges,
     paceStats,
     avgPaceSeconds,
     timeSeriesData,
+    monthlyData,
   };
 };

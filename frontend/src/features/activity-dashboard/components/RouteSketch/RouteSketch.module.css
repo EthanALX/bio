@@ -18,6 +18,7 @@
 .path {
     opacity: 0.8;
     transition: all 0.25s ease;
+    stroke: var(--electric-blue, #0ea5e9);
 }
 
 :global(.row:hover) .path {

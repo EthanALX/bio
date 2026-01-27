@@ -1,7 +1,11 @@
 .container {
     min-width: 900px;
     margin: 0 auto;
-    /* min-height: 100vh; */
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
 }
 
 .mainLayout {
@@ -10,6 +14,9 @@
     align-items: flex-start;
     position: relative;
     z-index: 50;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .calendarGap {
@@ -20,6 +27,30 @@
     flex: 1;
     min-width: 0;
     position: relative;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
+
+.content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 3px;
+    transition: background 0.2s ease;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
 }
 
 /* View Transition Animation */
@@ -46,18 +77,38 @@
     z-index: 110;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 3px;
+    transition: background 0.2s ease;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
 }
 
 .sidebar.sticky {
-    position: sticky;
-    top: 2rem;
+    position: relative;
     align-self: flex-start;
 }
 
 .sidebar.fixed {
-    position: fixed;
-    top: 2rem;
-    left: auto;
+    position: relative;
 }
 
 .sidebarPlaceholder {
