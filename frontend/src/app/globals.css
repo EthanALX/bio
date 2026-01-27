@@ -10,47 +10,69 @@
 
 html {
     height: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 body {
-    min-height: 100%;
-}
-
-body {
-    /*overflow-y: hidden;*/
+    height: 100%;
+    overflow: hidden;
 }
 
 :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
-}
+    /* Athletic Performance Color System */
+    --electric-blue: #0ea5e9;
+    --neon-orange: #f97316;
+    --bright-cyan: #06b6d4;
+    --energy-red: #ef4444;
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
-    }
+    /* Dark Base */
+    --deep-slate: #0f172a;
+    --darker-slate: #020617;
+    --slate-800: #1e293b;
+
+    /* Text Colors */
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+
+    /* Success/Data Colors */
+    --success-green: #10b981;
+    --emerald: #059669;
+
+    /* Glow Effects */
+    --glow-cyan: rgba(6, 182, 212, 0.4);
+    --glow-orange: rgba(249, 115, 22, 0.4);
+    --glow-blue: rgba(14, 165, 233, 0.4);
+
+    /* Legacy */
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 15, 23, 42;
+    --background-end-rgb: 2, 6, 23;
 }
 
 html {
-    background-color: #0f172a;
+    background: linear-gradient(135deg, var(--deep-slate) 0%, var(--darker-slate) 100%);
+    background-attachment: fixed;
 }
 
 body {
-    /* 在下方切换不同的字体变量进行尝试： */
-    font-family:
-        var(--font-jetbrains-mono), "Sarasa Mono SC", "Microsoft YaHei",
-        monospace;
-    /* font-family: var(--font-ibm-plex-mono), monospace; */
-    /* 当前选中：IBM Plex Mono */
-    /* font-family: var(--font-fira-code), monospace; */
-    /* font-family: var(--font-space-mono), monospace; */
-
-    color: #e2e8f0;
+    /* Athletic Performance Typography */
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text-primary);
     background: transparent;
+    letter-spacing: -0.01em;
+}
+
+/* Display Typography - Athletic Headers */
+h1, h2, h3, .display-font {
+    font-family: var(--font-bebas), var(--font-inter), sans-serif;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+}
+
+/* Data Typography - Monospace for precision */
+.mono-font, .stat-value, code {
+    font-family: var(--font-jetbrains-mono), "Sarasa Mono SC", monospace;
 }
 
 /* Global scrollbar styles */

@@ -1,6 +1,96 @@
+/* 🏃 Athletic Motivation Banner - 运动励志横幅 */
 .subtitle {
-  color: #94a3b8;
-  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  font-size: 0.9375rem;
+  font-style: italic;
+  font-weight: 400;
   margin: 0;
-  padding: 0 1rem;
+  padding: 1.5rem 2rem;
+  position: relative;
+  font-family: var(--font-inter), sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+
+  /* 极简背景 */
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+
+  opacity: 0;
+  animation: bannerSlideIn 0.6s ease 0.2s forwards;
+  transition: all 0.3s ease;
 }
+
+/* 动感入场动画 */
+@keyframes bannerSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) skewX(-5deg);
+    filter: blur(8px);
+  }
+  60% {
+    transform: translateX(10px) skewX(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) skewX(0deg);
+    filter: blur(0);
+  }
+}
+
+/* 移除所有装饰元素 */
+
+/* 🌟 悬停状态 - 简洁提升 */
+.subtitle:hover {
+  background: rgba(30, 41, 59, 0.4);
+  color: var(--text-secondary);
+}
+
+/* 📝 引言内容 */
+.quote {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* ⭐ 关键词高亮 - 简化版 */
+.highlight {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* 👤 作者标注 */
+.author {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  text-align: right;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+
+/* 📱 响应式调整 */
+@media (max-width: 1024px) {
+  .subtitle {
+    font-size: 0.875rem;
+    padding: 1.25rem 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .subtitle {
+    font-size: 0.8125rem;
+    padding: 1rem 1.5rem;
+    line-height: 1.5;
+  }
+
+  .author {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
+}
+

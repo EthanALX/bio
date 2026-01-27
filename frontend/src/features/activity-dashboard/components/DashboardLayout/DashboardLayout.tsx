@@ -7,6 +7,7 @@ import { SummaryStats } from "../SummaryStats";
 import { ActivityList } from "../ActivityList";
 import { ActivityCalendar } from "../ActivityCalendar";
 import { ActivityMap } from "../ActivityMap";
+import { PaceDistribution } from "../PaceDistribution";
 import styles from "./DashboardLayout.module.css";
 import { RouteSketch } from "../RouteSketch";
 
@@ -66,32 +67,57 @@ export function DashboardLayout() {
         className={`${styles.mainLayout} ${viewMode === "calendar" ? styles.calendarGap : ""}`}
       >
         <div className={styles.content}>
-          {viewMode === "list" && <ActivityList activities={data.activities} />}
+          {viewMode === "list" && (
+            <div key="list" className={styles.viewTransition}>
+              <ActivityList activities={data.activities} />
+            </div>
+          )}
           {viewMode === "calendar" && (
-            <ActivityCalendar
-              activities={data.activities}
-              year={selectedYear}
-            />
+            <div key="calendar" className={styles.viewTransition}>
+              <ActivityCalendar
+                activities={data.activities}
+                year={selectedYear}
+              />
+            </div>
+          )}
+          {viewMode === "pace" && (
+            <div key="pace" className={styles.viewTransition}>
+              <PaceDistribution activities={data.activities} />
+            </div>
           )}
 
           {viewMode === "map" && (
-            <div className={styles.mapPlaceholderView}>
+            <div key="map" className={`${styles.viewTransition} ${styles.mapPlaceholderView}`}>
               <div className={styles.trajectoryGrid}>
-                {data.activities.map((activity) => (
-                  <div
-                    key={activity.id}
-                    className={styles.trajectoryBlock}
-                    title={`${activity.route} - ${activity.distance}km`}
-                  >
-                    <RouteSketch
-                      coordinates={activity.coordinates}
-                      seed={activity.id}
-                    />
-                    <div className={styles.trajectoryInfo}>
-                      <div>{activity.distance}km</div>
+                {data.activities.map((activity, index) => {
+                  const distance = parseFloat(activity.distance);
+                  const getRouteColor = (dist: number) => {
+                    if (dist >= 15) return '#f59e0b';      // 橙色
+                    if (dist >= 10) return '#0ea5e9';      // 蓝色
+                    if (dist >= 7) return '#06b6d4';       // 青色
+                    if (dist >= 5) return '#10b981';       // 绿色
+                    if (dist >= 3) return '#8b5cf6';       // 紫色
+                    return '#64748b';                       // 灰色
+                  };
+
+                  return (
+                    <div
+                      key={activity.id}
+                      className={styles.trajectoryBlock}
+                      title={`${activity.distance}km`}
+                      style={{ '--index': index } as React.CSSProperties}
+                    >
+                      <RouteSketch
+                        coordinates={activity.coordinates}
+                        seed={activity.id}
+                        color={getRouteColor(distance)}
+                      />
+                      <div className={styles.trajectoryInfo}>
+                        <div>{activity.distance}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}

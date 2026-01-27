@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useActivityData, useAvailableYears } from "../../hooks";
 import { YearData } from "../../types";
 
-export type ViewMode = "list" | "calendar" | "chart" | "map";
+export type ViewMode = "list" | "calendar" | "chart" | "map" | "pace";
 
 export interface UseDashboardLayoutResult {
   state: {

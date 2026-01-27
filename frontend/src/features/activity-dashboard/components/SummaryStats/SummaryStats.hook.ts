@@ -1,6 +1,6 @@
 import { ActivityStats } from "../../types";
 
-export type ViewMode = "list" | "calendar" | "chart" | "map";
+export type ViewMode = "list" | "calendar" | "chart" | "map" | "pace";
 
 export interface StatItem {
   value: string | number;
@@ -35,7 +35,7 @@ export const useSummaryStats = ({
       mode: "list" as ViewMode,
     },
     { value: stats.Days, label: "Days", mode: "calendar" as ViewMode },
-    { value: stats.AvgPace, label: "Avg Pace", mode: "chart" as ViewMode },
+    { value: stats.AvgPace, label: "Avg Pace", mode: "pace" as ViewMode },
     { value: stats.Routes, label: "Routes", mode: "map" as ViewMode },
   ];
 
