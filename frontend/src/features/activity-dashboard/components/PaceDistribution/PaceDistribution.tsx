@@ -145,7 +145,7 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
           preserveAspectRatio="xMinYMin meet"
         >
           <defs>
-            {/* 普通柱状图 - 优雅的青绿渐变 */}
+            {/* 普通柱状图 - 电蓝渐变 */}
             <linearGradient
               id="barGradientPace"
               x1="0%"
@@ -153,12 +153,12 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
               x2="0%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="rgba(52, 211, 153, 0.6)" />
-              <stop offset="50%" stopColor="rgba(16, 185, 129, 0.7)" />
-              <stop offset="100%" stopColor="rgba(5, 150, 105, 0.8)" />
+              <stop offset="0%" stopColor="rgba(14, 165, 233, 0.5)" />
+              <stop offset="50%" stopColor="rgba(6, 182, 212, 0.7)" />
+              <stop offset="100%" stopColor="rgba(14, 165, 233, 0.9)" />
             </linearGradient>
 
-            {/* 平均配速区间 - 明亮的翠绿渐变 */}
+            {/* 平均配速区间 - 橙蓝渐变 */}
             <linearGradient
               id="barGradientAvg"
               x1="0%"
@@ -166,9 +166,9 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
               x2="0%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="rgba(110, 231, 183, 0.8)" />
-              <stop offset="50%" stopColor="rgba(52, 211, 153, 0.9)" />
-              <stop offset="100%" stopColor="rgba(16, 185, 129, 1)" />
+              <stop offset="0%" stopColor="rgba(249, 115, 22, 0.6)" />
+              <stop offset="50%" stopColor="rgba(14, 165, 233, 0.8)" />
+              <stop offset="100%" stopColor="rgba(6, 182, 212, 1)" />
             </linearGradient>
 
             {/* 柱状图阴影效果 */}
@@ -242,8 +242,8 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
               {/* Area under the line */}
               <defs>
                 <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="rgba(110, 231, 183, 0.3)" />
-                  <stop offset="100%" stopColor="rgba(110, 231, 183, 0.05)" />
+                  <stop offset="0%" stopColor="rgba(14, 165, 233, 0.4)" />
+                  <stop offset="100%" stopColor="rgba(6, 182, 212, 0.05)" />
                 </linearGradient>
               </defs>
 
@@ -257,7 +257,7 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
               <polyline
                 points={trendLineData.points}
                 fill="none"
-                stroke="#6ee7b7"
+                stroke="#0ea5e9"
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -282,7 +282,7 @@ export function PaceDistribution({ activities }: PaceDistributionProps) {
                       cx={x}
                       cy={y}
                       r="5"
-                      fill="#6ee7b7"
+                      fill="#0ea5e9"
                       className={styles.trendPoint}
                     />
                     <title>

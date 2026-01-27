@@ -1,51 +1,309 @@
+/* 🏃 Compact Activity List - 紧凑活动列表 */
 .container {
     width: 100%;
-    padding: 0 1.5rem;
-
-    /* Column Width Configuration */
-    --col-distance: 1fr;
-    --col-pace: 1fr;
-    --col-bpm: 0.5fr;
-    --col-time: 1fr;
-    --col-route: 0.8fr;
-    --col-date: 1.5fr;
+    padding: 1rem 0;
 }
 
-.header {
-    display: grid;
-    grid-template-columns:
-        var(--col-distance) var(--col-pace) var(--col-bpm) var(--col-time) var(--col-route) var(--col-date);
-    gap: 0.75rem;
-    padding: 0.25rem 0;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* 📊 Activity Row - 活动行 */
+.row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+
+    /* 入场动画 */
+    opacity: 0;
+    animation: slideInFade 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInFade {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 🎨 左侧色条 - 距离视觉编码 */
+.colorBar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg,
+        var(--electric-blue) 0%,
+        var(--bright-cyan) 100%
+    );
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+/* 🔢 距离数字块 - 绝对主角 */
+.distanceBlock {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    min-width: 120px;
+    padding-right: 1rem;
+}
+
+.distanceNumber {
+    font-size: 2.75rem;
+    font-weight: 700;
+    font-family: var(--font-bebas), sans-serif;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.distanceLabel {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-bebas), sans-serif;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    opacity: 0.5;
     margin-bottom: 0.25rem;
 }
 
-.headerCell {
-    font-size: 0.75rem;
-    color: #94a3b8;
-    text-align: left;
+/* 📝 信息块 */
+.infoBlock {
+    flex: 1;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
 }
 
-.row {
-    display: grid;
-    grid-template-columns:
-        var(--col-distance) var(--col-pace) var(--col-bpm) var(--col-time) var(--col-route) var(--col-date);
-    gap: 0.75rem;
-    transition: all 0.2s ease;
-}
-
-.row:hover {
+.dateText {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    font-family: var(--font-inter), sans-serif;
+    letter-spacing: 0.01em;
     opacity: 0.7;
 }
 
-.cell {
-    font-size: 0.875rem;
-    color: #e2e8f0;
+.metricsRow {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.metric {
     display: flex;
     align-items: center;
-    min-height: 40px;
-    /* Standardize cell height to accommodate SVG sketches */
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    font-family: var(--font-jetbrains-mono), monospace;
+    letter-spacing: -0.01em;
+    opacity: 0.6;
+}
+
+.metricIcon {
+    font-size: 0.8125rem;
+    opacity: 0.5;
+}
+
+/* 🗺️ 路线缩略图 */
+.routeBlock {
+    width: 60px;
+    height: 60px;
+    padding: 0.5rem;
+    background: rgba(30, 41, 59, 0.4);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🎨 距离等级配色 */
+.easy .distanceNumber {
+    color: #94a3b8;
+}
+
+.easy .colorBar {
+    background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+}
+
+.short .distanceNumber {
+    color: var(--bright-cyan);
+}
+
+.short .colorBar {
+    background: linear-gradient(180deg, var(--bright-cyan) 0%, #06b6d4 100%);
+}
+
+.medium .distanceNumber {
+    color: var(--electric-blue);
+}
+
+.medium .colorBar {
+    background: linear-gradient(180deg, var(--electric-blue) 0%, #0284c7 100%);
+}
+
+.long .distanceNumber {
+    color: #f59e0b;
+}
+
+.long .colorBar {
+    background: linear-gradient(180deg, #f59e0b 0%, var(--neon-orange) 100%);
+}
+
+.ultra .distanceNumber {
+    background: linear-gradient(135deg,
+        var(--neon-orange) 0%,
+        #ef4444 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ultra .colorBar {
+    background: linear-gradient(180deg,
+        var(--neon-orange) 0%,
+        #ef4444 100%
+    );
+}
+
+/* 🔥 悬停效果 - 聚焦提升 */
+.row:hover {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(148, 163, 184, 0.3);
+    transform: translateX(4px);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        -4px 0 20px rgba(14, 165, 233, 0.15);
+}
+
+.row:hover .colorBar {
+    width: 6px;
+    opacity: 1;
+    box-shadow: 0 0 20px currentColor;
+}
+
+.row:hover .distanceNumber {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px currentColor;
+}
+
+.row:hover .routeBlock {
+    transform: scale(1.08);
+    border-color: var(--electric-blue);
+    background: rgba(14, 165, 233, 0.1);
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+}
+
+.row:hover .dateText {
+    color: var(--text-secondary);
+    opacity: 0.85;
+}
+
+.row:hover .metric {
+    color: var(--text-tertiary);
+    opacity: 0.75;
+}
+
+/* 🎯 点击效果 */
+.row:active {
+    transform: translateX(2px);
+    transition: all 0.1s ease;
+}
+
+/* 📱 响应式调整 */
+@media (max-width: 1024px) {
+    .distanceBlock {
+        min-width: 100px;
+    }
+
+    .distanceNumber {
+        font-size: 2.5rem;
+    }
+
+    .routeBlock {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .row {
+        padding: 0.875rem 1rem;
+        gap: 1rem;
+    }
+
+    .distanceBlock {
+        min-width: 80px;
+        padding-right: 0.75rem;
+    }
+
+    .distanceNumber {
+        font-size: 2.25rem;
+    }
+
+    .distanceLabel {
+        font-size: 0.625rem;
+    }
+
+    .dateText {
+        font-size: 0.8125rem;
+    }
+
+    .metricsRow {
+        gap: 1rem;
+    }
+
+    .metric {
+        font-size: 0.75rem;
+    }
+
+    .routeBlock {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 640px) {
+    .row {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .distanceBlock {
+        padding-right: 0;
+        padding-bottom: 0.75rem;
+        width: 100%;
+    }
+
+    .infoBlock {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .routeBlock {
+        margin-left: auto;
+    }
 }

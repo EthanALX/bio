@@ -7,9 +7,10 @@ import styles from "./RouteSketch.module.css";
 interface RouteSketchProps {
   coordinates?: Array<{ lat: number; lng: number }>;
   seed?: string;
+  color?: string;
 }
 
-export function RouteSketch({ coordinates, seed }: RouteSketchProps) {
+export function RouteSketch({ coordinates, seed, color }: RouteSketchProps) {
   const { pathData } = useRouteSketch({ coordinates, seed });
 
   return (
@@ -22,6 +23,7 @@ export function RouteSketch({ coordinates, seed }: RouteSketchProps) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={color ? { stroke: color } : undefined}
         />
       </svg>
     </div>
