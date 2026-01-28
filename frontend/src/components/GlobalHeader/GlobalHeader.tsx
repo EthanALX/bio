@@ -12,7 +12,8 @@ export function GlobalHeader() {
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.avatar}>E</div>
+        <div className={styles.avatar}>W</div>
+        <div className={styles.name}>追风者 · Wind Chaser</div>
         <div className={styles.navContainer}>
           {pathname === "/about" ? (
             <Link href="/" className={styles.aboutLink}>
@@ -20,7 +21,7 @@ export function GlobalHeader() {
             </Link>
           ) : (
             <Link href="/about" className={styles.aboutLink}>
-              About me
+              About Me
             </Link>
           )}
         </div>
