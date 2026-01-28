@@ -1,28 +1,23 @@
 import type { Metadata } from "next";
-import {
-  JetBrains_Mono,
-  IBM_Plex_Mono,
-  Fira_Code,
-  Space_Mono,
-} from "next/font/google";
+import { Space_Mono } from "next/font/google";
 import { GlobalHeader } from "../components/GlobalHeader";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-});
+// const jetbrainsMono = JetBrains_Mono({
+//   subsets: ["latin"],
+//   variable: "--font-jetbrains-mono",
+// });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-ibm-plex-mono",
-});
+// const ibmPlexMono = IBM_Plex_Mono({
+//   weight: ["400", "500", "600", "700"],
+//   subsets: ["latin"],
+//   variable: "--font-ibm-plex-mono",
+// });
 
-const firaCode = Fira_Code({
-  subsets: ["latin"],
-  variable: "--font-fira-code",
-});
+// const firaCode = Fira_Code({
+//   subsets: ["latin"],
+//   variable: "--font-fira-code",
+// });
 
 const spaceMono = Space_Mono({
   weight: ["400", "700"],
@@ -41,10 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${jetbrainsMono.variable} ${ibmPlexMono.variable} ${firaCode.variable} ${spaceMono.variable}`}
-    >
+    <html lang="en" className={` ${spaceMono.variable}`}>
       <body className="antialiased">
         <div className="max-w-[75%] min-w-[900px] mx-auto relative z-10">
           <GlobalHeader />

@@ -20,7 +20,7 @@ export function GlobalHeader() {
             </Link>
           ) : (
             <Link href="/about" className={styles.aboutLink}>
-              about me
+              About me
             </Link>
           )}
         </div>

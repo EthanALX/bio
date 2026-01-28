@@ -11,15 +11,16 @@
     animation: fadeInDown 0.8s ease-out;
 }
 
-
 .hero p {
     padding-top: 1rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .card {
     padding: 1rem 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
     animation: fadeInUp 0.8s ease-out both;
 }
 
@@ -34,7 +35,6 @@
 .card:nth-child(4) {
     animation-delay: 0.3s;
 }
-
 
 .cardTitle {
     font-weight: 600;
@@ -57,7 +57,7 @@
 .text {
     color: #cbd5e1;
     line-height: 1.8;
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin-bottom: 0.2rem;
 }
 
@@ -117,7 +117,7 @@
 .footer {
     text-align: center;
     color: #64748b;
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin-top: 2rem;
     padding: 2rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
