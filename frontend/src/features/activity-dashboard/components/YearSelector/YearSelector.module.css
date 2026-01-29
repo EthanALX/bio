@@ -15,17 +15,32 @@
     color: #e2e8f0;
     font-size: 1.6rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    background: linear-gradient(90deg, transparent 0%, transparent 100%);
+    background-size: 200% 100%;
+    background-position: left center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .yearBlock:hover {
-    color: #6366f1;
+    background: linear-gradient(90deg, transparent 0%, #6366f1 100%);
+    background-position: right center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .yearBlock.active {
     color: #6366f1;
+    background: none;
+    -webkit-text-fill-color: initial;
 }
 
 .yearBlock.active:hover {
     color: #a855f7;
+    background: none;
+    -webkit-text-fill-color: initial;
 }
