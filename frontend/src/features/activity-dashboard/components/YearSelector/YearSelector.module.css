@@ -14,38 +14,26 @@
 .yearBlock {
     font-size: 1.6rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: linear-gradient(90deg, #e2e8f0 0%, #e2e8f0 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 100%;
-    background-position: left center;
+    color: #e2e8f0;
 }
 
-.yearBlock:hover {
-    background: linear-gradient(90deg, #6366f1 0%, #e2e8f0 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 100%;
-    background-position: left center;
+.yearBlock {
+    display: flex;
+}
+
+.yearChar {
+    color: inherit;
+    transition: color 0.1s ease-in;
+}
+
+.yearBlock:hover .yearChar {
+    color: #6366f1;
 }
 
 .yearBlock.active {
-    background: linear-gradient(90deg, #6366f1 0%, #6366f1 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 100%;
-    background-position: left center;
+    color: #6366f1;
 }
 
-.yearBlock.active:hover {
-    background: linear-gradient(90deg, #a855f7 0%, #a855f7 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 100%;
-    background-position: left center;
+.yearBlock.active .yearChar {
+    color: #6366f1;
 }
