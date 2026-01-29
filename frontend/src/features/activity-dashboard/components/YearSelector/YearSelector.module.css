@@ -17,30 +17,36 @@
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
-    background: linear-gradient(90deg, transparent 0%, transparent 100%);
-    background-size: 200% 100%;
-    background-position: left center;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+}
+
+.yearBlock::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, #6366f1 100%);
+    transition: width 0.3s ease;
+    z-index: -1;
 }
 
 .yearBlock:hover {
-    background: linear-gradient(90deg, transparent 0%, #6366f1 100%);
-    background-position: right center;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #6366f1;
+}
+
+.yearBlock:hover::before {
+    width: 100%;
 }
 
 .yearBlock.active {
     color: #6366f1;
-    background: none;
-    -webkit-text-fill-color: initial;
+}
+
+.yearBlock.active::before {
+    width: 100%;
 }
 
 .yearBlock.active:hover {
     color: #a855f7;
-    background: none;
-    -webkit-text-fill-color: initial;
 }
