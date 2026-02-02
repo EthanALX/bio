@@ -8,11 +8,11 @@ import type {
 const NAVIGATION_CONFIG: Record<string, NavigationLink[]> = {
   "/": [
     { href: "/about", label: "About Me" },
-    { href: "/showcase", label: "Components" },
+    // { href: "/showcase", label: "Components" },
   ],
   "/about": [
     { href: "/", label: "Running Stats" },
-    { href: "/showcase", label: "Components" },
+    // { href: "/showcase", label: "Components" },
   ],
   "/showcase": [
     { href: "/", label: "Running Stats" },
