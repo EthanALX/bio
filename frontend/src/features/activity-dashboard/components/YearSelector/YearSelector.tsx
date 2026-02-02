@@ -1,12 +1,7 @@
 import React from "react";
 import { useYearSelector } from "./YearSelector.hook";
+import type { YearSelectorProps } from "./YearSelector.type";
 import styles from "./YearSelector.module.css";
-
-interface YearSelectorProps {
-  years: number[];
-  selectedYear: number;
-  onYearChange: (year: number) => void;
-}
 
 export function YearSelector(props: YearSelectorProps) {
   const { actions } = useYearSelector(props);

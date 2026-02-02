@@ -1,35 +1,13 @@
 import { Activity } from '../../types';
-
-export interface GitHubDay {
-    date: string;
-    distance: number;
-    level: 'level-0' | 'level-1' | 'level-2' | 'level-3' | 'level-4' | 'level-5' | 'level-6' | 'level-7';
-}
-
-export interface GitHubWeek {
-    days: (GitHubDay | null)[];
-}
-
-export interface GitHubMonth {
-    name: string;
-    startWeek: number;
-    endWeek: number;
-}
-
-export interface UseGitHubCalendarProps {
-    activities: Activity[];
-    year: number;
-}
-
-export interface UseGitHubCalendarResult {
-    state: {
-        weeks: GitHubWeek[];
-        months: GitHubMonth[];
-        dayLabels: string[];
-        dayLabelColors: string[][];
-        dayLabelDates: string[];
-    };
-}
+import type {
+  ActivityLevel,
+  GitHubDay,
+  GitHubWeek,
+  GitHubMonth,
+  GitHubCalendarState,
+  UseGitHubCalendarProps,
+  UseGitHubCalendarResult,
+} from './GitHubCalendar.type';
 
 export const useGitHubCalendar = ({ activities, year }: UseGitHubCalendarProps): UseGitHubCalendarResult => {
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

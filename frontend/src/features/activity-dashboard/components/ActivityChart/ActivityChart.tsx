@@ -1,11 +1,7 @@
 import React, { useMemo } from "react";
-import { Activity } from "../../types";
 import { useActivityChart } from "./ActivityChart.hook";
+import type { ActivityChartProps } from "./ActivityChart.type";
 import styles from "./ActivityChart.module.css";
-
-interface ActivityChartProps {
-  activities: Activity[];
-}
 
 export function ActivityChart({ activities }: ActivityChartProps) {
   const { chartData } = useActivityChart({ activities });

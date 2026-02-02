@@ -2,12 +2,8 @@
 
 import React from "react";
 import { useRouteSketch } from "./RouteSketch.hook";
+import type { RouteSketchProps } from "./RouteSketch.type";
 import styles from "./RouteSketch.module.css";
-
-interface RouteSketchProps {
-  coordinates?: Array<{ lat: number; lng: number }>;
-  seed?: string;
-}
 
 export function RouteSketch({ coordinates, seed }: RouteSketchProps) {
   const { pathData } = useRouteSketch({ coordinates, seed });

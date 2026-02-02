@@ -1,18 +1,11 @@
 import { useMemo } from 'react';
 import { Activity } from '../../types';
-
-interface UseActivityChartProps {
-    activities: Activity[];
-}
-
-interface WeeklyData {
-    weekNumber: number;
-    year: number;
-    activities: Activity[];
-    avgPaceSeconds: number;
-    avgBpm: number;
-    runningDays: number;
-}
+import type {
+  WeeklyData,
+  ChartDataPoint,
+  UseActivityChartProps,
+  UseActivityChartResult,
+} from './ActivityChart.type';
 
 export function useActivityChart({ activities }: UseActivityChartProps) {
     const weeklyData = useMemo(() => {

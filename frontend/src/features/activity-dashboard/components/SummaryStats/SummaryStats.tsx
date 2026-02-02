@@ -1,13 +1,7 @@
 import React from 'react';
-import { ActivityStats } from '../../types';
-import { useSummaryStats, ViewMode } from './SummaryStats.hook';
+import { useSummaryStats } from './SummaryStats.hook';
+import type { SummaryStatsProps, ViewMode } from './SummaryStats.type';
 import styles from './SummaryStats.module.css';
-
-interface SummaryStatsProps {
-    stats: ActivityStats;
-    viewMode: ViewMode;
-    onViewChange: (mode: ViewMode) => void;
-}
 
 export function SummaryStats(props: SummaryStatsProps) {
     const { state, actions } = useSummaryStats(props);

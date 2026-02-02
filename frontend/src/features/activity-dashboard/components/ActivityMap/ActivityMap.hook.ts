@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import * as d3 from 'd3-geo';
 import { Activity } from '../../types';
-
-interface GeoData {
-    type: string;
-    features: any[];
-}
+import type {
+  GeoData,
+  ProjectedRoute,
+  UseActivityMapResult,
+} from './ActivityMap.type';
 
 export function useActivityMap(activities: Activity[]) {
     const [geoData, setGeoData] = useState<GeoData | null>(null);

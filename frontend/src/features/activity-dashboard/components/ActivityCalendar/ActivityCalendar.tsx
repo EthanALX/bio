@@ -1,13 +1,8 @@
 import React from "react";
-import { Activity } from "../../types";
 import { useActivityCalendar } from "./ActivityCalendar.hook";
+import type { ActivityCalendarProps } from "./ActivityCalendar.type";
 import { ActivityLegend } from "./ActivityLegend";
 import styles from "./ActivityCalendar.module.css";
-
-interface ActivityCalendarProps {
-  activities: Activity[];
-  year: number;
-}
 
 export function ActivityCalendar(props: ActivityCalendarProps) {
   const { state } = useActivityCalendar(props);

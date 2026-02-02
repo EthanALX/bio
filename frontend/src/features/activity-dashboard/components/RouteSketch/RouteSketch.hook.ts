@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
-
-interface UseRouteSketchProps {
-    coordinates?: Array<{ lat: number; lng: number }>;
-    seed?: string;
-}
+import type {
+  UseRouteSketchProps,
+  UseRouteSketchResult,
+} from './RouteSketch.type';
 
 export function useRouteSketch({ coordinates, seed }: UseRouteSketchProps) {
     const pathData = useMemo(() => {

@@ -1,13 +1,7 @@
 import React from 'react';
-import { Activity } from '../../types';
 import { useActivityMap } from './ActivityMap.hook';
+import type { ActivityMapProps } from './ActivityMap.type';
 import styles from './ActivityMap.module.css';
-
-interface ActivityMapProps {
-    activities: Activity[];
-    isBackground?: boolean;
-    isVisible?: boolean;
-}
 
 export function ActivityMap({ activities, isBackground = false, isVisible = true }: ActivityMapProps) {
     const { geoData, pathGenerator, projectedRoutes, viewBox } = useActivityMap(activities);

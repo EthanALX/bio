@@ -1,27 +1,12 @@
 import { ActivityStats } from "../../types";
-
-export type ViewMode = "list" | "calendar" | "chart" | "map";
-
-export interface StatItem {
-  value: string | number;
-  label: string;
-  mode: ViewMode;
-}
-
-export interface UseSummaryStatsProps {
-  stats: ActivityStats;
-  viewMode: ViewMode;
-  onViewChange: (mode: ViewMode) => void;
-}
-
-export interface UseSummaryStatsResult {
-  state: {
-    statItems: StatItem[];
-  };
-  actions: {
-    handleViewChange: (mode: ViewMode) => void;
-  };
-}
+import type {
+  ViewMode,
+  StatItem,
+  SummaryStatsState,
+  SummaryStatsActions,
+  UseSummaryStatsProps,
+  UseSummaryStatsResult,
+} from './SummaryStats.type';
 
 export const useSummaryStats = ({
   stats,

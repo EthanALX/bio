@@ -1,20 +1,8 @@
 import React from 'react';
-import { Activity } from '../../types';
 import { useActivityList } from './ActivityList.hook';
+import type { ActivityListProps } from './ActivityList.type';
 import { RouteSketch } from '../RouteSketch';
 import styles from './ActivityList.module.css';
-
-interface ActivityListProps {
-    activities: Activity[];
-    columnWidths?: {
-        distance?: string;
-        pace?: string;
-        bpm?: string;
-        time?: string;
-        route?: string;
-        date?: string;
-    };
-}
 
 export function ActivityList(props: ActivityListProps) {
     const { state } = useActivityList(props);

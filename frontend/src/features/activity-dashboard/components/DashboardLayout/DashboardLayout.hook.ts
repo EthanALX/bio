@@ -1,28 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useActivityData, useAvailableYears } from "../../hooks";
 import { YearData } from "../../types";
-
-export type ViewMode = "list" | "calendar" | "chart" | "map";
-
-export interface UseDashboardLayoutResult {
-  state: {
-    years: number[];
-    selectedYear: number;
-    viewMode: ViewMode;
-    data: YearData | null;
-    isLoading: boolean;
-    error: Error | null;
-    isSidebarFixed: boolean;
-    sidebarLeft: number;
-  };
-  actions: {
-    setSelectedYear: (year: number) => void;
-    setViewMode: (mode: ViewMode) => void;
-  };
-  refs: {
-    sidebarRef: React.RefObject<HTMLDivElement | null>;
-  };
-}
+import type {
+  ViewMode,
+  DashboardLayoutState,
+  DashboardLayoutActions,
+  DashboardLayoutRefs,
+  UseDashboardLayoutResult,
+} from "./DashboardLayout.type";
 
 export const useDashboardLayout = (): UseDashboardLayoutResult => {
   const { years, loading: yearsLoading } = useAvailableYears();

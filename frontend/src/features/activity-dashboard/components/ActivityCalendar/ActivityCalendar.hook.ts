@@ -1,33 +1,11 @@
 import { Activity } from "../../types";
-
-export interface CalendarDay {
-  day: number;
-  date: string;
-  hasActivity: boolean;
-  distance?: number;
-  level: number; // 0-7, where 0 is white background, 1-7 are increasing intensity
-}
-
-export interface CalendarWeek {
-  weekNumber: number;
-  days: (CalendarDay | null)[];
-}
-
-export interface CalendarMonth {
-  name: string;
-  weeks: CalendarWeek[];
-}
-
-export interface UseActivityCalendarProps {
-  activities: Activity[];
-  year: number;
-}
-
-export interface UseActivityCalendarResult {
-  state: {
-    months: CalendarMonth[];
-  };
-}
+import type {
+  CalendarDay,
+  CalendarWeek,
+  CalendarMonth,
+  UseActivityCalendarProps,
+  UseActivityCalendarResult,
+} from "./ActivityCalendar.type";
 
 export const useActivityCalendar = ({
   activities,

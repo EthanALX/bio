@@ -1,14 +1,8 @@
-export interface UseYearSelectorProps {
-    years: number[];
-    selectedYear: number;
-    onYearChange: (year: number) => void;
-}
-
-export interface UseYearSelectorResult {
-    actions: {
-        handleYearChange: (year: number) => void;
-    };
-}
+import type {
+  YearSelectorActions,
+  UseYearSelectorProps,
+  UseYearSelectorResult,
+} from './YearSelector.type';
 
 export const useYearSelector = ({ onYearChange }: UseYearSelectorProps): UseYearSelectorResult => {
     const handleYearChange = (year: number) => {

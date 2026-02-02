@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "next/navigation";
+import { useSubtitle } from "./Subtitle.hook";
 import styles from "./Subtitle.module.css";
 
 export function Subtitle() {
-  const pathname = usePathname();
+  const { shouldRender } = useSubtitle();
 
-  if (pathname === "/about") {
+  if (!shouldRender) {
     return null;
   }
 

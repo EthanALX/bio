@@ -44,6 +44,7 @@ Each component is a directory. The structure is non-negotiable for "Smart" (Logi
 MyComponent/
 ├── MyComponent.tsx       # View (Template)
 ├── MyComponent.hook.ts   # Logic (ViewModel)
+├── MyComponent.type.ts   # Type Definitions
 ├── MyComponent.css       # Styles (CSS Modules preferred)
 ├── index.ts              # Export Interface
 └── components/           # (Optional) Internal sub-components
@@ -69,6 +70,18 @@ MyComponent/
     *   Return a neat interface (`interface Use[Name]Result`) for the View.
 *   **Goal**: The `.tsx` file should be reduced to a purely declarative template. If you find yourself writing a `map`, `filter`, or `new Date()` in the `.tsx` file, consider if it belongs in the hook.
 
+#### `[Name].type.ts` - The Type Definitions
+*   **Role**: Type Safety & Contract.
+*   **Responsibility**:
+    *   Define all TypeScript interfaces/types specific to this component.
+    *   Separate API response types, component props, and internal state types.
+    *   Export types for external consumers (via `index.ts`).
+*   **Why Separate**:
+    *   Keeps hook and view files focused on logic and rendering.
+    *   Makes types easier to import and reuse across features.
+    *   Improves testability by isolating type definitions.
+*   **Naming**: Use descriptive names with component prefix (e.g., `MyComponentProps`, `MyComponentState`).
+
 #### `api/*.ts` - The Service Layer
 *   **Role**: Data Access.
 *   **Responsibility**:
@@ -78,25 +91,64 @@ MyComponent/
 
 ### 2.3 Implementation Example
 
-**MyComponent.hook.ts**
+**MyComponent.type.ts**
 ```typescript
-import { useState, useCallback } from 'react';
-import { useSubmitData } from './api/useSubmitData'; // React Query hook example
-
-// Define the interface for the View to consume
-export interface UseMyComponentProps {
+// Component Props
+export interface MyComponentProps {
     initialCount?: number;
 }
 
-export const useMyComponent = ({ initialCount = 0 }: UseMyComponentProps) => {
+// State Shape
+export interface MyComponentState {
+    count: number;
+    isSubmitting: boolean;
+}
+
+// Action Handlers
+export interface MyComponentActions {
+    increment: () => void;
+    submit: () => Promise<void>;
+}
+
+// Hook Return Interface
+export interface UseMyComponentResult {
+    state: MyComponentState;
+    actions: MyComponentActions;
+}
+
+// API Request/Response Types
+export interface SubmitDataRequest {
+    count: number;
+}
+
+export interface SubmitDataResponse {
+    success: boolean;
+    timestamp: string;
+}
+```
+
+**MyComponent.hook.ts**
+```typescript
+import { useState, useCallback } from 'react';
+import { useSubmitData } from './api/useSubmitData';
+import type {
+    MyComponentProps,
+    MyComponentState,
+    MyComponentActions,
+    UseMyComponentResult,
+    SubmitDataRequest
+} from './MyComponent.type';
+
+export const useMyComponent = ({ initialCount = 0 }: MyComponentProps): UseMyComponentResult => {
     const [count, setCount] = useState(initialCount);
     const mutation = useSubmitData();
 
     const increment = useCallback(() => setCount(c => c + 1), []);
-    
+
     const submit = async () => {
+        const request: SubmitDataRequest = { count };
         try {
-            await mutation.mutateAsync({ count });
+            await mutation.mutateAsync(request);
         } catch (error) {
             console.error(error);
         }
@@ -114,8 +166,9 @@ export const useMyComponent = ({ initialCount = 0 }: UseMyComponentProps) => {
 import React from 'react';
 import styles from './MyComponent.module.css';
 import { useMyComponent } from './MyComponent.hook';
+import type { MyComponentProps } from './MyComponent.type';
 
-export const MyComponent: React.FC<{ initialCount?: number }> = (props) => {
+export const MyComponent: React.FC<MyComponentProps> = (props) => {
     const { state, actions } = useMyComponent(props);
 
     return (
@@ -143,6 +196,7 @@ Consistency is key to preventing code rot.
     *   React Components: `PascalCase.tsx` (e.g., `UserProfile.tsx`).
     *   Hooks: `use` prefix + `camelCase.ts` (e.g., `useUserProfile.ts`).
     *   Logic Files: `[Component].hook.ts`.
+    *   Type Files: `[Component].type.ts`.
     *   Utilities: `camelCase.ts` (e.g., `formatDate.ts`).
     *   Styles: `[Component].module.css` (preferred for scoping).
 *   **Variables/Functions**:

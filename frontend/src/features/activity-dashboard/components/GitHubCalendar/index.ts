@@ -1,2 +1,10 @@
 export { GitHubCalendar, type GitHubCalendarProps } from './GitHubCalendar';
-export { useGitHubCalendar, type GitHubDay, type GitHubWeek, type GitHubMonth, type UseGitHubCalendarProps, type UseGitHubCalendarResult } from './GitHubCalendar.hook';
+export { useGitHubCalendar } from './GitHubCalendar.hook';
+export type {
+  GitHubDay,
+  GitHubWeek,
+  GitHubMonth,
+  GitHubCalendarState,
+  UseGitHubCalendarProps,
+  UseGitHubCalendarResult,
+} from './GitHubCalendar.type';

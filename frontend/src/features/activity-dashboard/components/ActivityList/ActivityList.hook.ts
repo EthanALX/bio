@@ -1,25 +1,9 @@
 import { Activity } from '../../types';
-
-export interface FormattedActivity {
-    id: string;
-    distance: string;
-    pace: string;
-    bpm: number;
-    time: string;
-    route: string;
-    coordinates?: Array<{ lat: number; lng: number }>;
-    dateDisplay: string;
-}
-
-export interface UseActivityListProps {
-    activities: Activity[];
-}
-
-export interface UseActivityListResult {
-    state: {
-        formattedActivities: FormattedActivity[];
-    };
-}
+import type {
+  FormattedActivity,
+  UseActivityListProps,
+  UseActivityListResult,
+} from './ActivityList.type';
 
 export const useActivityList = ({ activities }: UseActivityListProps): UseActivityListResult => {
     const formattedActivities: FormattedActivity[] = activities.map((activity) => ({

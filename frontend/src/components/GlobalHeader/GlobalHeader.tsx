@@ -2,12 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useGlobalHeader } from "./GlobalHeader.hook";
 import { Subtitle } from "../Subtitle";
 import styles from "./GlobalHeader.module.css";
 
 export function GlobalHeader() {
-  const pathname = usePathname();
+  const { pathname, navigationLinks } = useGlobalHeader();
 
   return (
     <>
@@ -15,15 +15,11 @@ export function GlobalHeader() {
         <div className={styles.avatar}>W</div>
         <div className={styles.name}>追风者 · Wind Chaser</div>
         <div className={styles.navContainer}>
-          {pathname === "/about" ? (
-            <Link href="/" className={styles.aboutLink}>
-              Running Stats
+          {navigationLinks.map((link) => (
+            <Link key={link.href} href={link.href} className={styles.aboutLink}>
+              {link.label}
             </Link>
-          ) : (
-            <Link href="/about" className={styles.aboutLink}>
-              About Me
-            </Link>
-          )}
+          ))}
         </div>
       </header>
       <Subtitle />
