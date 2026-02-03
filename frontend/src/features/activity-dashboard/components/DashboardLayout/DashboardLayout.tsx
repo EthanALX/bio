@@ -7,6 +7,7 @@ import { SummaryStats } from "../SummaryStats";
 import { ActivityList } from "../ActivityList";
 import { ActivityCalendar } from "../ActivityCalendar";
 import { ActivityMap } from "../ActivityMap";
+import { ActivityChart } from "../ActivityChart";
 import styles from "./DashboardLayout.module.css";
 import { RouteSketch } from "../RouteSketch";
 
@@ -94,6 +95,10 @@ export function DashboardLayout() {
                 ))}
               </div>
             </div>
+          )}
+
+          {viewMode === "chart" && (
+            <ActivityChart activities={data.activities} />
           )}
         </div>
 

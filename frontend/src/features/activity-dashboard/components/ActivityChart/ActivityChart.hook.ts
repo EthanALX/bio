@@ -3,15 +3,13 @@ import { Activity } from '../../types';
 import type {
   WeeklyData,
   ChartDataPoint,
+  HierarchyNode,
   UseActivityChartProps,
   UseActivityChartResult,
 } from './ActivityChart.type';
 
 export function useActivityChart({ activities }: UseActivityChartProps) {
     const weeklyData = useMemo(() => {
-        console.log('=== Hook Processing ===');
-        console.log('Input activities:', activities);
-        
         if (!activities.length) return [];
 
         // Group activities by week
@@ -61,15 +59,6 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
                 avgBpm,
                 runningDays: paceSeconds.length
             };
-            
-            console.log(`Week ${year}-W${weekNumber}:`, {
-                activities: weekActivities,
-                paceSeconds,
-                bpms,
-                avgPaceSeconds,
-                avgBpm,
-                runningDays: paceSeconds.length
-            });
 
             weeks.push(weekData);
         });
@@ -80,14 +69,10 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
             return a.weekNumber - b.weekNumber;
         });
 
-        console.log('Final weekly data:', weeks);
         return weeks;
     }, [activities]);
 
     const chartData = useMemo(() => {
-        console.log('\n=== Chart Data Calculation ===');
-        console.log('Weekly data input:', weeklyData);
-        
         if (!weeklyData.length) return [];
 
         // Get min/max for normalization
@@ -97,13 +82,9 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
         const bpmValues = weeklyData
             .filter(w => w.avgBpm > 0)
             .map(w => w.avgBpm);
-        
-        console.log('Pace values:', paceValues);
-        console.log('BPM values:', bpmValues);
-        
+
         // Handle case where no data exists
         if (paceValues.length === 0 || bpmValues.length === 0) {
-            console.log('No valid pace or BPM data');
             return weeklyData.map((week) => ({
                 id: `${week.year}-W${week.weekNumber}`,
                 weekNumber: week.weekNumber,
@@ -121,8 +102,6 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
         const paceMax = Math.max(...paceValues);
         const bpmMin = Math.min(...bpmValues);
         const bpmMax = Math.max(...bpmValues);
-        
-        console.log('Normalization ranges:', { paceMin, paceMax, bpmMin, bpmMax });
 
         const chartDataResult = weeklyData.map((week, index) => {
             const paceSeconds = week.avgPaceSeconds;
@@ -149,17 +128,141 @@ export function useActivityChart({ activities }: UseActivityChartProps) {
                     : 0,
                 hasData: paceSeconds > 0 || bpm > 0
             };
-            
-            console.log(`Chart point ${index}:`, dataPoint);
+
             return dataPoint;
         });
-        
-        console.log('Final chart data:', chartDataResult);
+
         return chartDataResult;
     }, [weeklyData]);
 
+    // Build hierarchy data for treemap/sunburst visualization
+    const hierarchyData = useMemo(() => {
+        if (!activities.length) {
+            return createEmptyHierarchyNode();
+        }
+
+        // Get year from first activity
+        const year = new Date(activities[0].date).getFullYear();
+        
+        // Create root year node
+        const yearNode: HierarchyNode = {
+            id: String(year),
+            name: String(year),
+            level: 'year',
+            value: 0,
+            count: 0,
+            avgPace: '',
+            children: []
+        };
+
+        // Group by quarter
+        const quartersMap = new Map<string, Activity[]>();
+        
+        activities.forEach(activity => {
+            const date = new Date(activity.date);
+            const month = date.getMonth();
+            const quarterIndex = Math.floor(month / 3);
+            const quarterNames = ['Q1', 'Q2', 'Q3', 'Q4'];
+            const quarterKey = quarterNames[quarterIndex];
+            
+            if (!quartersMap.has(quarterKey)) {
+                quartersMap.set(quarterKey, []);
+            }
+            quartersMap.get(quarterKey)!.push(activity);
+        });
+
+        // Build quarter nodes
+        quartersMap.forEach((quarterActivities, quarterKey) => {
+            const quarterNode: HierarchyNode = {
+                id: `${year}-${quarterKey}`,
+                name: `${year} ${quarterKey}`,
+                level: 'quarter',
+                value: 0,
+                count: 0,
+                avgPace: '',
+                children: [],
+                parent: yearNode
+            };
+
+            // Group by month within quarter
+            const monthsMap = new Map<string, Activity[]>();
+            
+            quarterActivities.forEach(activity => {
+                const date = new Date(activity.date);
+                const monthName = date.toLocaleString('en-US', { month: 'short' });
+                
+                if (!monthsMap.has(monthName)) {
+                    monthsMap.set(monthName, []);
+                }
+                monthsMap.get(monthName)!.push(activity);
+            });
+
+            // Build month nodes
+            monthsMap.forEach((monthActivities, monthName) => {
+                const totalDistance = monthActivities.reduce((sum, a) => sum + a.distance, 0);
+                const avgPace = calculateAveragePace(monthActivities);
+                
+                const monthNode: HierarchyNode = {
+                    id: `${year}-${quarterKey}-${monthName}`,
+                    name: monthName,
+                    level: 'month',
+                    value: totalDistance,
+                    count: monthActivities.length,
+                    avgPace: avgPace,
+                    parent: quarterNode
+                };
+
+                quarterNode.children!.push(monthNode);
+                quarterNode.value += totalDistance;
+                quarterNode.count += monthActivities.length;
+            });
+
+            // Calculate quarter average pace
+            quarterNode.avgPace = calculateAveragePace(quarterActivities);
+            
+            yearNode.children!.push(quarterNode);
+            yearNode.value += quarterNode.value;
+            yearNode.count += quarterNode.count;
+        });
+
+        // Calculate year average pace
+        yearNode.avgPace = calculateAveragePace(activities);
+
+        return yearNode;
+    }, [activities]);
+
     return {
-        chartData
+        chartData,
+        hierarchyData
+    };
+}
+
+// Helper function to calculate average pace from activities
+function calculateAveragePace(activities: Activity[]): string {
+    const paceSeconds = activities
+        .map(a => {
+            const match = a.pace.match(/(\d+)'(\d+)/);
+            return match ? parseInt(match[1]) * 60 + parseInt(match[2]) : 0;
+        })
+        .filter(s => s > 0);
+    
+    if (paceSeconds.length === 0) return '';
+    
+    const avgSeconds = paceSeconds.reduce((sum, s) => sum + s, 0) / paceSeconds.length;
+    const minutes = Math.floor(avgSeconds / 60);
+    const seconds = Math.round(avgSeconds % 60);
+    return `${minutes}'${String(seconds).padStart(2, '0')}"`;
+}
+
+// Helper function to create empty hierarchy node
+function createEmptyHierarchyNode(): HierarchyNode {
+    return {
+        id: 'empty',
+        name: 'No Data',
+        level: 'year',
+        value: 0,
+        count: 0,
+        avgPace: ''
     };
 }
 

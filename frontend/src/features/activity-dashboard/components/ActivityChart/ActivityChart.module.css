@@ -1,186 +1,191 @@
 .container {
-    padding: 1.5rem;
-    backdrop-filter: blur(10px);
+  position: relative;
+  width: 100%;
+  min-width: 900px;
+  height: 500px;
+  background: #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.header {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+.noData {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #94a3b8;
+  font-family: var(--font-space-mono);
+  font-size: 14px;
 }
 
-.button {
-    color: #94a3b8;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    padding: 0.25rem 0;
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  flex-shrink: 0;
 }
 
-.button:hover {
-    color: #e2e8f0;
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.chartArea {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    min-height: 400px;
+.backButton {
+  background: transparent;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #6366f1;
+  cursor: pointer;
+  font-family: var(--font-space-mono);
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.5);
+}
+
+.backButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.currentLevel {
+  color: #e2e8f0;
+  font-family: var(--font-space-mono);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 4px;
+  background: rgba(148, 163, 184, 0.1);
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.viewToggle button {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: var(--font-space-mono);
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.viewToggle button:hover:not(:disabled) {
+  color: #e2e8f0;
+}
+
+.viewToggle button.active {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+.viewToggle button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .svg {
-    min-width: 800px;
-    height: auto;
-    overflow: visible;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow: visible;
+  transition: opacity 0.3s ease;
 }
 
-/* Grid Lines */
-.gridLine {
-    stroke: rgba(148, 163, 184, 0.1);
-    stroke-width: 1;
-    stroke-dasharray: 2, 4;
+.node {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
-/* Pace Bars */
-.bar {
-    transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
-    cursor: pointer;
+.node:hover {
+  opacity: 0.85;
 }
 
-.bar:hover {
-    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.6));
-    opacity: 0.8;
+.tooltip {
+  position: fixed;
+  padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.emptyBar {
-    stroke: rgba(148, 163, 184, 0.2);
-    stroke-width: 1;
-    stroke-dasharray: 2, 2;
+.tooltipVisible {
+  opacity: 1;
 }
 
-.emptyWeekIndicator {
-    fill: rgba(148, 163, 184, 0.3);
-    stroke: rgba(148, 163, 184, 0.4);
-    stroke-width: 1;
+.tooltipTitle {
+  color: #e2e8f0;
+  font-family: var(--font-space-mono);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
-.emptyWeekLabel {
-    fill: #64748b;
-    font-size: 10px;
-    font-weight: 400;
-    opacity: 0.6;
+.tooltipRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 4px;
 }
 
-.paceValue {
-    fill: #e2e8f0;
-    font-size: 12px;
-    font-weight: 400;
+.tooltipLabel {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.tooltipValue {
+  color: #e2e8f0;
+  font-family: var(--font-space-mono);
+  font-size: 12px;
+}
+
+/* Animation keyframes */
+@keyframes nodeEnter {
+  from {
     opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.bar:hover + .paceValue {
+    transform: scale(0.8);
+  }
+  to {
     opacity: 1;
+    transform: scale(1);
+  }
 }
 
-/* Heart Rate Line */
-.hrLine {
-    filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.4));
-    pointer-events: none;
+.nodeEnter {
+  animation: nodeEnter 0.3s ease forwards;
 }
 
-.hrPoint {
-    fill: #f59e0b;
-    transition: r 0.3s ease;
-    cursor: pointer;
-}
-
-.hrPoint:hover {
-    r: 6;
-}
-
-.hrValue {
-    fill: #fbbf24;
-    font-size: 11px;
-    font-weight: 500;
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.hrPoint:hover + .hrValue {
+  }
+  to {
     opacity: 1;
+  }
 }
 
-/* Week Labels */
-.weekLabel {
-    fill: #94a3b8;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.weekLabel.noData {
-    fill: #64748b;
-    opacity: 0.5;
-    font-style: italic;
-}
-
-/* Axis Labels */
-.axisLabel {
-    fill: #64748b;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .chartArea {
-        min-height: 350px;
-    }
-
-    .svg {
-        min-width: 600px;
-    }
-
-    .paceValue {
-        font-size: 10px;
-    }
-
-    .hrValue {
-        font-size: 9px;
-    }
-
-    .weekLabel {
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 768px) {
-    .chartArea {
-        min-height: 300px;
-    }
-
-    .svg {
-        min-width: 500px;
-    }
-
-    .paceValue {
-        font-size: 9px;
-    }
-
-    .hrValue {
-        font-size: 8px;
-    }
-
-    .weekLabel {
-        font-size: 9px;
-    }
-
-    .axisLabel {
-        font-size: 9px;
-    }
+.fadeIn {
+  animation: fadeIn 0.3s ease forwards;
 }
