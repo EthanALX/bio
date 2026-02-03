@@ -12,6 +12,7 @@ export interface HierarchyNode {
   count: number; // Number of running activities
   avgPace: string; // Average pace (e.g., "5'30\"")
   avgBpm?: number; // Average heart rate
+  order?: number; // Display order for treemap layouts
   children?: HierarchyNode[];
   parent?: HierarchyNode;
   color?: string;

@@ -3,21 +3,6 @@ import { useActivityChart } from "./ActivityChart.hook";
 import type { ActivityChartProps } from "./ActivityChart.type";
 import styles from "./ActivityChart.module.css";
 
-const MONTH_NAMES = [
-  "Jan 一月",
-  "Feb 二月",
-  "Mar 三月",
-  "Apr 四月",
-  "May 五月",
-  "Jun 六月",
-  "Jul 七月",
-  "Aug 八月",
-  "Sep 九月",
-  "Oct 十月",
-  "Nov 十一月",
-  "Dec 十二月",
-];
-
 export function ActivityChart({ activities }: ActivityChartProps) {
   const { state } = useActivityChart({ activities });
   const {
@@ -42,23 +27,43 @@ export function ActivityChart({ activities }: ActivityChartProps) {
   }
 
   const showMonthNav = currentRoot.level === "month" || currentRoot.level === "week";
+  const showWeekBack = currentRoot.level === "month";
+  const currentMonthLabel =
+    currentRoot.level === "month"
+      ? currentRoot.name
+      : currentRoot.level === "week" && currentRoot.parent
+        ? currentRoot.parent.name
+        : "";
+  const currentYearLabel =
+    currentRoot.level === "year"
+      ? currentRoot.name
+      : currentRoot.level === "month" && currentRoot.parent
+        ? currentRoot.parent.name
+        : currentRoot.level === "week" && currentRoot.parent?.parent
+          ? currentRoot.parent.parent.name
+          : "";
 
   return (
     <div ref={containerRef} className={styles.container}>
-      <div className={styles.controls}>
-        <div className={styles.breadcrumb}>
-          {currentRoot.level !== "year" && currentRoot.parent && (
-            <button
-              className={styles.backButton}
-              onClick={handleBack}
-              disabled={isAnimating}
-            >
-              ← Back
-            </button>
-          )}
-          <span className={styles.currentLevel}>{currentRoot.name}</span>
+      {showWeekBack && (
+        <div className={styles.weekHeader}>
+          <button
+            className={styles.weekBack}
+            onClick={handleBack}
+            disabled={isAnimating}
+            title="Back to months"
+          >
+            ← {currentMonthLabel}
+          </button>
         </div>
-      </div>
+      )}
+
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        className={styles.svg}
+        style={{ opacity: isAnimating ? 0.5 : 1 }}
+      />
 
       {showMonthNav && currentMonthIndex >= 0 && (
         <div className={styles.monthNav}>
@@ -71,7 +76,7 @@ export function ActivityChart({ activities }: ActivityChartProps) {
             ‹
           </button>
           <span className={styles.monthIndicator}>
-            {MONTH_NAMES[currentMonthIndex % 12]}
+            {currentYearLabel}
           </span>
           <button
             className={styles.monthNavButton}
@@ -83,13 +88,6 @@ export function ActivityChart({ activities }: ActivityChartProps) {
           </button>
         </div>
       )}
-
-      <svg
-        ref={svgRef}
-        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-        className={styles.svg}
-        style={{ opacity: isAnimating ? 0.5 : 1 }}
-      />
 
       <div ref={tooltipRef} className={styles.tooltip} />
     </div>

@@ -3,6 +3,7 @@ import * as d3 from "d3-hierarchy";
 import * as d3Select from "d3-selection";
 import "d3-transition";
 import { Activity } from "../../types";
+import styles from "./ActivityChart.module.css";
 import {
   createHierarchy,
   createTreemapLayout,
@@ -81,6 +82,7 @@ function buildHierarchyData(activities: Activity[]): HierarchyNode {
     value: 0,
     count: 0,
     avgPace: "",
+    order: 0,
     children: [],
   };
 
@@ -112,8 +114,11 @@ function buildHierarchyData(activities: Activity[]): HierarchyNode {
     monthsMap.get(monthIndex)!.push(activity);
   });
 
+  const monthIndexes = Array.from(monthsMap.keys()).sort((a, b) => a - b);
+
   // Build month nodes
-  monthsMap.forEach((monthActivities, monthIndex) => {
+  monthIndexes.forEach((monthIndex) => {
+    const monthActivities = monthsMap.get(monthIndex) || [];
     const monthName = monthNames[monthIndex];
     const monthNode: HierarchyNode = {
       id: `${year}-${monthName}`,
@@ -122,6 +127,7 @@ function buildHierarchyData(activities: Activity[]): HierarchyNode {
       value: 0,
       count: 0,
       avgPace: "",
+      order: monthIndex,
       children: [],
       parent: yearNode,
     };
@@ -154,6 +160,7 @@ function buildHierarchyData(activities: Activity[]): HierarchyNode {
         count: weekActivities.length,
         avgPace: avgPace,
         avgBpm: avgBpm,
+        order: weekNumber,
         parent: monthNode,
       };
 
@@ -324,24 +331,51 @@ function renderTreemap(
   handleNodeClick: (node: HierarchyNode) => void,
   showTooltip: (event: MouseEvent, node: HierarchyNode) => void,
   hideTooltip: () => void,
-  styles: any,
+  styles: typeof import("./ActivityChart.module.css"),
 ) {
-  const layout = createTreemapLayout(dims.width, dims.height);
+  const chartPadding =
+    root.level === "year"
+      ? { x: 16, y: 12 }
+      : { x: 0, y: 0 };
+  const chartWidth = Math.max(dims.width - chartPadding.x * 2, 0);
+  const chartHeight = Math.max(dims.height - chartPadding.y * 2, 0);
+  const layout = createTreemapLayout(chartWidth, chartHeight);
   const hierarchy = createHierarchy(root);
   const tree = layout(hierarchy);
 
-  const g = svg.append("g");
+  const g = svg
+    .append("g")
+    .attr("transform", `translate(${chartPadding.x},${chartPadding.y})`);
 
-  // Filter nodes based on root level
-  // - Year level: show only months (depth 1)
-  // - Month level: show only weeks (depth 1)
-  const filterDepths = root.level === "year" ? [1] : [1];
+  const labelPadding = 8;
+  const valueOffset = 20;
+  const metaOffset = 38;
+  const minLabelWidth = 48;
+  const minLabelHeight = 34;
+  const minValueWidth = 84;
+  const minValueHeight = 60;
+
+  const truncateLabel = (label: string, width: number) => {
+    if (width <= 0) return "";
+    const approxCharWidth = 7;
+    const maxChars = Math.max(Math.floor(width / approxCharWidth), 2);
+    if (label.length <= maxChars) return label;
+    return `${label.slice(0, Math.max(maxChars - 1, 1))}…`;
+  };
+
+  const formatLabel = (label: string, width: number) => {
+    if (width < 90 && label.includes(" ")) {
+      return truncateLabel(label.split(" ")[0], width);
+    }
+    return truncateLabel(label, width);
+  };
 
   const nodes = g
     .selectAll("g")
-    .data(tree.descendants().filter((d) => filterDepths.includes(d.depth)))
+    .data(tree.descendants().filter((d) => d.depth === 1))
     .enter()
     .append("g")
+    .attr("class", styles.nodeGroup)
     .attr("transform", (d) => `translate(${d.x0},${d.y0})`);
 
   nodes
@@ -351,7 +385,11 @@ function renderTreemap(
     .attr("fill", (d) => getNodeColor(d.data, maxValue))
     .attr("rx", 4)
     .attr("ry", 4)
-    .attr("class", styles.node)
+    .attr("class", (d) =>
+      d.data.children && d.data.children.length > 0
+        ? styles.nodeRect
+        : `${styles.nodeRect} ${styles.nodeRectStatic}`,
+    )
     .style("cursor", (d) => (d.data.children && d.data.children.length > 0 ? "pointer" : "default"))
     .on("click", (event, d) => {
       if (d.data.children && d.data.children.length > 0) {
@@ -365,30 +403,50 @@ function renderTreemap(
     .filter((d) => {
       const width = (d.x1 || 0) - (d.x0 || 0);
       const height = (d.y1 || 0) - (d.y0 || 0);
-      return width > 60 && height > 40;
+      return width > minLabelWidth && height > minLabelHeight;
     })
     .append("text")
-    .attr("x", 8)
-    .attr("y", 20)
-    .text((d) => d.data.name)
-    .attr("fill", "#e2e8f0")
-    .attr("fontSize", "12px")
-    .attr("fontFamily", "var(--font-space-mono)")
+    .attr("x", labelPadding)
+    .attr("y", labelPadding)
+    .text((d) => {
+      const width = (d.x1 || 0) - (d.x0 || 0);
+      return formatLabel(d.data.name, width - labelPadding * 2);
+    })
+    .attr("class", styles.nodeLabel)
+    .attr("dominant-baseline", "hanging")
     .style("pointer-events", "none");
 
   nodes
     .filter((d) => {
       const width = (d.x1 || 0) - (d.x0 || 0);
       const height = (d.y1 || 0) - (d.y0 || 0);
-      return width > 80 && height > 60;
+      return width > minValueWidth && height > minValueHeight;
     })
     .append("text")
-    .attr("x", 8)
-    .attr("y", 36)
+    .attr("x", labelPadding)
+    .attr("y", labelPadding + valueOffset)
     .text((d) => `${d.data.value.toFixed(1)} km`)
-    .attr("fill", "#94a3b8")
-    .attr("fontSize", "10px")
-    .attr("fontFamily", "var(--font-space-mono)")
+    .attr("class", styles.nodeValue)
+    .attr("dominant-baseline", "hanging")
+    .style("pointer-events", "none");
+
+  nodes
+    .filter((d) => {
+      const width = (d.x1 || 0) - (d.x0 || 0);
+      const height = (d.y1 || 0) - (d.y0 || 0);
+      return (
+        width > minValueWidth &&
+        height > minValueHeight + 10 &&
+        typeof d.data.avgBpm === "number" &&
+        d.data.avgBpm > 0
+      );
+    })
+    .append("text")
+    .attr("x", labelPadding)
+    .attr("y", labelPadding + metaOffset)
+    .text((d) => `avg ${Math.round(d.data.avgBpm || 0)} bpm`)
+    .attr("class", styles.nodeMeta)
+    .attr("dominant-baseline", "hanging")
     .style("pointer-events", "none");
 }
 
@@ -432,10 +490,6 @@ export const useActivityChart = ({
       <div class="tooltipRow">
         <span class="tooltipLabel">Distance:</span>
         <span class="tooltipValue">${node.value.toFixed(1)} km</span>
-      </div>
-      <div class="tooltipRow">
-        <span class="tooltipLabel">Activities:</span>
-        <span class="tooltipValue">${node.count}</span>
       </div>
       ${
         node.avgPace
@@ -663,19 +717,16 @@ export const useActivityChart = ({
 
     const maxValue = getMaxValue(createHierarchy(currentRoot));
 
-    // Import styles dynamically
-    import("./ActivityChart.module.css").then((styles) => {
-      renderTreemap(
-        svg,
-        currentRoot,
-        dimensions,
-        maxValue,
-        handleNodeClick,
-        showTooltip,
-        hideTooltip,
-        styles
-      );
-    });
+    renderTreemap(
+      svg,
+      currentRoot,
+      dimensions,
+      maxValue,
+      handleNodeClick,
+      showTooltip,
+      hideTooltip,
+      styles,
+    );
   }, [currentRoot, dimensions, handleNodeClick, showTooltip, hideTooltip]);
 
   // Cleanup on unmount

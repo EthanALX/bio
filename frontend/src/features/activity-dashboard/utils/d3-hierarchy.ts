@@ -2,15 +2,17 @@ import * as d3 from 'd3-hierarchy';
 import type { HierarchyNode } from '../components/ActivityChart/ActivityChart.type';
 
 /**
- * Color scale configuration using Indigo-Purple gradient
+ * Color scale configuration using ActivityCalendar green palette
  * Maps values to colors based on intensity (0-1 ratio)
  */
 const COLOR_STOPS = [
-  { ratio: 0, color: 'rgba(99, 102, 241, 0.2)' },      // Low intensity - light indigo
-  { ratio: 0.25, color: 'rgba(99, 102, 241, 0.4)' },   // Low-medium intensity
-  { ratio: 0.5, color: 'rgba(129, 140, 248, 0.6)' },   // Medium intensity
-  { ratio: 0.75, color: 'rgba(167, 139, 250, 0.8)' },  // Medium-high intensity
-  { ratio: 1, color: 'rgba(168, 85, 247, 1)' }         // High intensity - purple
+  { ratio: 0, color: '#ccf5ee' }, // lightest
+  { ratio: 0.16, color: '#c8e6c8' },
+  { ratio: 0.32, color: '#a5d6a7' },
+  { ratio: 0.48, color: '#81c784' },
+  { ratio: 0.64, color: '#66bb6a' },
+  { ratio: 0.8, color: '#4caf50' },
+  { ratio: 1, color: '#388e3c' } // darkest
 ];
 
 /**
@@ -19,12 +21,28 @@ const COLOR_STOPS = [
 function interpolateColor(color1: string, color2: string, ratio: number): string {
   // Parse rgba values
   const parseRgba = (color: string) => {
-    const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+    const trimmed = color.trim();
+    const hexMatch = trimmed.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (hexMatch) {
+      const hex = hexMatch[1].length === 3
+        ? hexMatch[1].split("").map((c) => c + c).join("")
+        : hexMatch[1];
+      return {
+        r: parseInt(hex.slice(0, 2), 16),
+        g: parseInt(hex.slice(2, 4), 16),
+        b: parseInt(hex.slice(4, 6), 16),
+        a: 1
+      };
+    }
+
+    const match = trimmed.match(
+      /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/,
+    );
     if (!match) return { r: 0, g: 0, b: 0, a: 1 };
     return {
-      r: parseInt(match[1]),
-      g: parseInt(match[2]),
-      b: parseInt(match[3]),
+      r: parseInt(match[1], 10),
+      g: parseInt(match[2], 10),
+      b: parseInt(match[3], 10),
       a: match[4] ? parseFloat(match[4]) : 1
     };
   };
@@ -42,7 +60,7 @@ function interpolateColor(color1: string, color2: string, ratio: number): string
 
 /**
  * Get color for a value based on its ratio to the maximum value
- * Uses Indigo-Purple gradient scale
+ * Uses ActivityCalendar green gradient scale
  */
 export function getColorForValue(value: number, maxValue: number): string {
   if (maxValue === 0) return COLOR_STOPS[0].color;
@@ -67,7 +85,7 @@ export function getColorForValue(value: number, maxValue: number): string {
  * Get color for a hierarchy node
  */
 export function getNodeColor(node: HierarchyNode, maxValue: number): string {
-  return getColorForValue(node.value, maxValue);
+  return '#2f6b58';
 }
 
 /**
@@ -76,8 +94,8 @@ export function getNodeColor(node: HierarchyNode, maxValue: number): string {
 export function createTreemapLayout(width: number, height: number) {
   return d3.treemap<HierarchyNode>()
     .size([width, height])
-    .paddingOuter(4)
-    .paddingTop(20)
+    .paddingOuter(2)
+    .paddingTop(0)
     .paddingInner(2)
     .round(true);
 }
@@ -96,7 +114,16 @@ export function createSunburstLayout(radius: number) {
 export function createHierarchy(data: HierarchyNode): d3.HierarchyNode<HierarchyNode> {
   return d3.hierarchy<HierarchyNode>(data)
     .sum(d => d.value)
-    .sort((a, b) => (b.value || 0) - (a.value || 0));
+    .sort((a, b) => {
+      const aOrder = a.data.order;
+      const bOrder = b.data.order;
+      if (typeof aOrder === "number" && typeof bOrder === "number") {
+        return aOrder - bOrder;
+      }
+      if (typeof aOrder === "number") return -1;
+      if (typeof bOrder === "number") return 1;
+      return (b.value || 0) - (a.value || 0);
+    });
 }
 
 /**

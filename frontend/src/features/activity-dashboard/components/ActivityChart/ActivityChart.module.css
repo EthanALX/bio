@@ -8,6 +8,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    font-family: var(--font-space-mono);
 }
 
 .noData {
@@ -66,19 +67,79 @@
 
 .svg {
     width: 100%;
-    height: 100%;
-    flex: 1;
+    height: auto;
+    flex: 1 1 auto;
+    min-height: 0;
     overflow: visible;
     transition: opacity 0.3s ease;
 }
 
-.node {
-    cursor: pointer;
-    transition: opacity 0.2s ease;
+.weekHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px 0;
 }
 
-.node:hover {
-    opacity: 0.85;
+.weekBack {
+    background: rgba(15, 23, 42, 0.65);
+    color: #cbd5f5;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px 0;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.weekBack:hover:not(:disabled) {
+    color: #ffffff;
+}
+
+.weekBack:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nodeGroup {
+}
+
+.nodeRect {
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        stroke 0.2s ease;
+    stroke: rgba(148, 163, 184, 0.22);
+    stroke-width: 1;
+}
+
+.nodeRectStatic {
+    stroke: rgba(148, 163, 184, 0.12);
+}
+
+.nodeGroup:hover .nodeRect {
+    opacity: 0.92;
+    stroke: rgba(129, 140, 248, 0.7);
+    filter: drop-shadow(0 6px 10px rgba(15, 23, 42, 0.55));
+}
+
+.nodeLabel {
+    fill: #e2e8f0;
+    font-size: 12px;
+    font-family: var(--font-space-mono);
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(15, 23, 42, 0.6);
+}
+
+.nodeValue {
+    fill: #cbd5f5;
+    font-size: 10px;
+    font-family: var(--font-space-mono);
+    text-shadow: 0 1px 2px rgba(15, 23, 42, 0.5);
+}
+
+.nodeMeta {
+    fill: #94a3b8;
+    font-size: 10px;
+    font-family: var(--font-space-mono);
 }
 
 .tooltip {
@@ -161,7 +222,8 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
-    padding: 8px 16px;
+    padding: 8px 0;
+    margin-top: 1rem;
     background: rgba(15, 23, 42, 0.6);
     border-top: 1px solid rgba(148, 163, 184, 0.2);
 }
@@ -171,6 +233,7 @@
     border: none;
     color: #6366f1;
     cursor: pointer;
+    font-family: inherit;
     font-size: 24px;
     padding: 4px 12px;
     line-height: 1;
