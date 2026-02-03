@@ -131,13 +131,13 @@ export function createHierarchy(data: HierarchyNode): d3.HierarchyNode<Hierarchy
  */
 export function getMaxValue(node: d3.HierarchyNode<HierarchyNode>): number {
   let max = node.value || 0;
-  
+
   if (node.children) {
     for (const child of node.children) {
       max = Math.max(max, getMaxValue(child));
     }
   }
-  
+
   return max;
 }
 

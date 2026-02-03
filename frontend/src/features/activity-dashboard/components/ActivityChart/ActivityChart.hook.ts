@@ -114,8 +114,10 @@ function buildHierarchyData(activities: Activity[]): HierarchyNode {
     monthsMap.get(monthIndex)!.push(activity);
   });
 
-  // Build ALL 12 month nodes (even if no data)
-  for (let monthIndex = 0; monthIndex < 12; monthIndex++) {
+  const monthIndexes = Array.from(monthsMap.keys()).sort((a, b) => a - b);
+
+  // Build month nodes (only for months with data)
+  monthIndexes.forEach((monthIndex) => {
     const monthActivities = monthsMap.get(monthIndex) || [];
     const monthName = monthNames[monthIndex];
     const monthNode: HierarchyNode = {
@@ -130,59 +132,50 @@ function buildHierarchyData(activities: Activity[]): HierarchyNode {
       parent: yearNode,
     };
 
-    if (monthActivities.length > 0) {
-      // Group by week within month
-      const weeksMap = new Map<number, Activity[]>();
+    // Group by week within month
+    const weeksMap = new Map<number, Activity[]>();
 
-      monthActivities.forEach((activity) => {
-        const date = new Date(activity.date);
-        const weekNumber = getWeekNumber(date);
-        const weekKey = weekNumber;
+    monthActivities.forEach((activity) => {
+      const date = new Date(activity.date);
+      const weekNumber = getWeekNumber(date);
+      const weekKey = weekNumber;
 
-        if (!weeksMap.has(weekKey)) {
-          weeksMap.set(weekKey, []);
-        }
-        weeksMap.get(weekKey)!.push(activity);
-      });
+      if (!weeksMap.has(weekKey)) {
+        weeksMap.set(weekKey, []);
+      }
+      weeksMap.get(weekKey)!.push(activity);
+    });
 
-      // Build week nodes
-      weeksMap.forEach((weekActivities, weekNumber) => {
-        const totalDistance = weekActivities.reduce((sum, a) => sum + a.distance, 0);
-        const avgPace = calculateAveragePace(weekActivities);
-        const avgBpm = calculateAverageBpm(weekActivities);
+    // Build week nodes (only for weeks with data)
+    weeksMap.forEach((weekActivities, weekNumber) => {
+      const totalDistance = weekActivities.reduce((sum, a) => sum + a.distance, 0);
+      const avgPace = calculateAveragePace(weekActivities);
+      const avgBpm = calculateAverageBpm(weekActivities);
 
-        const weekNode: HierarchyNode = {
-          id: `${year}-${monthName}-W${weekNumber}`,
-          name: `W${weekNumber}`,
-          level: "week",
-          value: totalDistance,
-          count: weekActivities.length,
-          avgPace: avgPace,
-          avgBpm: avgBpm,
-          order: weekNumber,
-          parent: monthNode,
-        };
+      const weekNode: HierarchyNode = {
+        id: `${year}-${monthName}-W${weekNumber}`,
+        name: `W${weekNumber}`,
+        level: "week",
+        value: totalDistance,
+        count: weekActivities.length,
+        avgPace: avgPace,
+        avgBpm: avgBpm,
+        order: weekNumber,
+        parent: monthNode,
+      };
 
-        monthNode.children!.push(weekNode);
-        monthNode.value += totalDistance;
-        monthNode.count += weekActivities.length;
-      });
+      monthNode.children!.push(weekNode);
+      monthNode.value += totalDistance;
+      monthNode.count += weekActivities.length;
+    });
 
-      // Sort weeks by week number
-      monthNode.children!.sort((a, b) => {
-        const weekNumA = parseInt(a.id.split("-W")[1]);
-        const weekNumB = parseInt(b.id.split("-W")[1]);
-        return weekNumA - weekNumB;
-      });
-
-      monthNode.avgPace = calculateAveragePace(monthActivities);
-      monthNode.avgBpm = calculateAverageBpm(monthActivities);
-    }
+    monthNode.avgPace = calculateAveragePace(monthActivities);
+    monthNode.avgBpm = calculateAverageBpm(monthActivities);
 
     yearNode.children!.push(monthNode);
     yearNode.value += monthNode.value;
     yearNode.count += monthNode.count;
-  }
+  });
 
   yearNode.avgPace = calculateAveragePace(activities);
   yearNode.avgBpm = calculateAverageBpm(activities);
@@ -331,7 +324,7 @@ function renderTreemap(
   handleNodeClick: (node: HierarchyNode) => void,
   showTooltip: (event: MouseEvent, node: HierarchyNode) => void,
   hideTooltip: () => void,
-  styles: typeof import("./ActivityChart.module.css"),
+  styles: Record<string, string>,
 ) {
   const chartPadding =
     root.level === "year"
