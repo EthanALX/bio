@@ -6,7 +6,6 @@ import styles from "./YearSelector.module.css";
 export function YearSelector(props: YearSelectorProps) {
   const { actions } = useYearSelector(props);
   const { handleYearChange } = actions;
-  console.log("ye", props.selectedYear);
 
   return (
     <div className={styles.container}>
@@ -24,9 +23,11 @@ export function YearSelector(props: YearSelectorProps) {
                 <span
                   key={index}
                   className={styles.yearChar}
-                  style={{
-                    transitionDelay: `${index * 0.05}s`,
-                  }}
+                  style={
+                    {
+                      // transitionDelay: `${index * 0.05}s`,
+                    }
+                  }
                 >
                   {char}
                 </span>

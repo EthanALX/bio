@@ -26,14 +26,14 @@ export function DashboardLayout() {
   const { setSelectedYear, setViewMode } = actions;
   const { sidebarRef } = refs;
 
-  if (isLoading) {
-    return (
-      <div className={styles.loading}>
-        <div className={styles.spinner} />
-        <p>Loading activity data...</p>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className={styles.loading}>
+  //       <div className={styles.spinner} />
+  //       <p>Loading activity data...</p>
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return (
@@ -75,6 +75,10 @@ export function DashboardLayout() {
             />
           )}
 
+          {viewMode === "chart" && (
+            <ActivityChart activities={data.activities} />
+          )}
+
           {viewMode === "map" && (
             <div className={styles.mapPlaceholderView}>
               <div className={styles.trajectoryGrid}>
@@ -95,10 +99,6 @@ export function DashboardLayout() {
                 ))}
               </div>
             </div>
-          )}
-
-          {viewMode === "chart" && (
-            <ActivityChart activities={data.activities} />
           )}
         </div>
 

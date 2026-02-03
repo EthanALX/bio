@@ -22,7 +22,6 @@ export const useDashboardLayout = (): UseDashboardLayoutResult => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      console.log("sss", scrollY);
 
       const shouldBeFixed = scrollY > 100;
       setIsSidebarFixed(shouldBeFixed);

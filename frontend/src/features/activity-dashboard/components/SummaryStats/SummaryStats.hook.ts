@@ -6,7 +6,7 @@ import type {
   SummaryStatsActions,
   UseSummaryStatsProps,
   UseSummaryStatsResult,
-} from './SummaryStats.type';
+} from "./SummaryStats.type";
 
 export const useSummaryStats = ({
   stats,
@@ -19,8 +19,8 @@ export const useSummaryStats = ({
       label: "Distance",
       mode: "list" as ViewMode,
     },
-    { value: stats.Days, label: "Days", mode: "calendar" as ViewMode },
     { value: stats.AvgPace, label: "Avg Pace", mode: "chart" as ViewMode },
+    { value: stats.Days, label: "Days", mode: "calendar" as ViewMode },
     { value: stats.Routes, label: "Routes", mode: "map" as ViewMode },
   ];
 
