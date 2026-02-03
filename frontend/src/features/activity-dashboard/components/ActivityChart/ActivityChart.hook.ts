@@ -696,16 +696,27 @@ export const useActivityChart = ({
 
   // Handle responsive dimensions
   useEffect(() => {
+    if (!svgRef.current) return;
+
+    const element = svgRef.current;
     const updateDimensions = () => {
-      if (containerRef.current) {
-        const { width } = containerRef.current.getBoundingClientRect();
-        setDimensions({ width: Math.max(width, 600), height: 450 });
-      }
+      const { width, height } = element.getBoundingClientRect();
+      if (width === 0 || height === 0) return;
+      setDimensions({
+        width: Math.max(width, 600),
+        height: Math.max(height, 300),
+      });
     };
 
     updateDimensions();
+    const observer = new ResizeObserver(() => updateDimensions());
+    observer.observe(element);
     window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateDimensions);
+    };
   }, []);
 
   // Render visualization when dependencies change

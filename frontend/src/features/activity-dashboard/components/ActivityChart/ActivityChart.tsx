@@ -58,12 +58,15 @@ export function ActivityChart({ activities }: ActivityChartProps) {
         </div>
       )}
 
-      <svg
-        ref={svgRef}
-        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-        className={styles.svg}
-        style={{ opacity: isAnimating ? 0.5 : 1 }}
-      />
+      <div className={styles.chartStage}>
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+          preserveAspectRatio="none"
+          className={styles.svg}
+          style={{ opacity: isAnimating ? 0.5 : 1 }}
+        />
+      </div>
 
       {showMonthNav && currentMonthIndex >= 0 && (
         <div className={styles.monthNav}>

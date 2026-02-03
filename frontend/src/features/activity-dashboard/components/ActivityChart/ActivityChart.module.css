@@ -67,11 +67,15 @@
 
 .svg {
     width: 100%;
-    height: auto;
-    flex: 1 1 auto;
-    min-height: 0;
+    height: 100%;
+    display: block;
     overflow: visible;
     transition: opacity 0.3s ease;
+}
+
+.chartStage {
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .weekHeader {
