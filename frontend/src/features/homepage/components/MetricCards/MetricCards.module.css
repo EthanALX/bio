@@ -1,0 +1,110 @@
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: rgba(19, 22, 32, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  transition: background 0.3s;
+}
+
+.card:hover .glowBg {
+  opacity: 1;
+}
+
+.cardPrimary {
+  border-color: rgba(127, 13, 242, 0.2);
+}
+
+.cardBlue {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.cardOrange {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.glowBg {
+  position: absolute;
+  top: -5rem;
+  right: -5rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.glowBgPrimary {
+  background: rgba(127, 13, 242, 0.1);
+}
+
+.glowBgBlue {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.glowBgOrange {
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.25rem;
+}
+
+.cardLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(156, 163, 175);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardIcon {
+  opacity: 0.7;
+}
+
+.cardIconPrimary {
+  color: rgba(127, 13, 242, 0.7);
+}
+
+.cardIconBlue {
+  color: rgba(96, 165, 250, 0.7);
+}
+
+.cardIconOrange {
+  color: rgba(251, 146, 60, 0.7);
+}
+
+.cardValue {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.cardNumber {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.cardNumberPrimary {
+  text-shadow: 0 0 10px rgba(127, 13, 242, 0.5);
+}
+
+.cardUnit {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(156, 163, 175);
+}

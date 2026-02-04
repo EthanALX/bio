@@ -1,0 +1,175 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: rgba(19, 22, 32, 0.4);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.iconBox {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7f0df2;
+  background: rgba(127, 13, 242, 0.1);
+  border-radius: 0.5rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: white;
+  text-transform: uppercase;
+}
+
+.titlePrimary {
+  color: #7f0df2;
+}
+
+.titleVersion {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgb(107, 114, 128);
+  vertical-align: top;
+  margin-left: 0.25rem;
+}
+
+.nav {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(107, 114, 128);
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  transition: color 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.navItem:hover {
+  color: rgb(209, 213, 219);
+}
+
+.navItemActive {
+  composes: navItem;
+  color: white;
+  text-shadow: 0 0 8px rgba(127, 13, 242, 0.8);
+  border-bottom-color: #7f0df2;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.iconButton {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgb(209, 213, 219);
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #7f0df2;
+}
+
+.notificationButton {
+  composes: iconButton;
+  position: relative;
+}
+
+.notificationDot {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #7f0df2;
+  border-radius: 9999px;
+}
+
+.notificationDotPing {
+  composes: notificationDot;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background: linear-gradient(to top right, #7f0df2, #3b82f6);
+  padding: 1px;
+}
+
+.avatarInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background: #0a0e14;
+  padding: 0.125rem;
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+}

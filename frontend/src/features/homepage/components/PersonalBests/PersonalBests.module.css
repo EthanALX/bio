@@ -1,0 +1,52 @@
+.container {
+  background: rgba(19, 22, 32, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.headerIcon {
+  color: #7f0df2;
+  font-size: 1.125rem;
+}
+
+.title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.pbsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.pbCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+  text-align: center;
+}
+
+.pbLabel {
+  font-size: 0.75rem;
+  color: rgb(156, 163, 175);
+  margin-bottom: 0.25rem;
+}
+
+.pbValue {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: white;
+}

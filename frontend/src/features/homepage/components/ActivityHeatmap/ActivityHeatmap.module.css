@@ -1,0 +1,110 @@
+.heatmapContainer {
+  background: rgba(19, 22, 32, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+}
+
+.heatmapHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: white;
+}
+
+.titleIcon {
+  color: #7f0df2;
+  font-size: 1.25rem;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(156, 163, 175);
+}
+
+.legendLabel {
+  color: inherit;
+}
+
+.legendCells {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.legendCell {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.125rem;
+}
+
+.legendCell0 {
+  background: rgb(30, 35, 48);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.legendCell1 {
+  background: rgba(127, 13, 242, 0.2);
+  border: 1px solid rgba(127, 13, 242, 0.2);
+}
+
+.legendCell2 {
+  background: rgba(127, 13, 242, 0.5);
+  border: 1px solid rgba(127, 13, 242, 0.4);
+}
+
+.legendCell3 {
+  background: #7f0df2;
+  border: 1px solid #7f0df2;
+  box-shadow: 0 0 5px rgba(127, 13, 242, 0.4);
+}
+
+.grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, auto);
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+
+.grid::-webkit-scrollbar {
+  display: none;
+}
+
+.cell {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.125rem;
+}
+
+.cellLevel0 {
+  background: rgb(30, 35, 48);
+}
+
+.cellLevel1 {
+  background: rgba(127, 13, 242, 0.2);
+}
+
+.cellLevel2 {
+  background: rgba(127, 13, 242, 0.5);
+}
+
+.cellLevel3 {
+  background: #7f0df2;
+  box-shadow: 0 0 5px rgba(127, 13, 242, 0.4);
+}
