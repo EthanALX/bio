@@ -21,7 +21,7 @@ export function PersonalBests({ selectedYear }: PersonalBestsProps) {
     <div className={styles.container}>
       <div className={styles.header}>
         <span className={`material-symbols-outlined ${styles.headerIcon}`}>
-          trophy
+          {/*trophy*/}
         </span>
         <h3 className={styles.title}>个人最佳</h3>
       </div>

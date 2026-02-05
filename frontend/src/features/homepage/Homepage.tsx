@@ -10,11 +10,13 @@ import { MetricCards } from "./components/MetricCards";
 import { Footer } from "./components/Footer";
 
 export function Homepage() {
-  const [selectedYear, setSelectedYear] = useState<number | undefined>(undefined);
+  const [selectedYear, setSelectedYear] = useState<number | undefined>(
+    undefined,
+  );
 
   return (
     <div className="homepage">
-      <Header selectedYear={selectedYear} onYearChange={setSelectedYear} />
+      {/*<Header selectedYear={selectedYear} onYearChange={setSelectedYear} />*/}
       <main className="main-content">
         <section className="left-column">
           <MapSection selectedYear={selectedYear} />

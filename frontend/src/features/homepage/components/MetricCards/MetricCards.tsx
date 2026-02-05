@@ -16,21 +16,21 @@ export function MetricCards({ selectedYear }: MetricCardsProps) {
       label: "总距离",
       value: `${totalDistance.toFixed(0)}`,
       unit: "km",
-      icon: "timeline",
+      icon: "",
       variant: "primary" as const,
     },
     {
       label: "平均配速",
       value: avgPace.replace('"', ""),
       unit: "/km",
-      icon: "speed",
+      icon: "",
       variant: "blue" as const,
     },
     {
       label: "活跃天数",
       value: String(activeDays),
       unit: "天",
-      icon: "calendar_today",
+      icon: "",
       variant: "orange" as const,
     },
   ];
@@ -44,8 +44,8 @@ export function MetricCards({ selectedYear }: MetricCardsProps) {
             metric.variant === "primary"
               ? styles.cardPrimary
               : metric.variant === "blue"
-              ? styles.cardBlue
-              : styles.cardOrange
+                ? styles.cardBlue
+                : styles.cardOrange
           }`}
         >
           <div
@@ -53,8 +53,8 @@ export function MetricCards({ selectedYear }: MetricCardsProps) {
               metric.variant === "primary"
                 ? styles.glowBgPrimary
                 : metric.variant === "blue"
-                ? styles.glowBgBlue
-                : styles.glowBgOrange
+                  ? styles.glowBgBlue
+                  : styles.glowBgOrange
             }`}
           />
           <div className={styles.cardHeader}>
@@ -64,8 +64,8 @@ export function MetricCards({ selectedYear }: MetricCardsProps) {
                 metric.variant === "primary"
                   ? styles.cardIconPrimary
                   : metric.variant === "blue"
-                  ? styles.cardIconBlue
-                  : styles.cardIconOrange
+                    ? styles.cardIconBlue
+                    : styles.cardIconOrange
               }`}
             >
               {metric.icon}

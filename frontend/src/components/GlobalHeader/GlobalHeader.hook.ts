@@ -12,6 +12,7 @@ const NAVIGATION_CONFIG: Record<string, NavigationLink[]> = {
   ],
   "/about": [
     { href: "/", label: "Running Stats" },
+    { href: "/homepage", label: "Homepage" },
     // { href: "/showcase", label: "Components" },
   ],
   "/showcase": [

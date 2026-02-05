@@ -22,17 +22,18 @@ export function MapSection({ selectedYear }: MapSectionProps) {
     const coords = latestActivity.coordinates;
     const last = coords[coords.length - 1];
 
-    const minLng = Math.min(...coords.map(c => c.lng));
-    const maxLng = Math.max(...coords.map(c => c.lng));
-    const minLat = Math.min(...coords.map(c => c.lat));
-    const maxLat = Math.max(...coords.map(c => c.lat));
+    const minLng = Math.min(...coords.map((c) => c.lng));
+    const maxLng = Math.max(...coords.map((c) => c.lng));
+    const minLat = Math.min(...coords.map((c) => c.lat));
+    const maxLat = Math.max(...coords.map((c) => c.lat));
 
     const lngRange = maxLng - minLng || 1;
     const latRange = maxLat - minLat || 1;
     const padding = 10;
 
     const x = padding + ((last.lng - minLng) / lngRange) * (100 - 2 * padding);
-    const y = 100 - padding - ((last.lat - minLat) / latRange) * (100 - 2 * padding);
+    const y =
+      100 - padding - ((last.lat - minLat) / latRange) * (100 - 2 * padding);
 
     return { x, y };
   }, [latestActivity]);
@@ -52,21 +53,17 @@ export function MapSection({ selectedYear }: MapSectionProps) {
       <div className={styles.zoomControls}>
         <div className={styles.zoomButtonGroup}>
           <button className={styles.zoomButton}>
-            <span className="material-symbols-outlined">add</span>
+            <span className="material-symbols-outlined">+</span>
           </button>
           <button className={styles.zoomButton}>
-            <span className="material-symbols-outlined">remove</span>
+            <span className="material-symbols-outlined">-</span>
           </button>
         </div>
       </div>
 
       <svg className={styles.svgContainer} viewBox="0 0 100 100">
         {svgPath && (
-          <path
-            ref={pathRef}
-            d={svgPath}
-            className={styles.svgPath}
-          />
+          <path ref={pathRef} d={svgPath} className={styles.svgPath} />
         )}
         {endPointCoordinates && (
           <circle
