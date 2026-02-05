@@ -1,15 +1,13 @@
 "use client";
 
 import React from "react";
-import { useActivities } from "@/features/homepage/hooks";
+import { useActivityHeatmap } from "./ActivityHeatmap.hook";
+import type { ActivityHeatmapProps } from "./ActivityHeatmap.type";
 import styles from "./ActivityHeatmap.module.css";
 
-interface ActivityHeatmapProps {
-  selectedYear?: number;
-}
-
-export function ActivityHeatmap({ selectedYear }: ActivityHeatmapProps) {
-  const { heatmapData } = useActivities(selectedYear);
+export function ActivityHeatmap(props: ActivityHeatmapProps) {
+  const { data } = useActivityHeatmap(props);
+  const { heatmapData } = data;
 
   const cellClasses = [
     styles.cellLevel0,
@@ -25,17 +23,17 @@ export function ActivityHeatmap({ selectedYear }: ActivityHeatmapProps) {
           <span className={`material-symbols-outlined ${styles.titleIcon}`}>
             grid_view
           </span>
-          活动热力图
+          {/*活动热力图*/}
         </h3>
         <div className={styles.legend}>
-          <span className={styles.legendLabel}>少</span>
+          {/*<span className={styles.legendLabel}>less</span>*/}
           <div className={styles.legendCells}>
             <div className={styles.legendCell0} />
             <div className={styles.legendCell1} />
             <div className={styles.legendCell2} />
             <div className={styles.legendCell3} />
           </div>
-          <span className={styles.legendLabel}>多</span>
+          {/*<span className={styles.legendLabel}>more</span>*/}
         </div>
       </div>
       <div className={styles.grid}>
@@ -45,7 +43,7 @@ export function ActivityHeatmap({ selectedYear }: ActivityHeatmapProps) {
               key={`${weekIndex}-${dayIndex}`}
               className={`${styles.cell} ${cellClasses[level]}`}
             />
-          ))
+          )),
         )}
       </div>
     </div>

@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
+import type { FooterProps } from "./Footer.type";
 import styles from "./Footer.module.css";
 
-export function Footer() {
+export function Footer(_props: FooterProps) {
   return (
     <footer className={styles.footer}>
       <div className={styles.links}>

@@ -1,21 +1,13 @@
 "use client";
 
 import React from "react";
-import { useActivities } from "@/features/homepage/hooks";
+import { usePersonalBests } from "./PersonalBests.hook";
+import type { PersonalBestsProps } from "./PersonalBests.type";
 import styles from "./PersonalBests.module.css";
 
-interface PersonalBestsProps {
-  selectedYear?: number;
-}
-
-export function PersonalBests({ selectedYear }: PersonalBestsProps) {
-  const { personalBests } = useActivities(selectedYear);
-
-  const pbs = [
-    { event: "5K", time: personalBests.best5k || "--:--" },
-    { event: "10K", time: personalBests.best10k || "--:--" },
-    { event: "Half", time: personalBests.bestHalf || "--:--" },
-  ];
+export function PersonalBests(props: PersonalBestsProps) {
+  const { data } = usePersonalBests(props);
+  const { pbs } = data;
 
   return (
     <div className={styles.container}>

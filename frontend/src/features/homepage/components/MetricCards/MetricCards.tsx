@@ -1,39 +1,13 @@
 "use client";
 
 import React from "react";
-import { useActivities } from "@/features/homepage/hooks";
+import { useMetricCards } from "./MetricCards.hook";
+import type { MetricCardsProps } from "./MetricCards.type";
 import styles from "./MetricCards.module.css";
 
-interface MetricCardsProps {
-  selectedYear?: number;
-}
-
-export function MetricCards({ selectedYear }: MetricCardsProps) {
-  const { totalDistance, avgPace, activeDays } = useActivities(selectedYear);
-
-  const metrics = [
-    {
-      label: "总距离",
-      value: `${totalDistance.toFixed(0)}`,
-      unit: "km",
-      icon: "",
-      variant: "primary" as const,
-    },
-    {
-      label: "平均配速",
-      value: avgPace.replace('"', ""),
-      unit: "/km",
-      icon: "",
-      variant: "blue" as const,
-    },
-    {
-      label: "活跃天数",
-      value: String(activeDays),
-      unit: "天",
-      icon: "",
-      variant: "orange" as const,
-    },
-  ];
+export function MetricCards(props: MetricCardsProps) {
+  const { data } = useMetricCards(props);
+  const { metrics } = data;
 
   return (
     <div className={styles.cardsGrid}>

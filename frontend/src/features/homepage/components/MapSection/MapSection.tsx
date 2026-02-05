@@ -1,42 +1,16 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef } from "react";
-import { useActivities } from "@/features/homepage/hooks";
-import { generateSvgPath } from "@/features/homepage/utils";
+import React, { useEffect, useRef } from "react";
+import { useMapSection } from "./MapSection.hook";
+import type { MapSectionProps } from "./MapSection.type";
 import styles from "./MapSection.module.css";
 
-interface MapSectionProps {
-  selectedYear?: number;
-}
+export function MapSection(props: MapSectionProps) {
+  const { data, actions } = useMapSection(props);
+  const { latestActivity, svgPath, endPointCoordinates } = data;
+  const { handlePathRef } = actions;
 
-export function MapSection({ selectedYear }: MapSectionProps) {
-  const { latestActivity } = useActivities(selectedYear);
   const pathRef = useRef<SVGPathElement>(null);
-
-  const svgPath = latestActivity
-    ? generateSvgPath(latestActivity.coordinates)
-    : "";
-
-  const endPointCoordinates = useMemo(() => {
-    if (!latestActivity?.coordinates?.length) return null;
-    const coords = latestActivity.coordinates;
-    const last = coords[coords.length - 1];
-
-    const minLng = Math.min(...coords.map((c) => c.lng));
-    const maxLng = Math.max(...coords.map((c) => c.lng));
-    const minLat = Math.min(...coords.map((c) => c.lat));
-    const maxLat = Math.max(...coords.map((c) => c.lat));
-
-    const lngRange = maxLng - minLng || 1;
-    const latRange = maxLat - minLat || 1;
-    const padding = 10;
-
-    const x = padding + ((last.lng - minLng) / lngRange) * (100 - 2 * padding);
-    const y =
-      100 - padding - ((last.lat - minLat) / latRange) * (100 - 2 * padding);
-
-    return { x, y };
-  }, [latestActivity]);
 
   useEffect(() => {
     const path = pathRef.current;
@@ -46,7 +20,7 @@ export function MapSection({ selectedYear }: MapSectionProps) {
       path.style.strokeDashoffset = String(length);
       path.style.animation = "drawPath 3s ease forwards";
     }
-  }, [svgPath]);
+  }, [svgPath, handlePathRef]);
 
   return (
     <div className={styles.mapContainer}>
@@ -63,7 +37,7 @@ export function MapSection({ selectedYear }: MapSectionProps) {
 
       <svg className={styles.svgContainer} viewBox="0 0 100 100">
         {svgPath && (
-          <path ref={pathRef} d={svgPath} className={styles.svgPath} />
+          <path ref={handlePathRef} d={svgPath} className={styles.svgPath} />
         )}
         {endPointCoordinates && (
           <circle

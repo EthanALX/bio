@@ -151,20 +151,7 @@ export function calculatePersonalBests(activities: Activity[]): {
   };
 }
 
-function parseTime(timeStr: string): number {
-  const hourMatch = timeStr.match(/(\d+)h/);
-  const minMatch = timeStr.match(/(\d+)m/);
-  const secMatch = timeStr.match(/(\d+)s/);
-
-  let totalSeconds = 0;
-  if (hourMatch) totalSeconds += parseInt(hourMatch[1], 10) * 3600;
-  if (minMatch) totalSeconds += parseInt(minMatch[1], 10) * 60;
-  if (secMatch) totalSeconds += parseInt(secMatch[1], 10);
-
-  return totalSeconds;
-}
-
-function formatTime(timeStr: string): string {
+export function formatTime(timeStr: string): string {
   const totalSeconds = parseTime(timeStr);
   if (totalSeconds === Infinity) return timeStr;
 
@@ -176,4 +163,17 @@ function formatTime(timeStr: string): string {
     return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
+}
+
+function parseTime(timeStr: string): number {
+  const hourMatch = timeStr.match(/(\d+)h/);
+  const minMatch = timeStr.match(/(\d+)m/);
+  const secMatch = timeStr.match(/(\d+)s/);
+
+  let totalSeconds = 0;
+  if (hourMatch) totalSeconds += parseInt(hourMatch[1], 10) * 3600;
+  if (minMatch) totalSeconds += parseInt(minMatch[1], 10) * 60;
+  if (secMatch) totalSeconds += parseInt(secMatch[1], 10);
+
+  return totalSeconds;
 }
