@@ -3,6 +3,7 @@
 import React from "react";
 import { useActivityHeatmap } from "./ActivityHeatmap.hook";
 import type { ActivityHeatmapProps } from "./ActivityHeatmap.type";
+import { Icon } from "@/components/Icon";
 import styles from "./ActivityHeatmap.module.css";
 
 export function ActivityHeatmap(props: ActivityHeatmapProps) {
@@ -20,9 +21,7 @@ export function ActivityHeatmap(props: ActivityHeatmapProps) {
     <div className={styles.heatmapContainer}>
       <div className={styles.heatmapHeader}>
         <h3 className={styles.title}>
-          <span className={`material-symbols-outlined ${styles.titleIcon}`}>
-            grid_view
-          </span>
+          <Icon name="grid_view" className={styles.titleIcon} />
           {/*活动热力图*/}
         </h3>
         <div className={styles.legend}>

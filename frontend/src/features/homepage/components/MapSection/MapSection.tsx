@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { useMapSection } from "./MapSection.hook";
 import type { MapSectionProps } from "./MapSection.type";
+import { Icon } from "@/components/Icon";
 import styles from "./MapSection.module.css";
 
 export function MapSection(props: MapSectionProps) {
@@ -27,10 +28,10 @@ export function MapSection(props: MapSectionProps) {
       <div className={styles.zoomControls}>
         <div className={styles.zoomButtonGroup}>
           <button className={styles.zoomButton}>
-            <span className="material-symbols-outlined">+</span>
+            <Icon name="+" />
           </button>
           <button className={styles.zoomButton}>
-            <span className="material-symbols-outlined">-</span>
+            <Icon name="-" />
           </button>
         </div>
       </div>

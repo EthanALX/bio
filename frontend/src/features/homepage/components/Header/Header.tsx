@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Icon } from "@/components/Icon";
 import styles from "./Header.module.css";
 
 const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
@@ -27,7 +28,7 @@ export function Header({ selectedYear, onYearChange }: HeaderProps) {
       <div className={styles.container}>
         <div className={styles.logoSection}>
           <div className={styles.iconBox}>
-            <span className="material-symbols-outlined">terminal</span>
+            <Icon name="terminal" />
           </div>
           <h1 className={styles.title}>
             Running<span className={styles.titlePrimary}>OS</span>
@@ -51,11 +52,11 @@ export function Header({ selectedYear, onYearChange }: HeaderProps) {
 
         <div className={styles.actions}>
           <button className={styles.iconButton}>
-            <span className="material-symbols-outlined">settings</span>
+            <Icon name="settings" />
           </button>
 
           <button className={styles.notificationButton}>
-            <span className="material-symbols-outlined">notifications</span>
+            <Icon name="notifications" />
             <span className={styles.notificationDotPing} />
             <span className={styles.notificationDot} />
           </button>

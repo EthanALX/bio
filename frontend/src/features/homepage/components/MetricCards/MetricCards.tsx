@@ -3,6 +3,7 @@
 import React from "react";
 import { useMetricCards } from "./MetricCards.hook";
 import type { MetricCardsProps } from "./MetricCards.type";
+import { Icon } from "@/components/Icon";
 import styles from "./MetricCards.module.css";
 
 export function MetricCards(props: MetricCardsProps) {
@@ -33,17 +34,16 @@ export function MetricCards(props: MetricCardsProps) {
           />
           <div className={styles.cardHeader}>
             <p className={styles.cardLabel}>{metric.label}</p>
-            <span
-              className={`material-symbols-outlined ${styles.cardIcon} ${
+            <Icon
+              name={metric.icon}
+              className={`${styles.cardIcon} ${
                 metric.variant === "primary"
                   ? styles.cardIconPrimary
                   : metric.variant === "blue"
                     ? styles.cardIconBlue
                     : styles.cardIconOrange
               }`}
-            >
-              {metric.icon}
-            </span>
+            />
           </div>
           <div className={styles.cardValue}>
             <span

@@ -5,6 +5,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as Separator from "@radix-ui/react-separator";
 import { useActivityList } from "./ActivityList.hook";
 import type { ActivityListProps, FormattedActivity, SortField } from "./ActivityList.type";
+import { Icon } from "@/components/Icon";
 import { RouteSketch } from "../RouteSketch";
 import styles from "./ActivityList.module.css";
 
@@ -65,7 +66,7 @@ function ActivityDetailDialog({
           <div className={styles.dialogHeader}>
             <Dialog.Title className={styles.dialogTitle}>Run Details</Dialog.Title>
             <Dialog.Close className={styles.dialogClose} aria-label="Close">
-              <span className="material-symbols-outlined">close</span>
+              <Icon name="close" className={styles.dialogCloseIcon} />
             </Dialog.Close>
           </div>
 
@@ -87,7 +88,7 @@ function ActivityDetailDialog({
           <div className={styles.dialogStats}>
             {detail.map(({ icon, label, value }) => (
               <div key={label} className={styles.dialogStatItem}>
-                <span className={`material-symbols-outlined ${styles.dialogStatIcon}`}>{icon}</span>
+                <Icon name={icon} className={styles.dialogStatIcon} />
                 <div>
                   <div className={styles.dialogStatLabel}>{label}</div>
                   <div className={styles.dialogStatValue}>{value}</div>

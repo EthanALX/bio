@@ -3,6 +3,7 @@
 import React from "react";
 import { usePersonalBests } from "./PersonalBests.hook";
 import type { PersonalBestsProps } from "./PersonalBests.type";
+import { Icon } from "@/components/Icon";
 import styles from "./PersonalBests.module.css";
 
 export function PersonalBests(props: PersonalBestsProps) {
@@ -12,9 +13,7 @@ export function PersonalBests(props: PersonalBestsProps) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <span className={`material-symbols-outlined ${styles.headerIcon}`}>
-          {/*trophy*/}
-        </span>
+        <Icon name="trophy" className={styles.headerIcon} />
         <h3 className={styles.title}>个人最佳</h3>
       </div>
       <div className={styles.pbsGrid}>

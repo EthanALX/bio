@@ -5,6 +5,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useDashboardLayout } from "./DashboardLayout.hook";
 import { YearSelector } from "../YearSelector";
 import { SummaryStats } from "../SummaryStats";
+import { Icon } from "@/components/Icon";
 import { ActivityList } from "../ActivityList";
 import { ActivityCalendar } from "../ActivityCalendar";
 import { ActivityMap } from "../ActivityMap";
@@ -13,10 +14,10 @@ import { RouteSketch } from "../RouteSketch";
 import styles from "./DashboardLayout.module.css";
 
 const TAB_ITEMS = [
-  { value: "list",     label: "Runs",     icon: "format_list_bulleted" },
+  { value: "list", label: "Runs", icon: "format_list_bulleted" },
   { value: "calendar", label: "Calendar", icon: "calendar_month" },
-  { value: "chart",    label: "Charts",   icon: "area_chart" },
-  { value: "map",      label: "Map",      icon: "route" },
+  { value: "chart", label: "Charts", icon: "area_chart" },
+  { value: "map", label: "Map", icon: "route" },
 ] as const;
 
 export function DashboardLayout() {
@@ -27,7 +28,7 @@ export function DashboardLayout() {
   if (error) {
     return (
       <div className={styles.error}>
-        <span className="material-symbols-outlined">error</span>
+        <Icon name="error" className={styles.errorIcon} />
         <p>Error loading data: {error.message}</p>
       </div>
     );
@@ -57,14 +58,18 @@ export function DashboardLayout() {
       >
         <Tabs.List className={styles.tabList} aria-label="Dashboard views">
           {TAB_ITEMS.map(({ value, label, icon }) => (
-            <Tabs.Trigger key={value} value={value} className={styles.tabTrigger}>
-              <span className={`material-symbols-outlined ${styles.tabIcon}`} aria-hidden="true">
-                {icon}
-              </span>
+            <Tabs.Trigger
+              key={value}
+              value={value}
+              className={styles.tabTrigger}
+            >
+              <Icon name={icon} className={styles.tabIcon} />
               <span className={styles.tabLabel}>{label}</span>
             </Tabs.Trigger>
           ))}
-          {isLoading && <div className={styles.loadingPulse} aria-hidden="true" />}
+          {isLoading && (
+            <div className={styles.loadingPulse} aria-hidden="true" />
+          )}
         </Tabs.List>
 
         <Tabs.Content value="list" className={styles.tabContent}>
@@ -73,7 +78,10 @@ export function DashboardLayout() {
 
         <Tabs.Content value="calendar" className={styles.tabContent}>
           {data && (
-            <ActivityCalendar activities={data.activities} year={selectedYear} />
+            <ActivityCalendar
+              activities={data.activities}
+              year={selectedYear}
+            />
           )}
         </Tabs.Content>
 
@@ -90,8 +98,13 @@ export function DashboardLayout() {
                   className={styles.trajectoryBlock}
                   title={`${activity.route} — ${activity.distance} km`}
                 >
-                  <RouteSketch coordinates={activity.coordinates} seed={activity.id} />
-                  <div className={styles.trajectoryDist}>{activity.distance} km</div>
+                  <RouteSketch
+                    coordinates={activity.coordinates}
+                    seed={activity.id}
+                  />
+                  <div className={styles.trajectoryDist}>
+                    {activity.distance} km
+                  </div>
                 </div>
               ))}
             </div>
