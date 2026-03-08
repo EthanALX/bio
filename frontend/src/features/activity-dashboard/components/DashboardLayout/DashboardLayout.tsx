@@ -14,10 +14,10 @@ import { RouteSketch } from "../RouteSketch";
 import styles from "./DashboardLayout.module.css";
 
 const TAB_ITEMS = [
-  { value: "list", label: "Runs", icon: "format_list_bulleted" },
-  { value: "calendar", label: "Calendar", icon: "calendar_month" },
-  { value: "chart", label: "Charts", icon: "area_chart" },
-  { value: "map", label: "Map", icon: "route" },
+  { value: "list", label: "记录历程", icon: "format_list_bulleted" },
+  { value: "calendar", label: "打卡日历", icon: "calendar_month" },
+  { value: "chart", label: "图表数据", icon: "area_chart" },
+  { value: "map", label: "跑步路线", icon: "route" },
 ] as const;
 
 export function DashboardLayout() {

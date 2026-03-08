@@ -1,12 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 import { useAboutLayout } from "./AboutLayout.hook";
 import styles from "./AboutLayout.module.css";
 
 export function AboutLayout() {
   const { state } = useAboutLayout();
   const { heroText, storySections, socialLinks, footerText } = state;
+
+  const [qrDialogOpen, setQrDialogOpen] = useState(false);
+  const [selectedSocial, setSelectedSocial] = useState<{
+    label: string;
+    qrCode: string;
+  } | null>(null);
+
+  const handleSocialClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: (typeof socialLinks)[0],
+  ) => {
+    if (link.qrCode) {
+      e.preventDefault();
+      setSelectedSocial({ label: link.label, qrCode: link.qrCode });
+      setQrDialogOpen(true);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -34,6 +52,7 @@ export function AboutLayout() {
               target="_blank"
               rel="noopener noreferrer"
               className={`${styles.socialLink} ${styles[link.className]}`}
+              onClick={(e) => handleSocialClick(e, link)}
             >
               <svg
                 className={styles.icon}
@@ -48,6 +67,29 @@ export function AboutLayout() {
           ))}
         </div>
       </section>
+
+      {/* QR Code Dialog */}
+      <Dialog.Root open={qrDialogOpen} onOpenChange={setQrDialogOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className={styles.qrOverlay} />
+          <Dialog.Content className={styles.qrContent}>
+            <Dialog.Title className={styles.qrTitle}>
+              {selectedSocial?.label} 二维码
+            </Dialog.Title>
+            <div className={styles.qrImageWrapper}>
+              <img
+                src={selectedSocial?.qrCode}
+                alt={`${selectedSocial?.label} 二维码`}
+                className={styles.qrImage}
+              />
+            </div>
+            <p className={styles.qrHint}>扫描二维码关注</p>
+            <Dialog.Close className={styles.qrClose}>
+              <span aria-hidden="true">×</span>
+            </Dialog.Close>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
 
       <footer className={styles.footer}>
         <p>{footerText}</p>

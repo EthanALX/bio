@@ -7,6 +7,7 @@ import styles from "./Subtitle.module.css";
 export function Subtitle() {
   const { shouldRender } = useSubtitle();
 
+  return null;
   if (!shouldRender) {
     return null;
   }

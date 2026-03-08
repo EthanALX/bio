@@ -38,7 +38,7 @@
 .aboutLink {
     color: #64748b;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.8rem;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     padding: 0.5rem 0.75rem;

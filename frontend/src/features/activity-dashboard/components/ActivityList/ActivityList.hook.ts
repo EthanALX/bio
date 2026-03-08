@@ -19,10 +19,30 @@ function parseTimeToMinutes(time: string): number {
   return (h ? parseInt(h[1]) * 60 : 0) + (m ? parseInt(m[1]) : 0);
 }
 
-export const useActivityList = ({ activities }: UseActivityListProps): UseActivityListResult => {
+function formatTime(time: string): string {
+  const totalMinutes = parseTimeToMinutes(time);
+
+  if (totalMinutes < 60) {
+    return `${totalMinutes}min`;
+  }
+
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (minutes === 0) {
+    return `${hours}h`;
+  }
+
+  return `${hours}h${minutes}min`;
+}
+
+export const useActivityList = ({
+  activities,
+}: UseActivityListProps): UseActivityListResult => {
   const [sortField, setSortField] = useState<SortField>("date");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
-  const [selectedActivity, setSelectedActivity] = useState<FormattedActivity | null>(null);
+  const [selectedActivity, setSelectedActivity] =
+    useState<FormattedActivity | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const formattedActivities: FormattedActivity[] = useMemo(
@@ -34,19 +54,21 @@ export const useActivityList = ({ activities }: UseActivityListProps): UseActivi
         pace: a.pace,
         paceSeconds: parsePaceToSeconds(a.pace),
         bpm: a.bpm,
-        time: a.time,
+        time: formatTime(a.time),
         route: a.route,
         coordinates: a.coordinates,
         dateISO: a.date,
-        dateDisplay: new Date(a.date).toLocaleString("zh-CN", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-        }).replace(/\//g, "-"),
+        dateDisplay: new Date(a.date)
+          .toLocaleString("zh-CN", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+          .replace(/\//g, "-"),
       })),
-    [activities]
+    [activities],
   );
 
   const sorted = useMemo(() => {
@@ -55,11 +77,23 @@ export const useActivityList = ({ activities }: UseActivityListProps): UseActivi
       let av: number | string = 0;
       let bv: number | string = 0;
 
-      if (sortField === "date")     { av = a.dateISO; bv = b.dateISO; }
-      if (sortField === "distance") { av = a.distanceNum; bv = b.distanceNum; }
-      if (sortField === "pace")     { av = a.paceSeconds; bv = b.paceSeconds; }
-      if (sortField === "bpm")      { av = a.bpm; bv = b.bpm; }
-      if (sortField === "time")     {
+      if (sortField === "date") {
+        av = a.dateISO;
+        bv = b.dateISO;
+      }
+      if (sortField === "distance") {
+        av = a.distanceNum;
+        bv = b.distanceNum;
+      }
+      if (sortField === "pace") {
+        av = a.paceSeconds;
+        bv = b.paceSeconds;
+      }
+      if (sortField === "bpm") {
+        av = a.bpm;
+        bv = b.bpm;
+      }
+      if (sortField === "time") {
         av = parseTimeToMinutes(a.time);
         bv = parseTimeToMinutes(b.time);
       }

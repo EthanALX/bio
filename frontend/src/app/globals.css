@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -30,9 +30,17 @@ html {
 /* Cyber grid background pattern */
 .bg-cyber-grid {
     background-size: 40px 40px;
-    background-image: 
-        linear-gradient(to right, rgba(127, 13, 242, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(127, 13, 242, 0.05) 1px, transparent 1px);
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(127, 13, 242, 0.05) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(127, 13, 242, 0.05) 1px,
+            transparent 1px
+        );
 }
 
 /* Glass panel effect */
@@ -42,19 +50,9 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Hide scrollbar */
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
 /* Material Symbols Outlined base styles */
 .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
+    font-family: "Material Symbols Outlined";
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
@@ -65,22 +63,30 @@ html {
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
     -webkit-font-smoothing: antialiased;
     font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24;
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
 }
 
 /* Homepage global layout */
 .homepage {
     min-height: 100vh;
-    background-image: 
-        linear-gradient(to right, rgba(127, 13, 242, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(127, 13, 242, 0.05) 1px, transparent 1px);
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(127, 13, 242, 0.05) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(127, 13, 242, 0.05) 1px,
+            transparent 1px
+        );
     background-size: 40px 40px;
 }
 
@@ -148,30 +154,77 @@ html {
     color: white;
 }
 
+/* ── Global scrollbar styles ──────────────────────────────────────── */
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(127, 13, 242, 0.3);
+    border-radius: 5px;
+    transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(127, 13, 242, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(127, 13, 242, 0.3) rgba(255, 255, 255, 0.02);
+}
+
+/* Hide scrollbar utility class */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 /* ── Radix UI global overrides ───────────────────────────────────── */
 
 /* Ensure Radix portals render above everything */
 [data-radix-popper-content-wrapper] {
-  z-index: 999 !important;
+    z-index: 999 !important;
 }
 
 /* Smooth dialog backdrop */
 [data-radix-dialog-overlay] {
-  animation: radixOverlayShow 0.18s ease;
+    animation: radixOverlayShow 0.18s ease;
 }
 
 @keyframes radixOverlayShow {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Scroll area default track */
 [data-radix-scroll-area-scrollbar] {
-  opacity: 0;
-  transition: opacity 0.2s ease;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 [data-radix-scroll-area-viewport]:hover ~ [data-radix-scroll-area-scrollbar],
 [data-radix-scroll-area-scrollbar][data-state="visible"] {
-  opacity: 1;
+    opacity: 1;
 }

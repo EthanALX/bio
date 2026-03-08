@@ -3,6 +3,7 @@ export interface SocialLink {
   label: string;
   iconPath: string;
   className: string;
+  qrCode?: string; // 二维码图片路径（可选）
 }
 
 export interface AboutLayoutState {

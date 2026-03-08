@@ -11,23 +11,23 @@ export const useSummaryStats = ({
   const statItems: StatItem[] = [
     {
       value: `${stats.Distance} km`,
-      label: "Distance",
-      hint: "Total distance run this year",
+      label: "距离",
+      hint: "今年跑步总距离",
     },
     {
       value: stats.AvgPace,
-      label: "Avg Pace",
-      hint: "Average pace across all runs",
+      label: "平均配速",
+      hint: "所有跑步的平均配速",
     },
     {
       value: stats.Days,
-      label: "Days",
-      hint: "Unique days with an activity",
+      label: "天数",
+      hint: "有活动的独立天数",
     },
     {
       value: stats.Routes,
-      label: "Routes",
-      hint: "Runs with GPS track data",
+      label: "路线",
+      hint: "带有GPS轨迹数据的跑步",
     },
   ];
 

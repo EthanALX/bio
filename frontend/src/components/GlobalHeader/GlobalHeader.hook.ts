@@ -7,17 +7,17 @@ import type {
 
 const NAVIGATION_CONFIG: Record<string, NavigationLink[]> = {
   "/": [
-    { href: "/about", label: "About Me" },
-    // { href: "/showcase", label: "Components" },
+    { href: "/about", label: "关于我" },
+    // { href: "/showcase", label: "组件展示" },
   ],
   "/about": [
-    { href: "/", label: "Running Stats" },
-    { href: "/homepage", label: "Homepage" },
-    // { href: "/showcase", label: "Components" },
+    { href: "/", label: "首页" },
+    // { href: "/homepage", label: "首页" },
+    // { href: "/showcase", label: "组件展示" },
   ],
   "/showcase": [
-    { href: "/", label: "Running Stats" },
-    { href: "/about", label: "About Me" },
+    { href: "/", label: "跑步统计" },
+    { href: "/about", label: "关于我" },
   ],
 };
 
@@ -25,10 +25,10 @@ export const useGlobalHeader = (): GlobalHeaderState & GlobalHeaderActions => {
   const pathname = usePathname();
 
   const getActivePageLabel = (): string => {
-    if (pathname === "/") return "Running Stats";
-    if (pathname === "/about") return "About Me";
-    if (pathname === "/showcase") return "Components";
-    return "Unknown";
+    if (pathname === "/") return "跑步统计";
+    if (pathname === "/about") return "关于我";
+    if (pathname === "/showcase") return "组件展示";
+    return "未知";
   };
 
   const navigationLinks = NAVIGATION_CONFIG[pathname] || NAVIGATION_CONFIG["/"];
