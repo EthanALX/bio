@@ -5,6 +5,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { useDashboardLayout } from "./DashboardLayout.hook";
 import { YearSelector } from "../YearSelector";
 import { SummaryStats } from "../SummaryStats";
+import { GlobalPanel } from "../GlobalPanel";
 import { Icon } from "@/components/Icon";
 import { ActivityList } from "../ActivityList";
 import { ActivityCalendar } from "../ActivityCalendar";
@@ -22,7 +23,16 @@ const TAB_ITEMS = [
 
 export function DashboardLayout() {
   const { state, actions } = useDashboardLayout();
-  const { years, selectedYear, viewMode, data, isLoading, error } = state;
+  const {
+    years,
+    selectedYear,
+    viewMode,
+    data,
+    globalStats,
+    globalStatsLoading,
+    isLoading,
+    error,
+  } = state;
   const { setSelectedYear, setViewMode } = actions;
 
   if (error) {
@@ -36,17 +46,27 @@ export function DashboardLayout() {
 
   return (
     <div className={styles.container}>
-      {/* ── Header ──────────────────────────────────────────────── */}
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          {data && <SummaryStats stats={data.stats} isLoading={isLoading} />}
-        </div>
-        <div className={styles.headerRight}>
-          <YearSelector
-            years={years}
-            selectedYear={selectedYear}
-            onYearChange={setSelectedYear}
+      {/* ── Title ──────────────────────────────────────────────── */}
+
+      {/* ── Year Selector ──────────────────────────────────────── */}
+      <div className={styles.yearSelectorWrapper}>
+        <YearSelector
+          years={years}
+          selectedYear={selectedYear}
+          onYearChange={setSelectedYear}
+        />
+      </div>
+
+      {/* ── Stats Row (Left: Global, Right: Current Year) ──────── */}
+      <div className={styles.statsRow}>
+        {/*<div className={styles.globalPanelWrapper}>
+          <GlobalPanel
+            globalStats={globalStats}
+            isLoading={globalStatsLoading}
           />
+        </div>*/}
+        <div className={styles.summaryStatsWrapper}>
+          {data && <SummaryStats stats={data.stats} isLoading={isLoading} />}
         </div>
       </div>
 

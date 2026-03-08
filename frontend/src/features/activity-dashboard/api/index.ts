@@ -1,5 +1,5 @@
-import { Activity, YearData, ActivityStats } from '../types';
-import activitiesData from '../../../mocks/activities.json';
+import { Activity, YearData, ActivityStats } from "../types";
+import activitiesData from "../../../mocks/activities.json";
 
 // Cast the imported data to Activity[] to ensure types match
 const allActivities = activitiesData as unknown as Activity[];
@@ -8,78 +8,162 @@ const allActivities = activitiesData as unknown as Activity[];
  * Helper to calculate stats from a list of activities
  */
 function calculateStats(activities: Activity[]): ActivityStats {
-    const totalDistance = activities.reduce((sum, act) => sum + act.distance, 0);
+  const totalDistance = activities.reduce((sum, act) => sum + act.distance, 0);
 
-    // Count distinct days
-    const days = new Set(activities.map(act => act.date.split('T')[0])).size;
+  // Count distinct days
+  const days = new Set(activities.map((act) => act.date.split("T")[0])).size;
 
-    // Calculate average pace (total seconds / total km)
-    let totalSeconds = 0;
-    activities.forEach(act => {
-        // Parse "30m" or "1h 23m" or "56m 00s"
-        // The mock data currently has "30m".
-        // joy.htm parser produced "30m" or "1h 30m".
-        const parts = act.time.match(/(\d+)h/);
-        const hours = parts ? parseInt(parts[1]) : 0;
-        const minParts = act.time.match(/(\d+)m/);
-        const minutes = minParts ? parseInt(minParts[1]) : 0;
-        const secParts = act.time.match(/(\d+)s/);
-        const seconds = secParts ? parseInt(secParts[1]) : 0;
+  // Calculate average pace (total seconds / total km)
+  let totalSeconds = 0;
+  activities.forEach((act) => {
+    // Parse "30m" or "1h 23m" or "56m 00s"
+    // The mock data currently has "30m".
+    // joy.htm parser produced "30m" or "1h 30m".
+    const parts = act.time.match(/(\d+)h/);
+    const hours = parts ? parseInt(parts[1]) : 0;
+    const minParts = act.time.match(/(\d+)m/);
+    const minutes = minParts ? parseInt(minParts[1]) : 0;
+    const secParts = act.time.match(/(\d+)s/);
+    const seconds = secParts ? parseInt(secParts[1]) : 0;
 
-        totalSeconds += hours * 3600 + minutes * 60 + seconds;
-    });
+    totalSeconds += hours * 3600 + minutes * 60 + seconds;
+  });
 
-    // Valid distance check
-    if (totalDistance === 0) {
-        return { Distance: 0, Days: 0, AvgPace: "0'00\"/km", Routes: 0 };
-    }
+  // Valid distance check
+  if (totalDistance === 0) {
+    return { Distance: 0, Days: 0, AvgPace: "0'00\"/km", Routes: 0 };
+  }
 
-    const avgPaceSeconds = totalSeconds / totalDistance;
-    const paceMin = Math.floor(avgPaceSeconds / 60);
-    const paceSec = Math.floor(avgPaceSeconds % 60);
-    const avgPace = `${paceMin}'${paceSec.toString().padStart(2, '0')}"/km`;
+  const avgPaceSeconds = totalSeconds / totalDistance;
+  const paceMin = Math.floor(avgPaceSeconds / 60);
+  const paceSec = Math.floor(avgPaceSeconds % 60);
+  const avgPace = `${paceMin}'${paceSec.toString().padStart(2, "0")}"/km`;
 
-    // Count routes (just count total activities for simplicity, or unique route names)
-    // "Routes" usually implies tracks.
-    const routeCount = activities.filter(a => a.coordinates && a.coordinates.length > 0).length;
-    // Fallback: if no coords, maybe just total count or unique locations
-    const totalCount = activities.length;
+  // Count routes (just count total activities for simplicity, or unique route names)
+  // "Routes" usually implies tracks.
+  const routeCount = activities.filter(
+    (a) => a.coordinates && a.coordinates.length > 0,
+  ).length;
+  // Fallback: if no coords, maybe just total count or unique locations
+  const totalCount = activities.length;
 
-    return {
-        Distance: parseFloat(totalDistance.toFixed(1)),
-        Days: days,
-        AvgPace: avgPace,
-        Routes: routeCount,
-    };
+  return {
+    Distance: parseFloat(totalDistance.toFixed(1)),
+    Days: days,
+    AvgPace: avgPace,
+    Routes: routeCount,
+  };
 }
 
 /**
  * Fetch activity data for a specific year
  */
 export async function fetchYearData(year: number): Promise<YearData> {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300));
+  // Simulate API delay
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
-    const yearActivities = allActivities.filter(act => {
-        const actYear = new Date(act.date).getFullYear();
-        return actYear === year;
-    });
+  const yearActivities = allActivities.filter((act) => {
+    const actYear = new Date(act.date).getFullYear();
+    return actYear === year;
+  });
 
-    const stats = calculateStats(yearActivities);
+  const stats = calculateStats(yearActivities);
 
-    return {
-        year,
-        stats,
-        activities: yearActivities,
-    };
+  return {
+    year,
+    stats,
+    activities: yearActivities,
+  };
 }
 
 /**
  * Fetch available years
  */
 export async function fetchAvailableYears(): Promise<number[]> {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    const years = new Set(allActivities.map(act => new Date(act.date).getFullYear()));
-    return Array.from(years).sort((a, b) => b - a);
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  const years = new Set(
+    allActivities.map((act) => new Date(act.date).getFullYear()),
+  );
+  return Array.from(years).sort((a, b) => b - a);
 }
 
+/**
+ * Global stats interface
+ */
+export interface GlobalStats {
+  totalStats: ActivityStats;
+  personalBest: {
+    longestDistance: number;
+    fastestPace: string;
+    longestDuration: string;
+    maxHeartRate: number;
+  };
+}
+
+/**
+ * Fetch global statistics (all-time stats and personal best)
+ */
+export async function fetchGlobalStats(): Promise<GlobalStats> {
+  await new Promise((resolve) => setTimeout(resolve, 200));
+
+  const stats = calculateStats(allActivities);
+
+  // Calculate personal best
+  let longestDistance = 0;
+  let fastestPaceSeconds = Infinity;
+  let longestDurationSeconds = 0;
+  let maxHeartRate = 0;
+
+  allActivities.forEach((act) => {
+    // Longest distance
+    if (act.distance > longestDistance) {
+      longestDistance = act.distance;
+    }
+
+    // Parse pace (format: "5'20\"/km")
+    const paceMatch = act.pace.match(/(\d+)'(\d+)/);
+    if (paceMatch) {
+      const paceSeconds = parseInt(paceMatch[1]) * 60 + parseInt(paceMatch[2]);
+      if (paceSeconds < fastestPaceSeconds) {
+        fastestPaceSeconds = paceSeconds;
+      }
+    }
+
+    // Parse duration
+    const h = act.time.match(/(\d+)h/);
+    const m = act.time.match(/(\d+)m/);
+    const s = act.time.match(/(\d+)s/);
+    const durationSeconds =
+      (h ? parseInt(h[1]) * 3600 : 0) +
+      (m ? parseInt(m[1]) * 60 : 0) +
+      (s ? parseInt(s[1]) : 0);
+    if (durationSeconds > longestDurationSeconds) {
+      longestDurationSeconds = durationSeconds;
+    }
+
+    // Max heart rate
+    if (act.bpm > maxHeartRate) {
+      maxHeartRate = act.bpm;
+    }
+  });
+
+  // Format fastest pace
+  const paceMin = Math.floor(fastestPaceSeconds / 60);
+  const paceSec = Math.floor(fastestPaceSeconds % 60);
+  const fastestPace = `${paceMin}'${paceSec.toString().padStart(2, "0")}"/km`;
+
+  // Format longest duration
+  const hours = Math.floor(longestDurationSeconds / 3600);
+  const minutes = Math.floor((longestDurationSeconds % 3600) / 60);
+  const longestDuration = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+
+  return {
+    totalStats: stats,
+    personalBest: {
+      longestDistance,
+      fastestPace,
+      longestDuration,
+      maxHeartRate,
+    },
+  };
+}

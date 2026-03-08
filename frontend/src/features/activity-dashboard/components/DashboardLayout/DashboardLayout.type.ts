@@ -1,4 +1,5 @@
 import { YearData } from "../../types";
+import { GlobalStats } from "../../api";
 
 export type ViewMode = "list" | "calendar" | "chart" | "map";
 
@@ -7,6 +8,8 @@ export interface DashboardLayoutState {
   selectedYear: number;
   viewMode: ViewMode;
   data: YearData | null;
+  globalStats: GlobalStats | null;
+  globalStatsLoading: boolean;
   isLoading: boolean;
   error: Error | null;
 }
