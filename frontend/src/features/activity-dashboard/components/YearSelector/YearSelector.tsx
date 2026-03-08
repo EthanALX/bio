@@ -1,40 +1,29 @@
 import React from "react";
-import { useYearSelector } from "./YearSelector.hook";
+import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import type { YearSelectorProps } from "./YearSelector.type";
 import styles from "./YearSelector.module.css";
 
-export function YearSelector(props: YearSelectorProps) {
-  const { actions } = useYearSelector(props);
-  const { handleYearChange } = actions;
-
+export function YearSelector({ years, selectedYear, onYearChange }: YearSelectorProps) {
   return (
-    <div className={styles.container}>
-      <div className={styles.yearList}>
-        {props.years.map((year) => (
-          <div
-            key={year}
-            className={`${styles.yearBlock} ${year === props.selectedYear ? styles.active : ""}`}
-            onClick={() => handleYearChange(year)}
-          >
-            {year
-              .toString()
-              .split("")
-              .map((char, index) => (
-                <span
-                  key={index}
-                  className={styles.yearChar}
-                  style={
-                    {
-                      // transitionDelay: `${index * 0.05}s`,
-                    }
-                  }
-                >
-                  {char}
-                </span>
-              ))}
-          </div>
-        ))}
-      </div>
-    </div>
+    <ToggleGroup.Root
+      type="single"
+      value={String(selectedYear)}
+      onValueChange={(val) => {
+        if (val) onYearChange(Number(val));
+      }}
+      className={styles.root}
+      aria-label="Select year"
+    >
+      {years.map((year) => (
+        <ToggleGroup.Item
+          key={year}
+          value={String(year)}
+          className={styles.item}
+          aria-label={String(year)}
+        >
+          {year}
+        </ToggleGroup.Item>
+      ))}
+    </ToggleGroup.Root>
   );
 }

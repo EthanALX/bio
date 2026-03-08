@@ -1,37 +1,73 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-width: 320px;
-    padding: 1rem;
-    margin-top: 4rem;
+  display: flex;
+  gap: 2.5rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+  transition: opacity 0.3s ease;
 }
 
-.statCard {
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
+.container.loading {
+  opacity: 0.4;
 }
 
-.statCard:hover .value {
-    color: #a855f7;
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  cursor: default;
+  outline: none;
+  border-radius: 4px;
+  transition: opacity 0.15s ease;
 }
 
-.statCard.active .value {
-    color: #6366f1;
+.statItem:hover .value {
+  color: #a855f7;
+}
+
+.statItem:focus-visible {
+  outline: 2px solid rgba(127, 13, 242, 0.4);
+  outline-offset: 4px;
 }
 
 .value {
-    font-size: 2rem;
-    color: #e2e8f0;
-    transition: color 0.2s ease;
-    font-style: italic;
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: color 0.2s ease;
 }
 
 .label {
-    font-size: 0.75rem;
-    color: #94a3b8;
-    font-style: italic;
+  font-size: 0.68rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* ── Radix Tooltip ───────────────────────────────────────────────── */
+.tooltipContent {
+  background: rgba(19, 22, 32, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  max-width: 220px;
+  line-height: 1.4;
+  animation: tooltipIn 0.12s ease;
+  z-index: 999;
+}
+
+.tooltipArrow {
+  fill: rgba(19, 22, 32, 0.96);
+}
+
+@keyframes tooltipIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

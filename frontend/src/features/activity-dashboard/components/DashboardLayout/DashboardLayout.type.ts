@@ -9,8 +9,6 @@ export interface DashboardLayoutState {
   data: YearData | null;
   isLoading: boolean;
   error: Error | null;
-  isSidebarFixed: boolean;
-  sidebarLeft: number;
 }
 
 export interface DashboardLayoutActions {
@@ -18,12 +16,7 @@ export interface DashboardLayoutActions {
   setViewMode: (mode: ViewMode) => void;
 }
 
-export interface DashboardLayoutRefs {
-  sidebarRef: React.RefObject<HTMLDivElement | null>;
-}
-
 export interface UseDashboardLayoutResult {
   state: DashboardLayoutState;
   actions: DashboardLayoutActions;
-  refs: DashboardLayoutRefs;
 }

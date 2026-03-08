@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
+import * as Tabs from "@radix-ui/react-tabs";
 import { useDashboardLayout } from "./DashboardLayout.hook";
 import { YearSelector } from "../YearSelector";
 import { SummaryStats } from "../SummaryStats";
@@ -8,113 +9,95 @@ import { ActivityList } from "../ActivityList";
 import { ActivityCalendar } from "../ActivityCalendar";
 import { ActivityMap } from "../ActivityMap";
 import { ActivityChart } from "../ActivityChart";
-import styles from "./DashboardLayout.module.css";
 import { RouteSketch } from "../RouteSketch";
+import styles from "./DashboardLayout.module.css";
+
+const TAB_ITEMS = [
+  { value: "list",     label: "Runs",     icon: "format_list_bulleted" },
+  { value: "calendar", label: "Calendar", icon: "calendar_month" },
+  { value: "chart",    label: "Charts",   icon: "area_chart" },
+  { value: "map",      label: "Map",      icon: "route" },
+] as const;
 
 export function DashboardLayout() {
-  const { state, actions, refs } = useDashboardLayout();
-  const {
-    years,
-    selectedYear,
-    viewMode,
-    data,
-    isLoading,
-    error,
-    isSidebarFixed,
-    sidebarLeft,
-  } = state;
+  const { state, actions } = useDashboardLayout();
+  const { years, selectedYear, viewMode, data, isLoading, error } = state;
   const { setSelectedYear, setViewMode } = actions;
-  const { sidebarRef } = refs;
-
-  // if (isLoading) {
-  //   return (
-  //     <div className={styles.loading}>
-  //       <div className={styles.spinner} />
-  //       <p>Loading activity data...</p>
-  //     </div>
-  //   );
-  // }
 
   if (error) {
     return (
       <div className={styles.error}>
+        <span className="material-symbols-outlined">error</span>
         <p>Error loading data: {error.message}</p>
       </div>
     );
   }
 
-  if (!data) {
-    return null;
-  }
-
   return (
-    <div
-      className={`${styles.container} ${viewMode === "map" ? styles.backgroundActive : ""}`}
-    >
-      <ActivityMap
-        isBackground={true}
-        isVisible={viewMode === "map"}
-        activities={data.activities}
-      />
-
-      <YearSelector
-        years={years}
-        selectedYear={selectedYear}
-        onYearChange={setSelectedYear}
-      />
-
-      <div
-        className={`${styles.mainLayout} ${viewMode === "calendar" ? styles.calendarGap : ""}`}
-      >
-        <div className={styles.content}>
-          {viewMode === "list" && <ActivityList activities={data.activities} />}
-          {viewMode === "calendar" && (
-            <ActivityCalendar
-              activities={data.activities}
-              year={selectedYear}
-            />
-          )}
-
-          {viewMode === "chart" && (
-            <ActivityChart activities={data.activities} />
-          )}
-
-          {viewMode === "map" && (
-            <div className={styles.mapPlaceholderView}>
-              <div className={styles.trajectoryGrid}>
-                {data.activities.map((activity) => (
-                  <div
-                    key={activity.id}
-                    className={styles.trajectoryBlock}
-                    title={`${activity.route} - ${activity.distance}km`}
-                  >
-                    <RouteSketch
-                      coordinates={activity.coordinates}
-                      seed={activity.id}
-                    />
-                    <div className={styles.trajectoryInfo}>
-                      <div>{activity.distance}km</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+    <div className={styles.container}>
+      {/* ── Header ──────────────────────────────────────────────── */}
+      <div className={styles.header}>
+        <div className={styles.headerLeft}>
+          {data && <SummaryStats stats={data.stats} isLoading={isLoading} />}
         </div>
-
-        {isSidebarFixed && <div className={styles.sidebarPlaceholder} />}
-        <div
-          ref={sidebarRef}
-          className={`${styles.sidebar} ${isSidebarFixed ? styles.fixed : styles.sticky}`}
-          style={isSidebarFixed ? { left: `${sidebarLeft}px` } : {}}
-        >
-          <SummaryStats
-            stats={data.stats}
-            viewMode={viewMode}
-            onViewChange={setViewMode}
+        <div className={styles.headerRight}>
+          <YearSelector
+            years={years}
+            selectedYear={selectedYear}
+            onYearChange={setSelectedYear}
           />
         </div>
       </div>
+
+      {/* ── Radix Tabs ──────────────────────────────────────────── */}
+      <Tabs.Root
+        value={viewMode}
+        onValueChange={(v) => setViewMode(v as typeof viewMode)}
+        className={styles.tabsRoot}
+      >
+        <Tabs.List className={styles.tabList} aria-label="Dashboard views">
+          {TAB_ITEMS.map(({ value, label, icon }) => (
+            <Tabs.Trigger key={value} value={value} className={styles.tabTrigger}>
+              <span className={`material-symbols-outlined ${styles.tabIcon}`} aria-hidden="true">
+                {icon}
+              </span>
+              <span className={styles.tabLabel}>{label}</span>
+            </Tabs.Trigger>
+          ))}
+          {isLoading && <div className={styles.loadingPulse} aria-hidden="true" />}
+        </Tabs.List>
+
+        <Tabs.Content value="list" className={styles.tabContent}>
+          {data && <ActivityList activities={data.activities} />}
+        </Tabs.Content>
+
+        <Tabs.Content value="calendar" className={styles.tabContent}>
+          {data && (
+            <ActivityCalendar activities={data.activities} year={selectedYear} />
+          )}
+        </Tabs.Content>
+
+        <Tabs.Content value="chart" className={styles.tabContent}>
+          {data && <ActivityChart activities={data.activities} />}
+        </Tabs.Content>
+
+        <Tabs.Content value="map" className={styles.tabContent}>
+          {data && (
+            <div className={styles.trajectoryGrid}>
+              {data.activities.map((activity) => (
+                <div
+                  key={activity.id}
+                  className={styles.trajectoryBlock}
+                  title={`${activity.route} — ${activity.distance} km`}
+                >
+                  <RouteSketch coordinates={activity.coordinates} seed={activity.id} />
+                  <div className={styles.trajectoryDist}>{activity.distance} km</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </Tabs.Content>
+      </Tabs.Root>
     </div>
   );
 }

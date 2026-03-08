@@ -165,3 +165,53 @@
     white-space: nowrap;
     font-weight: 500;
 }
+
+/* ── Radix Tooltip for calendar cells ──────────────────────────── */
+.hasActivity {
+  cursor: pointer;
+  outline: none;
+}
+
+.hasActivity:hover {
+  filter: brightness(1.3);
+  transform: scale(1.15);
+  z-index: 1;
+  position: relative;
+}
+
+.hasActivity:focus-visible {
+  outline: 2px solid rgba(127, 13, 242, 0.6);
+  outline-offset: 1px;
+}
+
+.tooltipContent {
+  background: rgba(13, 17, 23, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  animation: calTipIn 0.1s ease;
+  z-index: 999;
+}
+
+.tooltipDate {
+  font-size: 0.72rem;
+  color: #64748b;
+  margin-bottom: 0.2rem;
+}
+
+.tooltipDist {
+  font-size: 0.88rem;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.tooltipArrow {
+  fill: rgba(13, 17, 23, 0.97);
+}
+
+@keyframes calTipIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

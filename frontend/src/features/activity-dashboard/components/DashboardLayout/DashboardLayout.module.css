@@ -1,151 +1,166 @@
 .container {
-    min-width: 900px;
-    margin: 0 auto;
-    /* min-height: 100vh; */
+  min-width: 900px;
+  margin: 0 auto;
 }
 
-.mainLayout {
-    display: flex;
-    gap: 8rem;
-    align-items: flex-start;
-    position: relative;
-    z-index: 50;
+/* ── Header ─────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.calendarGap {
-    gap: 2rem;
+.headerLeft {
+  flex: 1;
+  min-width: 0;
 }
 
-.content {
-    flex: 1;
-    min-width: 0;
+.headerRight {
+  flex-shrink: 0;
 }
 
-.sidebar {
-    width: 220px;
-    flex-shrink: 0;
-    z-index: 100;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* ── Radix Tabs ──────────────────────────────────────────────────── */
+.tabsRoot {
+  width: 100%;
 }
 
-.sidebar.sticky {
-    position: sticky;
-    top: 2rem;
-    align-self: flex-start;
+.tabList {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 2rem;
+  position: relative;
 }
 
-.sidebar.fixed {
-    position: fixed;
-    top: 2rem;
-    left: auto;
+.tabTrigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #475569;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+  margin-bottom: -1px;
+  outline: none;
+  position: relative;
 }
 
-.sidebarPlaceholder {
-    width: 220px;
-    flex-shrink: 0;
-    visibility: hidden;
+.tabTrigger:hover {
+  color: #94a3b8;
+  background-color: rgba(127, 13, 242, 0.04);
 }
 
-.loading,
-.error {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 400px;
-    color: #94a3b8;
+.tabTrigger:focus-visible {
+  outline: 2px solid rgba(127, 13, 242, 0.5);
+  outline-offset: -2px;
+  border-radius: 4px 4px 0 0;
 }
 
-.spinner {
-    width: 48px;
-    height: 48px;
-    border: 4px solid rgba(99, 102, 241, 0.1);
-    border-top-color: #6366f1;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
+.tabTrigger[data-state="active"] {
+  color: #7f0df2;
+  border-bottom-color: #7f0df2;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+.tabTrigger[data-state="active"] .tabIcon {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
-.error {
-    color: #f87171;
+.tabIcon {
+  font-size: 18px;
+  transition: font-variation-settings 0.2s ease;
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
 }
 
-.backgroundActive .mainLayout {
-    transition: opacity 0.5s ease;
+.tabLabel {
+  line-height: 1;
 }
 
-.mapPlaceholderView {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
+/* loading pulse dot on the tab list */
+.loadingPulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7f0df2;
+  margin-left: auto;
+  margin-right: 0.25rem;
+  animation: pulse 1.4s ease-in-out infinite;
 }
 
-.mapHint {
-    color: #94a3b8;
-    font-size: 1.1rem;
-    font-weight: 500;
-    font-style: italic;
-    letter-spacing: 0.05em;
-    animation: fadeInOut 3s infinite ease-in-out;
+@keyframes pulse {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
 }
 
+/* ── Tab content ─────────────────────────────────────────────────── */
+.tabContent {
+  animation: tabFadeIn 0.2s ease;
+  outline: none;
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Map view trajectory grid ────────────────────────────────────── */
 .trajectoryGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding: 1rem;
-    width: 100%;
-    height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 1rem;
+  padding: 0.5rem;
 }
 
 .trajectoryBlock {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    /*background: rgba(15, 23, 42, 0.4);*/
-    cursor: pointer;
-    transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .trajectoryBlock:hover {
-    border-color: rgba(148, 163, 184, 0.6);
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: rgba(127, 13, 242, 0.06);
+  transform: scale(1.04);
 }
 
-.trajectoryBlock svg {
-    width: auto;
+.trajectoryDist {
+  font-size: 0.7rem;
+  color: #22c55e;
+  font-weight: 600;
+  margin-top: 0.4rem;
 }
 
-.trajectoryInfo {
-    /*background: rgba(0, 0, 0, 0.7);*/
-    color: white;
-    padding: 4px 8px;
-    font-size: 10px;
-    text-align: center;
-    backdrop-filter: blur(4px);
-    margin-top: 2rem;
+/* ── Error state ─────────────────────────────────────────────────── */
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 300px;
+  color: #f87171;
+  font-size: 0.9rem;
 }
 
-.trajectoryInfo > div:first-child {
-    font-weight: bold;
-    color: #22c55e;
-}
-
-@keyframes fadeInOut {
-    0%,
-    100% {
-        opacity: 0.4;
-    }
-
-    50% {
-        opacity: 0.8;
-    }
+.error .material-symbols-outlined {
+  font-size: 40px;
+  opacity: 0.7;
 }
