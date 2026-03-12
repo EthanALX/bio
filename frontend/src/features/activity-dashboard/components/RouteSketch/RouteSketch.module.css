@@ -13,13 +13,13 @@
 }
 
 .path {
-    stroke: #6366f1;
+    stroke: var(--color-primary);
     opacity: 0.8;
     transition: all 0.3s ease;
 }
 
 :global(.row:hover) .path {
-    stroke: #a855f7;
+    stroke: var(--color-primary-strong);
     opacity: 1;
     stroke-width: 3;
 }

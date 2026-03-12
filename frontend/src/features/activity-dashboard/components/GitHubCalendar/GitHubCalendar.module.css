@@ -19,7 +19,7 @@
 .monthHeader {
     position: absolute;
     font-size: 10px;
-    color: #57606a;
+    color: var(--color-text-subtle);
     font-weight: 600;
     height: 16px;
     display: flex;
@@ -48,7 +48,7 @@
 
 .dayLabelName {
     font-size: 9px;
-    color: #57606a;
+    color: var(--color-text-subtle);
     width: 40px;
     display: flex;
     align-items: center;
@@ -79,7 +79,7 @@
 }
 
 .dayLabelCell:hover {
-    outline: 1px solid #8b949e;
+    outline: 1px solid var(--color-border-strong);
     outline-offset: 0;
 }
 
@@ -109,46 +109,46 @@
 }
 
 .day:hover {
-    outline: 1px solid #8b949e;
+    outline: 1px solid var(--color-border-strong);
     outline-offset: 0;
 }
 
 .level-0 {
-    background-color: #ebedf0;
+    background-color: var(--activity-level-0);
 }
 
 .level-1 {
-    background-color: #c6e48b;
+    background-color: var(--activity-level-1);
 }
 
 .level-2 {
-    background-color: #7bc96f;
+    background-color: var(--activity-level-2);
 }
 
 .level-3 {
-    background-color: #239a3b;
+    background-color: var(--activity-level-3);
 }
 
 .level-4 {
-    background-color: #196127;
+    background-color: var(--activity-level-4);
 }
 
 .level-5 {
-    background-color: #0e4429;
+    background-color: var(--activity-level-5);
 }
 
 .level-6 {
-    background-color: #006d32;
+    background-color: var(--activity-level-6);
 }
 
 .level-7 {
-    background-color: #26a641;
+    background-color: var(--activity-level-7);
 }
 
 .legend {
     margin-top: 16px;
     font-size: 11px;
-    color: #57606a;
+    color: var(--color-text-subtle);
 }
 
 .legendRow {
@@ -161,7 +161,7 @@
 
 .legendText {
     font-size: 11px;
-    color: #57606a;
+    color: var(--color-text-subtle);
     min-width: 40px;
 }
 
@@ -172,35 +172,35 @@
 }
 
 .legendDay.level-0 {
-    background-color: #ebedf0;
+    background-color: var(--activity-level-0);
 }
 
 .legendDay.level-1 {
-    background-color: #c6e48b;
+    background-color: var(--activity-level-1);
 }
 
 .legendDay.level-2 {
-    background-color: #7bc96f;
+    background-color: var(--activity-level-2);
 }
 
 .legendDay.level-3 {
-    background-color: #239a3b;
+    background-color: var(--activity-level-3);
 }
 
 .legendDay.level-4 {
-    background-color: #196127;
+    background-color: var(--activity-level-4);
 }
 
 .legendDay.level-5 {
-    background-color: #0e4429;
+    background-color: var(--activity-level-5);
 }
 
 .legendDay.level-6 {
-    background-color: #006d32;
+    background-color: var(--activity-level-6);
 }
 
 .legendDay.level-7 {
-    background-color: #26a641;
+    background-color: var(--activity-level-7);
 }
 
 @media (max-width: 768px) {

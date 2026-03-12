@@ -1,6 +1,9 @@
 .container {
     border-radius: 12px;
-    padding: 0 1.5rem;
+    padding: 1rem 1.5rem 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
     backdrop-filter: blur(10px);
 }
 
@@ -18,7 +21,7 @@
 
 .monthLabel {
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 0.2rem;
@@ -38,7 +41,7 @@
 
 .weekLabel {
     font-size: 0.55rem;
-    color: #64748b;
+    color: var(--color-text-subtle);
     min-width: 1.3rem;
     text-align: left;
 }
@@ -54,7 +57,7 @@
     width: 14px;
     height: 14px;
     aspect-ratio: 1;
-    background: rgba(148, 163, 184, 0.1);
+    background: var(--activity-level-0);
     border-radius: 2px;
     transition: all 0.2s ease;
 }
@@ -65,42 +68,42 @@
 
 /* Level 0 - White background (no activity) */
 .day.level-0 {
-    background: rgba(148, 163, 184, 0.1);
+    background: var(--activity-level-0);
 }
 
 /* Level 1 - Light green */
 .day.level-1 {
-    background: #ccf5ee;
+    background: var(--activity-level-1);
 }
 
 /* Level 2 - Light-medium green */
 .day.level-2 {
-    background: #c8e6c8;
+    background: var(--activity-level-2);
 }
 
 /* Level 3 - Medium green */
 .day.level-3 {
-    background: #a5d6a7;
+    background: var(--activity-level-3);
 }
 
 /* Level 4 - Medium-dark green */
 .day.level-4 {
-    background: #81c784;
+    background: var(--activity-level-4);
 }
 
 /* Level 5 - Dark green */
 .day.level-5 {
-    background: #66bb6a;
+    background: var(--activity-level-5);
 }
 
 /* Level 6 - Darker green */
 .day.level-6 {
-    background: #4caf50;
+    background: var(--activity-level-6);
 }
 
 /* Level 7 - Darkest green */
 .day.level-7 {
-    background: #388e3c;
+    background: var(--activity-level-7);
 }
 
 .day:hover:not(.empty) {
@@ -111,19 +114,19 @@
 .day:not(.empty):hover {
     transform: scale(1.1);
     z-index: 10;
-    box-shadow: 0 0 9px rgba(76, 175, 80, 0.6);
+    box-shadow: 0 0 9px var(--color-primary-shadow);
 }
 
 /* Legend Styles */
 .legend {
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    border-top: 1px solid var(--color-border);
 }
 
 .legendTitle {
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 0.8rem;
@@ -161,7 +164,7 @@
 
 .legendDistance {
     font-size: 0.65rem;
-    color: #64748b;
+    color: var(--color-text-subtle);
     white-space: nowrap;
     font-weight: 500;
 }
@@ -180,35 +183,35 @@
 }
 
 .hasActivity:focus-visible {
-  outline: 2px solid rgba(127, 13, 242, 0.6);
+  outline: 2px solid var(--color-primary);
   outline-offset: 1px;
 }
 
 .tooltipContent {
-  background: rgba(13, 17, 23, 0.97);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
   backdrop-filter: blur(16px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-popover);
   animation: calTipIn 0.1s ease;
   z-index: 999;
 }
 
 .tooltipDate {
   font-size: 0.72rem;
-  color: #64748b;
+  color: var(--color-text-subtle);
   margin-bottom: 0.2rem;
 }
 
 .tooltipDist {
   font-size: 0.88rem;
-  color: #22c55e;
+  color: var(--color-success);
   font-weight: 600;
 }
 
 .tooltipArrow {
-  fill: rgba(13, 17, 23, 0.97);
+  fill: var(--color-surface);
 }
 
 @keyframes calTipIn {

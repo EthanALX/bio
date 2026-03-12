@@ -6,13 +6,13 @@ import type { HierarchyNode } from '../components/ActivityChart/ActivityChart.ty
  * Maps values to colors based on intensity (0-1 ratio)
  */
 const COLOR_STOPS = [
-  { ratio: 0, color: '#ccf5ee' }, // lightest
-  { ratio: 0.16, color: '#c8e6c8' },
-  { ratio: 0.32, color: '#a5d6a7' },
-  { ratio: 0.48, color: '#81c784' },
-  { ratio: 0.64, color: '#66bb6a' },
-  { ratio: 0.8, color: '#4caf50' },
-  { ratio: 1, color: '#388e3c' } // darkest
+  { ratio: 0, color: '#d7f2ed' }, // lightest
+  { ratio: 0.16, color: '#bfe7df' },
+  { ratio: 0.32, color: '#9ed8cd' },
+  { ratio: 0.48, color: '#74c4b6' },
+  { ratio: 0.64, color: '#4aab9a' },
+  { ratio: 0.8, color: '#2f8c80' },
+  { ratio: 1, color: '#0f766e' } // darkest
 ];
 
 /**
@@ -85,7 +85,7 @@ export function getColorForValue(value: number, maxValue: number): string {
  * Get color for a hierarchy node
  */
 export function getNodeColor(node: HierarchyNode, maxValue: number): string {
-  return '#2f6b58';
+  return getColorForValue(node.value || 0, maxValue);
 }
 
 /**

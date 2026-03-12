@@ -13,7 +13,7 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,7 +25,7 @@
 .name {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #8b5cf6;
+    color: var(--color-primary-strong);
     margin-right: auto;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .aboutLink {
-    color: #64748b;
+    color: var(--color-text-subtle);
     text-decoration: none;
     font-size: 0.8rem;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -48,19 +48,5 @@
 }
 
 .aboutLink:hover {
-    color: #6366f1;
-}
-
-@media (prefers-color-scheme: dark) {
-    .name {
-        color: #a78bfa;
-    }
-
-    .aboutLink {
-        color: #94a3b8;
-    }
-
-    .aboutLink:hover {
-        color: #a5b4fc;
-    }
+    color: var(--color-primary);
 }

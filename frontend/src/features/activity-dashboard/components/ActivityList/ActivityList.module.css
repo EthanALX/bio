@@ -1,6 +1,10 @@
 .container {
     width: 100%;
-    padding: 0 0.25rem;
+    padding: 0.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-card);
 }
 
 /* ── Header ──────────────────────────────────────────────────────── */
@@ -10,7 +14,7 @@
     gap: 0.75rem;
     padding: 0.5rem 0.75rem;
     margin-bottom: 0.25rem;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .headerCell {
@@ -22,7 +26,7 @@
     padding: 0;
     font-family: inherit;
     font-size: 0.75rem;
-    color: #475569;
+    color: var(--color-text-subtle);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     cursor: pointer;
@@ -32,11 +36,11 @@
 }
 
 .headerCell:hover {
-    color: #94a3b8;
+    color: var(--color-text);
 }
 
 .headerCell:focus-visible {
-    outline: 2px solid rgba(127, 13, 242, 0.4);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
     border-radius: 3px;
 }
@@ -48,7 +52,7 @@
 
 .sortActive {
     opacity: 1;
-    color: #7f0df2;
+    color: var(--color-primary);
 }
 
 /* ── Scroll area ─────────────────────────────────────────────────── */
@@ -73,19 +77,19 @@
 }
 
 .scrollbar:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--color-primary-ghost);
 }
 
 .scrollThumb {
     flex: 1;
-    background: rgba(127, 13, 242, 0.35);
+    background: var(--color-scrollbar);
     border-radius: 3px;
     position: relative;
     transition: background-color 0.15s ease;
 }
 
 .scrollThumb:hover {
-    background: rgba(127, 13, 242, 0.6);
+    background: var(--color-scrollbar-hover);
 }
 
 /* ── Data row ────────────────────────────────────────────────────── */
@@ -103,11 +107,11 @@
 }
 
 .row:hover {
-    background: rgba(127, 13, 242, 0.05);
+    background: var(--color-primary-ghost);
 }
 
 .row:focus-visible {
-    outline: 2px solid rgba(127, 13, 242, 0.4);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }
 
@@ -116,7 +120,7 @@
     align-items: center;
     min-height: 40px;
     font-size: 0.9rem;
-    color: #e2e8f0;
+    color: var(--color-text);
 }
 
 .mono {
@@ -125,7 +129,7 @@
 }
 
 .dateCell {
-    color: #64748b;
+    color: var(--color-text-subtle);
     font-size: 0.82rem;
 }
 
@@ -141,27 +145,27 @@
 }
 
 .bpmLow {
-    background: rgba(59, 130, 246, 0.12);
-    color: #60a5fa;
+    background: var(--color-info-soft);
+    color: var(--color-info);
 }
 .bpmMed {
-    background: rgba(127, 13, 242, 0.12);
-    color: #a855f7;
+    background: var(--color-primary-soft);
+    color: var(--color-primary-strong);
 }
 .bpmHigh {
-    background: rgba(239, 68, 68, 0.12);
-    color: #f87171;
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
 }
 
 /* ── Row tooltip ─────────────────────────────────────────────────── */
 .rowTooltip {
-    background: rgba(13, 17, 23, 0.97);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 0.75rem 1rem;
     min-width: 170px;
     backdrop-filter: blur(16px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-popover);
     animation: tooltipIn 0.12s ease;
     z-index: 999;
 }
@@ -175,27 +179,27 @@
 
 .tooltipLabel {
     font-size: 0.72rem;
-    color: #475569;
+    color: var(--color-text-subtle);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .tooltipValue {
     font-size: 0.8rem;
-    color: #e2e8f0;
+    color: var(--color-text);
     font-weight: 500;
 }
 
 .tooltipHint {
     margin-top: 0.5rem;
     font-size: 0.68rem;
-    color: #475569;
+    color: var(--color-text-subtle);
     font-style: italic;
     text-align: right;
 }
 
 .tooltipArrow {
-    fill: rgba(13, 17, 23, 0.97);
+    fill: var(--color-surface);
 }
 
 @keyframes tooltipIn {
@@ -211,7 +215,7 @@
 
 /* ── Dialog ─────────────────────────────────────────────────────── */
 .dialogOverlay {
-    background: rgba(0, 0, 0, 0.65);
+    background: var(--color-overlay);
     backdrop-filter: blur(6px);
     position: fixed;
     inset: 0;
@@ -237,13 +241,13 @@
     z-index: 510;
     width: 420px;
     max-width: 90vw;
-    background: #0d1117;
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--color-surface);
+    border-left: 1px solid var(--color-border);
     border-radius: 0;
     padding: 2rem;
     box-shadow:
-        -8px 0 32px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(127, 13, 242, 0.15);
+        var(--shadow-drawer),
+        0 0 0 1px var(--color-primary-soft);
     animation: drawerIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     outline: none;
     overflow-y: auto;
@@ -268,7 +272,7 @@
 .dialogTitle {
     font-size: 1rem;
     font-weight: 600;
-    color: #e2e8f0;
+    color: var(--color-text);
     letter-spacing: 0.01em;
 }
 
@@ -279,21 +283,21 @@
     width: 32px;
     height: 32px;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
-    color: #475569;
+    color: var(--color-text-subtle);
     cursor: pointer;
     transition: all 0.15s ease;
     outline: none;
 }
 
 .dialogClose:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #e2e8f0;
+    background: var(--color-surface-muted);
+    color: var(--color-text);
 }
 
 .dialogClose:focus-visible {
-    outline: 2px solid rgba(127, 13, 242, 0.5);
+    outline: 2px solid var(--color-primary);
 }
 
 .dialogCloseIcon {
@@ -302,15 +306,15 @@
 
 .sep {
     height: 1px;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--color-border);
     margin: 0 0 1.25rem;
 }
 
 .dialogSketch {
     display: flex;
     justify-content: center;
-    background: rgba(19, 22, 32, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 1rem;
     margin-bottom: 1.25rem;
@@ -328,14 +332,14 @@
     align-items: flex-start;
     gap: 0.6rem;
     padding: 0.65rem 0.75rem;
-    background: rgba(19, 22, 32, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: 10px;
 }
 
 .dialogStatIcon {
     font-size: 16px;
-    color: #7f0df2;
+    color: var(--color-primary);
     margin-top: 2px;
     font-variation-settings:
         "FILL" 1,
@@ -346,7 +350,7 @@
 
 .dialogStatLabel {
     font-size: 0.65rem;
-    color: #475569;
+    color: var(--color-text-subtle);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 0.2rem;
@@ -354,6 +358,6 @@
 
 .dialogStatValue {
     font-size: 0.9rem;
-    color: #e2e8f0;
+    color: var(--color-text);
     font-weight: 500;
 }

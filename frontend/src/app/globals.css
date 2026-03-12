@@ -5,6 +5,50 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --color-bg: #f6f7fb;
+    --color-bg-strong: #eef2f7;
+    --color-surface: #ffffff;
+    --color-surface-muted: #f1f5f9;
+    --color-surface-tint: #f8fafc;
+    --color-surface-glass: rgba(255, 255, 255, 0.72);
+    --color-surface-glass-strong: rgba(255, 255, 255, 0.88);
+    --color-border: rgba(15, 23, 42, 0.12);
+    --color-border-strong: rgba(15, 23, 42, 0.2);
+    --color-text: #0f172a;
+    --color-text-muted: #475569;
+    --color-text-subtle: #64748b;
+    --color-primary: #14b8a6;
+    --color-primary-strong: #0f766e;
+    --color-primary-soft: rgba(20, 184, 166, 0.16);
+    --color-primary-ghost: rgba(20, 184, 166, 0.08);
+    --color-primary-shadow: rgba(20, 184, 166, 0.28);
+    --color-success: #16a34a;
+    --color-success-soft: rgba(22, 163, 74, 0.14);
+    --color-warning: #f59e0b;
+    --color-warning-soft: rgba(245, 158, 11, 0.18);
+    --color-danger: #ef4444;
+    --color-danger-soft: rgba(239, 68, 68, 0.16);
+    --color-info: #2563eb;
+    --color-info-soft: rgba(37, 99, 235, 0.14);
+    --color-accent: #f97316;
+    --color-overlay: rgba(15, 23, 42, 0.55);
+    --color-grid: rgba(20, 184, 166, 0.08);
+    --color-scrollbar: rgba(20, 184, 166, 0.35);
+    --color-scrollbar-hover: rgba(20, 184, 166, 0.6);
+    --shadow-popover: 0 18px 40px rgba(15, 23, 42, 0.14);
+    --shadow-card: 0 16px 34px rgba(15, 23, 42, 0.08);
+    --shadow-drawer: -10px 0 30px rgba(15, 23, 42, 0.12);
+    --activity-level-0: #e2e8f0;
+    --activity-level-1: #d7f2ed;
+    --activity-level-2: #bfe7df;
+    --activity-level-3: #9ed8cd;
+    --activity-level-4: #74c4b6;
+    --activity-level-5: #4aab9a;
+    --activity-level-6: #2f8c80;
+    --activity-level-7: #0f766e;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -19,12 +63,18 @@ html {
 body {
     min-height: 100%;
     font-family: "Space Grotesk", sans-serif;
-    color: #e2e8f0;
-    background: #0a0e14;
+    color: var(--color-text);
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(20, 184, 166, 0.12),
+            transparent 55%
+        ),
+        linear-gradient(180deg, var(--color-bg), var(--color-bg-strong));
 }
 
 html {
-    background-color: #0a0e14;
+    background-color: var(--color-bg);
 }
 
 /* Cyber grid background pattern */
@@ -33,21 +83,22 @@ html {
     background-image:
         linear-gradient(
             to right,
-            rgba(127, 13, 242, 0.05) 1px,
+            var(--color-grid) 1px,
             transparent 1px
         ),
         linear-gradient(
             to bottom,
-            rgba(127, 13, 242, 0.05) 1px,
+            var(--color-grid) 1px,
             transparent 1px
         );
 }
 
 /* Glass panel effect */
 .glass-panel {
-    background: rgba(19, 22, 32, 0.4);
+    background: var(--color-surface-glass);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
 }
 
 /* Material Symbols Outlined base styles */
@@ -79,12 +130,12 @@ html {
     background-image:
         linear-gradient(
             to right,
-            rgba(127, 13, 242, 0.05) 1px,
+            var(--color-grid) 1px,
             transparent 1px
         ),
         linear-gradient(
             to bottom,
-            rgba(127, 13, 242, 0.05) 1px,
+            var(--color-grid) 1px,
             transparent 1px
         );
     background-size: 40px 40px;
@@ -150,8 +201,8 @@ html {
 
 /* Selection styles */
 ::selection {
-    background: #7f0df2;
-    color: white;
+    background: var(--color-primary);
+    color: #ffffff;
 }
 
 /* ── Global scrollbar styles ──────────────────────────────────────── */
@@ -163,18 +214,18 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(15, 23, 42, 0.04);
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(127, 13, 242, 0.3);
+    background: var(--color-scrollbar);
     border-radius: 5px;
     transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(127, 13, 242, 0.5);
+    background: var(--color-scrollbar-hover);
 }
 
 ::-webkit-scrollbar-corner {
@@ -184,7 +235,7 @@ html {
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(127, 13, 242, 0.3) rgba(255, 255, 255, 0.02);
+    scrollbar-color: var(--color-scrollbar) rgba(15, 23, 42, 0.04);
 }
 
 /* Hide scrollbar utility class */

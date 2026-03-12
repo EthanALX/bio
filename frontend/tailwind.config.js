@@ -10,12 +10,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#7f0df2',
-        'primary-glow': '#9d4bf6',
-        'background-light': '#f7f5f8',
-        'background-dark': '#0a0e14',
-        'surface-dark': '#131620',
-        'surface-dark-transparent': 'rgba(19, 22, 32, 0.6)',
+        primary: 'var(--color-primary)',
+        'primary-strong': 'var(--color-primary-strong)',
+        'primary-soft': 'var(--color-primary-soft)',
+        'primary-ghost': 'var(--color-primary-ghost)',
+        'background-light': 'var(--color-bg)',
+        'background-dark': 'var(--color-bg-strong)',
+        surface: 'var(--color-surface)',
+        'surface-muted': 'var(--color-surface-muted)',
+        border: 'var(--color-border)',
+        text: 'var(--color-text)',
+        'text-muted': 'var(--color-text-muted)',
       },
       fontFamily: {
         display: ['Space Grotesk', 'sans-serif'],

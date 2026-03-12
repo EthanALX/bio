@@ -34,12 +34,12 @@ export function useActivityMap(activities: Activity[]) {
     }, [projection]);
 
     const TRACE_COLORS = [
-        '#ff4d4f', // Red
-        '#ffa940', // Orange
-        '#36cfc9', // Cyan
-        '#b37feb', // Purple
-        '#ffec3d', // Yellow
-        '#73d13d', // Green
+        '#14b8a6', // Primary teal
+        '#2563eb', // Info blue
+        '#f97316', // Accent orange
+        '#16a34a', // Success green
+        '#f59e0b', // Warning amber
+        '#0f766e', // Primary strong
     ];
 
     const projectedRoutes = useMemo(() => {
