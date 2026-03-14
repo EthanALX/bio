@@ -45,6 +45,10 @@
     .mainRow {
         grid-template-columns: 1fr;
     }
+
+    .summaryColumn {
+        order: -1;
+    }
 }
 
 /* ── Radix Tabs ──────────────────────────────────────────────────── */
