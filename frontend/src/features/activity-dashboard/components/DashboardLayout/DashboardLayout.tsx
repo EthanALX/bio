@@ -17,7 +17,7 @@ import styles from "./DashboardLayout.module.css";
 const TAB_ITEMS = [
   { value: "list", label: "记录历程", icon: "format_list_bulleted" },
   { value: "calendar", label: "打卡日历", icon: "calendar_month" },
-  { value: "chart", label: "图表数据", icon: "area_chart" },
+  // { value: "chart", label: "图表数据", icon: "area_chart" },
   { value: "map", label: "跑步路线", icon: "route" },
 ] as const;
 
