@@ -1,5 +1,6 @@
 import type {
   StatItem,
+  SummarySection,
   SummaryStatsState,
   UseSummaryStatsProps,
   UseSummaryStatsResult,
@@ -7,31 +8,98 @@ import type {
 
 export const useSummaryStats = ({
   stats,
+  globalStats,
+  year,
 }: UseSummaryStatsProps): UseSummaryStatsResult => {
-  const statItems: StatItem[] = [
+  const formatDistance = (value?: number) =>
+    typeof value === "number" && Number.isFinite(value)
+      ? `${value.toFixed(1)} km`
+      : "—";
+  const formatCount = (value?: number) =>
+    typeof value === "number" && Number.isFinite(value) ? value : "—";
+  const formatBpm = (value?: number) =>
+    typeof value === "number" && Number.isFinite(value) ? `${value} bpm` : "—";
+
+  const total = globalStats?.totalStats;
+  const personal = globalStats?.personalBest;
+
+  const totalItems: StatItem[] = [
     {
-      value: `${stats.Distance} km`,
-      label: "距离",
-      hint: "今年跑步总距离",
+      value: formatDistance(total?.Distance),
+      label: "总距离",
     },
     {
-      value: stats.AvgPace,
+      value: formatCount(total?.Days),
+      label: "总天数",
+    },
+    {
+      value: total?.AvgPace ?? "—",
       label: "平均配速",
-      hint: "所有跑步的平均配速",
     },
     {
-      value: stats.Days,
+      value: formatCount(total?.Routes),
+      label: "总路线",
+    },
+  ];
+
+  const personalItems: StatItem[] = [
+    {
+      value: formatDistance(personal?.longestDistance),
+      label: "最长距离",
+    },
+    {
+      value: personal?.fastestPace ?? "—",
+      label: "最快配速",
+    },
+    {
+      value: personal?.longestDuration ?? "—",
+      label: "最长时间",
+    },
+    {
+      value: formatBpm(personal?.maxHeartRate),
+      label: "最高心率",
+    },
+  ];
+
+  const yearItems: StatItem[] = [
+    {
+      value: formatDistance(stats.Distance),
+      label: "距离",
+    },
+    {
+      value: stats.AvgPace || "—",
+      label: "平均配速",
+    },
+    {
+      value: formatCount(stats.Days),
       label: "天数",
-      hint: "有活动的独立天数",
     },
     {
-      value: stats.Routes,
+      value: formatCount(stats.Routes),
       label: "路线",
-      hint: "带有GPS轨迹数据的跑步",
+    },
+  ];
+
+  const sections: SummarySection[] = [
+    {
+      id: "total",
+      title: "Total Summary",
+      items: totalItems,
+    },
+    {
+      id: "personal",
+      title: "Personal Best",
+      items: personalItems,
+      variant: "best",
+    },
+    {
+      id: "year",
+      title: year ? `Year Summary (${year})` : "Year Summary",
+      items: yearItems,
     },
   ];
 
   return {
-    state: { statItems },
+    state: { sections },
   };
 };

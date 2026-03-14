@@ -25,32 +25,32 @@
     justify-content: flex-end;
 }
 
-/* ── Stats Row (Left: Global, Right: Current Year) ─────────────── */
-.statsRow {
+/* ── Main Row (Tabs + Summary) ─────────────────────────────────── */
+.mainRow {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) 340px;
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    align-items: start;
 }
 
-.globalPanelWrapper {
+.tabsColumn {
     min-width: 0;
 }
 
-.summaryStatsWrapper {
+.summaryColumn {
     min-width: 0;
 }
 
 @media (max-width: 1200px) {
-    .statsRow {
+    .mainRow {
         grid-template-columns: 1fr;
-        gap: 1rem;
     }
 }
 
 /* ── Radix Tabs ──────────────────────────────────────────────────── */
 .tabsRoot {
     width: 100%;
+    min-width: 0;
 }
 
 .tabList {

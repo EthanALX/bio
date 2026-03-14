@@ -1,73 +1,79 @@
-.container {
-  display: flex;
-  gap: 2.5rem;
-  align-items: baseline;
-  flex-wrap: wrap;
-  transition: opacity 0.3s ease;
+.loading {
+  opacity: 0.55;
 }
 
-.container.loading {
-  opacity: 0.4;
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-popover);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sectionSplit {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.sectionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 1rem;
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  cursor: default;
-  outline: none;
-  border-radius: 4px;
-  transition: opacity 0.15s ease;
-}
-
-.statItem:hover .value {
-  color: var(--color-primary-strong);
-}
-
-.statItem:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+  gap: 0.25rem;
 }
 
 .value {
-  font-size: 1.9rem;
-  font-weight: 600;
-  color: var(--color-text);
-  font-style: italic;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-primary-strong);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-  line-height: 1;
-  transition: color 0.2s ease;
 }
 
 .label {
-  font-size: 0.68rem;
-  color: var(--color-text-subtle);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-weight: 500;
 }
 
-/* ── Radix Tooltip ───────────────────────────────────────────────── */
-.tooltipContent {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.75rem;
-  color: var(--color-text-subtle);
-  backdrop-filter: blur(12px);
-  box-shadow: var(--shadow-popover);
-  max-width: 220px;
-  line-height: 1.4;
-  animation: tooltipIn 0.12s ease;
-  z-index: 999;
+.section[data-variant="best"] .value {
+  color: var(--color-accent);
 }
 
-.tooltipArrow {
-  fill: var(--color-surface);
-}
-
-@keyframes tooltipIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+@media (max-width: 1200px) {
+  .sectionGrid {
+    grid-template-columns: 1fr;
+  }
 }
