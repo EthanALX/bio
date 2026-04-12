@@ -82,9 +82,9 @@ export const useSummaryStats = ({
 
   const sections: SummarySection[] = [
     {
-      id: "total",
-      title: "Total Summary",
-      items: totalItems,
+      id: "year",
+      title: year ? `Year Summary (${year})` : "Year Summary",
+      items: yearItems,
     },
     {
       id: "personal",
@@ -93,9 +93,9 @@ export const useSummaryStats = ({
       variant: "best",
     },
     {
-      id: "year",
-      title: year ? `Year Summary (${year})` : "Year Summary",
-      items: yearItems,
+      id: "total",
+      title: "Total Summary",
+      items: totalItems,
     },
   ];
 
