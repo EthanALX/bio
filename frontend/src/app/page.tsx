@@ -1,11 +1,11 @@
-// import { Homepage } from "@/features/homepage";
-
-// export default function Home() {
-//   return <Homepage />;
-// }
-
+import { Suspense } from "react";
 import { DashboardLayout } from "@/features/activity-dashboard";
+import { LoadingSkeleton } from "@/components/Feedback";
 
 export default function Home() {
-  return <DashboardLayout />;
+  return (
+    <Suspense fallback={<LoadingSkeleton variant="list" rows={8} />}>
+      <DashboardLayout />
+    </Suspense>
+  );
 }

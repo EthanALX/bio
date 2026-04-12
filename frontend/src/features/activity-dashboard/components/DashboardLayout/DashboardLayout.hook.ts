@@ -1,11 +1,6 @@
-import { useState } from "react";
-import {
-  useActivityData,
-  useAvailableYears,
-  useGlobalStats,
-} from "../../hooks";
+import { useActivityData, useAvailableYears, useGlobalStats } from "../../hooks";
+import { useDashboardQueryState } from "../../hooks/useDashboardQueryState";
 import type {
-  ViewMode,
   DashboardLayoutState,
   DashboardLayoutActions,
   UseDashboardLayoutResult,
@@ -14,8 +9,7 @@ import type {
 export const useDashboardLayout = (): UseDashboardLayoutResult => {
   const { years, loading: yearsLoading } = useAvailableYears();
   const { data: globalStats, loading: globalStatsLoading } = useGlobalStats();
-  const [selectedYear, setSelectedYear] = useState<number>(2025);
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const { year: selectedYear, view: viewMode, setYear: setSelectedYear, setView: setViewMode } = useDashboardQueryState();
 
   const { data, loading, error } = useActivityData(selectedYear);
 

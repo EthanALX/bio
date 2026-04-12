@@ -6,11 +6,11 @@
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
-    padding: 1.25rem;
+    padding: var(--card-padding);
     margin-top: 0.2rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
+    background: var(--card-bg);
+    border: var(--card-border);
+    border-radius: var(--radius-xl);
     box-shadow: var(--shadow-popover);
     margin-top: 2.6rem;
 }
@@ -35,10 +35,22 @@
 
 .sectionTitle {
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.06em;
     color: var(--color-text-subtle);
+}
+
+.sectionIcon {
+    font-size: 16px;
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
 }
 
 .primaryBlock {

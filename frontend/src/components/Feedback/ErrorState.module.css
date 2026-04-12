@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3xl) var(--space-lg);
+    text-align: center;
+}
+
+.icon {
+    font-size: 40px;
+    color: var(--color-danger);
+    opacity: 0.7;
+    margin-bottom: var(--space-md);
+}
+
+.title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.message {
+    font-size: 0.82rem;
+    color: var(--color-text-subtle);
+    margin: var(--space-xs) 0 0;
+    max-width: 320px;
+}
+
+.retryButton {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-lg);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--duration-fast);
+    outline: none;
+}
+
+.retryButton:hover {
+    background: var(--color-surface-muted);
+    border-color: var(--color-primary);
+    color: var(--color-primary-strong);
+}
+
+.retryButton:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.retryIcon {
+    font-size: 16px;
+}

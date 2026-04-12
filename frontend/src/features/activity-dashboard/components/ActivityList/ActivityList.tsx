@@ -4,6 +4,7 @@ import * as ScrollArea from "@radix-ui/react-scroll-area";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Separator from "@radix-ui/react-separator";
 import { useActivityList } from "./ActivityList.hook";
+import { EmptyState } from "@/components/Feedback";
 import type {
   ActivityListProps,
   FormattedActivity,
@@ -118,6 +119,18 @@ export function ActivityList({ activities }: ActivityListProps) {
   const { state, actions } = useActivityList({ activities });
   const { sorted, sortField, sortDir, selectedActivity, dialogOpen } = state;
   const { handleSort, handleRowClick, handleDialogClose } = actions;
+
+  if (sorted.length === 0) {
+    return (
+      <div className={styles.container}>
+        <EmptyState
+          icon="directions_run"
+          title="No activities"
+          description="Activities for this period will appear here."
+        />
+      </div>
+    );
+  }
 
   return (
     <>

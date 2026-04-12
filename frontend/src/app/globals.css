@@ -39,6 +39,35 @@
     --shadow-popover: 0 18px 40px rgba(15, 23, 42, 0.14);
     --shadow-card: 0 16px 34px rgba(15, 23, 42, 0.08);
     --shadow-drawer: -10px 0 30px rgba(15, 23, 42, 0.12);
+
+    /* ── Radius tokens ──────────────────────────────────────────────── */
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    /* ── Spacing tokens ─────────────────────────────────────────────── */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+    --space-xl: 1.25rem;
+    --space-2xl: 1.5rem;
+    --space-3xl: 2rem;
+
+    /* ── Transition tokens ──────────────────────────────────────────── */
+    --duration-fast: 0.15s ease;
+    --duration-normal: 0.2s ease;
+    --duration-slow: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* ── Card surface (unified card container) ──────────────────────── */
+    --card-bg: var(--color-surface);
+    --card-border: 1px solid var(--color-border);
+    --card-radius: var(--radius-lg);
+    --card-shadow: var(--shadow-card);
+    --card-padding: var(--space-lg);
     --activity-level-0: #e2e8f0;
     --activity-level-1: #d7f2ed;
     --activity-level-2: #bfe7df;

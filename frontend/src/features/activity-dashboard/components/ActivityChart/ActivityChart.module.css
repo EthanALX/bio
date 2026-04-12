@@ -3,24 +3,14 @@
     width: 100%;
     min-width: 900px;
     height: 500px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+    background: var(--card-bg);
+    border: var(--card-border);
+    border-radius: var(--card-radius);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     font-family: var(--font-space-mono);
-    box-shadow: var(--shadow-card);
-}
-
-.noData {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--color-text-subtle);
-    font-family: var(--font-space-mono);
-    font-size: 14px;
+    box-shadow: var(--card-shadow);
 }
 
 .controls {
@@ -46,7 +36,7 @@
     font-family: var(--font-space-mono);
     font-size: 13px;
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     transition: all 0.2s ease;
 }
 
@@ -153,7 +143,7 @@
     padding: 12px 16px;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     backdrop-filter: blur(10px);
     pointer-events: none;
     opacity: 0;

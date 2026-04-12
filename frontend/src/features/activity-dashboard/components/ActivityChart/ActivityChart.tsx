@@ -1,5 +1,6 @@
 import React from "react";
 import { useActivityChart } from "./ActivityChart.hook";
+import { EmptyState } from "@/components/Feedback";
 import type { ActivityChartProps } from "./ActivityChart.type";
 import styles from "./ActivityChart.module.css";
 
@@ -21,7 +22,11 @@ export function ActivityChart({ activities }: ActivityChartProps) {
   if (!currentRoot || currentRoot.id === "empty") {
     return (
       <div className={styles.container}>
-        <div className={styles.noData}>No activity data available</div>
+        <EmptyState
+          icon="area_chart"
+          title="No chart data"
+          description="Activity breakdown will appear when data is available."
+        />
       </div>
     );
   }

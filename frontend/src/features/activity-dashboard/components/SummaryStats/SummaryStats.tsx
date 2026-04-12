@@ -1,7 +1,14 @@
 import React from "react";
+import { Icon } from "@/components/Icon";
 import { useSummaryStats } from "./SummaryStats.hook";
 import type { SummaryStatsProps } from "./SummaryStats.type";
 import styles from "./SummaryStats.module.css";
+
+const SECTION_ICONS: Record<string, string> = {
+  total: "monitoring",
+  personal: "emoji_events",
+  year: "calendar_today",
+};
 
 export function SummaryStats({
   stats,
@@ -24,7 +31,13 @@ export function SummaryStats({
             data-variant={section.variant ?? "default"}
           >
             <div className={styles.sectionHeader}>
-              <h3 className={styles.sectionTitle}>{section.title}</h3>
+              <h3 className={styles.sectionTitle}>
+                <Icon
+                  name={SECTION_ICONS[section.id] ?? "analytics"}
+                  className={styles.sectionIcon}
+                />
+                {section.title}
+              </h3>
             </div>
 
             {primary && (
